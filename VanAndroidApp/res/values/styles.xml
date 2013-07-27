@@ -1,0 +1,75 @@
+<resources>
+
+    <style name="AppTheme" parent="android:Theme.Light">
+        <item name="android:windowFullscreen">false</item>
+    </style>
+
+    <style name="myDialogTheme" parent="@android:style/Theme.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <style name="listitem_photo">
+        <item name="android:layout_width">80.0dip</item>
+        <item name="android:layout_height">60.0dip</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:padding">5.0dip</item>
+        <item name="android:clickable">true</item>
+        <item name="android:background">@drawable/widget_dface_border</item>
+        <item name="android:src">@drawable/widget_dface_loading</item>
+    </style>
+    
+    <style name="reward_item_photo">
+        <item name="android:layout_width">120.0dip</item>
+        <item name="android:layout_height">90.0dip</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:padding">5.0dip</item>
+        <item name="android:clickable">true</item>
+        <item name="android:background">@drawable/widget_dface_border</item>
+        <item name="android:src">@drawable/widget_dface_loading</item>
+    </style>
+
+    <style name="loading_small" parent="@android:style/Widget.ProgressBar.Small">
+        <item name="android:indeterminateDrawable">@anim/loading</item>
+        <item name="android:layout_width">21dip</item>
+        <item name="android:layout_height">21dip</item>
+        <item name="android:layout_gravity">center_vertical</item>
+    </style>
+
+    <style name="loading_large" parent="@android:style/Widget.ProgressBar.Large.Inverse">
+        <item name="android:layout_width">76dip</item>
+        <item name="android:layout_height">76dip</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+
+    <style name="widget_listview">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:listSelector">@drawable/listview_item_selector</item>
+        <item name="android:divider">@drawable/listview_divider_line</item>
+        <item name="android:dividerHeight">1.0dip</item>
+        <item name="android:fadingEdge">none</item>
+        <item name="android:scrollingCache">false</item>
+    </style>
+
+    <style name="system_button" parent="@android:style/Widget.Button">
+        <item name="android:gravity">center_vertical|center_horizontal</item>
+        <item name="android:textColor">#FFFFFFFF</item>
+        <item name="android:shadowColor">#FF000000</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">0.2</item>
+        <item name="android:textSize">16dip</item>
+        <item name="android:textStyle">bold</item>
+        <!-- <item name="android:background">@drawable/btn_custom</item> -->
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+    </style>
+
+</resources>

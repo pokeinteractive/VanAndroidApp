@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+        
+            <TextView
+                android:id="@+id/app_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@+id/membership_point_text_section"
+                android:singleLine="false"
+                android:text="MatchPoint"
+                android:paddingTop="5dip"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/white"
+                android:textSize="25dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/membership_point_text_section"
+                android:layout_alignParentRight="true"
+                android:paddingLeft="10dip"
+                android:paddingRight="10dip" >
+
+                <ImageView
+                    android:id="@+id/match_point_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:src="@drawable/mp" />
+
+                <TextView
+                    android:id="@+id/membership_point_total_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="50"
+                    android:textStyle="bold"
+                    android:textColor="@color/red" 
+                    android:textSize="15sp" />
+                
+            </LinearLayout>
+            
+    
+
+</RelativeLayout>         
+                
+                    

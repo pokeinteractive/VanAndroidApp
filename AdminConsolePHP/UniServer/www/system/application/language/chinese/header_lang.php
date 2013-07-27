@@ -1,0 +1,52 @@
+<?php
+
+$lang['service/serviceInfo'] = "商戶分類 » ";
+$lang['service/serviceList'] = "商戶分類 » ";
+$lang['service/serviceCatList'] = "商戶分類";
+$lang['service/serviceList'] = "商戶分類 » ";
+$lang['member/updateProfile'] = "修改個人資料 » ";
+$lang['member/signUp'] = "立即登記 ";
+$lang['member/profile'] = "會員資料 ";
+$lang['member/memberInfo'] = "會員資料";
+$lang['member/memberProduct'] = "會員刊登物品";
+$lang['ranking/browse'] = "瀏覽排行榜 ";
+$lang['ranking/rating'] = "評分排行榜 ";
+$lang['mainact/'] = "搜尋全城最好的婚禮服務";
+$lang['/'] = "搜尋全城最好的婚禮服務";
+$lang['mainact/aboutus'] = "關於我們";
+$lang['mainact/contactus'] = "聯絡我們";
+$lang['mainact/termsofservice'] = "Terms of Service";
+$lang['mainact/privacypolicy'] = "Privacy Policy";
+$lang['filter/serviceFilter'] = "找尋商戶服務";
+$lang['article/listArticle'] = "最新消息";
+$lang['searchtext/search'] = "找尋 ";
+$lang['gallery/managePhoto'] = "相片管理";
+$lang['openform/email'] = "通知";
+$lang['openform/comment'] = "發表意見";
+$lang['service/questionList'] = "商戶問答» ";
+$lang['service/serviceAdd'] = "管理服務";
+$lang['service/serviceComment'] = "意見";
+$lang['service/serviceQuestion'] = "問答";
+$lang['shop/listProduct'] = "租借裝飾";
+$lang['shop/productInfo'] = "租借裝飾";
+$lang['shop/submitProductOrder'] = "租借裝飾» 確認訂單";
+$lang['shop/confirmOrder'] = "租借裝飾 » 確認訂單";
+$lang['leaflet/manage'] = "管理傳單";
+$lang['sell/productCatList'] = "婚禮物資";
+$lang['sell/productList'] = "婚禮物資 » 物資列表";
+$lang['sell/productInfo'] = "婚禮物資 » ";
+$lang['sell/submitProduct'] = "婚禮物資 » 刊登物品";
+$lang['sell/addProduct'] = "婚禮物資 » 刊登物品";
+$lang['sell/editProduct'] = "婚禮物資 » 刊登物品";
+$lang['sell/remove'] = "婚禮物資 » 停止刊登物品";
+$lang['grade/show'] = "計劃禮婚";
+$lang['grade/listGrade'] = "計劃禮婚 » 商戶推薦";
+$lang['message/inbox'] = "訊息中心 » 收件匣";
+$lang['message/outbox'] = "訊息中心 » 寄件匣";
+$lang['message/read'] = "訊息中心 » 閱讀訊息";
+$lang['message/send'] = "訊息中心 » 寫訊息";
+$lang['message/reply'] = "訊息中心 » 回覆訊息";
+$lang['message/submitMessage'] = "訊息中心 » 發出訊息";
+$lang['message/delete'] = "訊息中心 » 刪除訊息";
+
+?>

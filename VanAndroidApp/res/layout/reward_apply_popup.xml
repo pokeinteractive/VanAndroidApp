@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/reward_apply_scrollview_id"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@android:color/white"
+    android:isScrollContainer="true"
+    android:overScrollMode="always"
+    android:scrollbarStyle="outsideInset"
+    android:scrollbars="vertical" >
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/reward_apply_layout_id"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@android:color/white"
+        android:orientation="vertical"
+        android:padding="10dip" >
+
+        <ImageView
+            android:id="@+id/reward_apply_title_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:src="@drawable/mp" />
+        
+        <TextView
+            android:id="@+id/reward_apply_title_text"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="7dip"
+            android:text=""
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+        
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="7dip"
+            android:text="請輸入你的Email,之後有專人聯絡你有關換獎事宜."
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/reward_apply_email"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dip"
+            android:gravity="center"
+            android:inputType="textEmailAddress"
+            android:textSize="18sp" >
+        </EditText>
+
+        <Button
+            android:id="@+id/reward_apply_button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dip"
+            android:layout_weight="1"
+            android:text="確定換領" />
+
+        <ProgressBar
+            android:id="@+id/reward_apply_progress"
+            style="@style/loading_large" />
+        
+    </LinearLayout>
+
+</ScrollView>

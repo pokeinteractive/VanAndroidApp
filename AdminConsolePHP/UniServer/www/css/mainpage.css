@@ -1,0 +1,163 @@
+#homeBody
+{
+	FONT-SIZE: 12px; 
+}
+#homeBody H1 {
+	DISPLAY: block; FONT-WEIGHT: bold; FONT-SIZE: 16px; COLOR: #6a4542; HEIGHT: 30px
+}
+#homeBody H2 {
+	PADDING-RIGHT: 0px! important; DISPLAY: block; PADDING-LEFT: 0px! important; FONT-WEIGHT: bold; FONT-SIZE: 16px; PADDING-BOTTOM: 0px! important; MARGIN: 0px; COLOR: #a19b2a; PADDING-TOP: 0px! important; HEIGHT: 25px
+}
+.hidden {
+	DISPLAY: none
+}
+#homeBody #products {
+	FLOAT: left; MARGIN: 10px 0px; WIDTH: 966px;
+	background-repeat: no-repeat;
+	background-position: left top;
+	background-color: #fff1f1
+}
+#homeBody #products #featuredProduct {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FLOAT: left; PADDING-BOTTOM: 0px; MARGIN: 0px; WIDTH: 460px; PADDING-TOP: 0px
+}
+#homeBody #products #productList {
+	PADDING-RIGHT: 15px; PADDING-LEFT: 0px; FLOAT: left; PADDING-BOTTOM: 0px; MARGIN: 15px 0px 0px 15px; WIDTH: 460px; PADDING-TOP: 0px
+}
+#homeBody #products #productList H1 {
+	MARGIN: 0px;
+	color: #0060ff;
+}
+#homeBody #productList .popularProduct {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; MIN-HEIGHT: 95px; FLOAT: left; PADDING-BOTTOM: 0px; MARGIN: 5px 12px 5px 0px; WIDTH: 212px; PADDING-TOP: 0px;
+}
+.popularProduct {
+	OVERFLOW: hidden
+}
+.popularProduct A {
+	TEXT-DECORATION: none
+}
+.popularProduct A:hover {
+	TEXT-DECORATION: underline
+}
+.bottom-line {
+	border-bottom: #D1D1D1 1px solid; 
+}
+.popularProduct IMG.prod50 {
+	BORDER: #d1d3c8 2px solid; 
+}
+.popularProduct .productName {
+	PADDING-LEFT: 10px; OVERFLOW: hidden
+}
+.popularProduct IMG.prod50 {
+	FLOAT: left; MARGIN: 0px; WIDTH: 50px; HEIGHT: 50px;
+}
+.popularProduct A {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-WEIGHT: bold; PADDING-BOTTOM: 0px; PADDING-TOP: 0px
+}
+.popularProduct A:visited {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-WEIGHT: bold; PADDING-BOTTOM: 0px; PADDING-TOP: 0px
+}
+.popularProduct A:hover {
+	TEXT-DECORATION: underline
+}
+.popularProduct A:hover {
+	TEXT-DECORATION: underline
+}
+.popularProduct .priceWrapper {
+	FLOAT: right; WIDTH: 150px
+}
+.popularProduct .price {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-SIZE: 13px; FLOAT: left; PADDING-BOTTOM: 0px; MARGIN-LEFT: 5px; WIDTH: 93px; COLOR: #666; PADDING-TOP: 9px; HEIGHT: 15px
+}
+.popularProduct IMG.cart {
+	BORDER-TOP-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; FLOAT: left; BORDER-BOTTOM-WIDTH: 0px; MARGIN: 4px 0px 0px; BORDER-RIGHT-WIDTH: 0px
+}
+.popularProduct IMG.checkmark {
+	BORDER-TOP-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; FLOAT: left; BORDER-BOTTOM-WIDTH: 0px; MARGIN: 4px 0px 0px; BORDER-RIGHT-WIDTH: 0px
+}
+.moreOptions {
+	CLEAR: both; PADDING-RIGHT: 0px; PADDING-LEFT: 4px; FONT-SIZE: 12px; PADDING-BOTTOM: 1px;  MARGIN: 5px 0px 2px 0px; COLOR: #8f8f8f; PADDING-top: 8px;
+}
+.moreOptions A {
+	COLOR: #8f8f8f; TEXT-DECORATION: none
+}
+.moreOptions A:hover {
+	COLOR: #8f8f8f; TEXT-DECORATION: underline
+}
+.popularProduct .small {
+	FONT-SIZE: 9px
+}
+#homeBody #recipes {
+	MIN-HEIGHT: 312px; FLOAT: left; WIDTH: 460px
+}
+.tabContent {
+	CLEAR: both; DISPLAY: block; MIN-HEIGHT: 270px; BACKGROUND: #fff1f1; PADDING-BOTTOM: 10px; OVERFLOW: hidden
+}
+.tabContent A {
+	TEXT-DECORATION: none
+}
+.tabContent A:hover {
+	TEXT-DECORATION: underline
+}
+.tabs #popularButton {
+	MARGIN-LEFT: 0px
+}
+.recipeItem {
+	CLEAR: left; PADDING-RIGHT: 10px; PADDING-LEFT: 10px; PADDING-BOTTOM: 0px; PADDING-TOP: 10px
+}
+.recipeItem .recipeItemImage {
+	BORDER-RIGHT: #fff 5px solid; BORDER-TOP: #fff 5px solid; FLOAT: left; BORDER-LEFT: #fff 5px solid; WIDTH: 140px; MARGIN-RIGHT: 20px; BORDER-BOTTOM: #fff 5px solid; HEIGHT: 105px
+}
+.recipeItem .recipeItemName {
+	MARGIN-TOP: 10px; DISPLAY: block; FONT-WEIGHT: bold; FONT-SIZE: 14px; COLOR: #c14d00
+}
+.recipeItem .recipeItemName:hover {
+	TEXT-DECORATION: none
+}
+.recipeItem H3 {
+	MARGIN-TOP: 0px; FONT-SIZE: 14px; MARGIN-BOTTOM: 7px; COLOR: #6a4542; HEIGHT: auto;
+}
+.recipeItem DL {
+	FLOAT: left; WIDTH: 255px; COLOR: #676664; LINE-HEIGHT: 17px; height: 100px;
+}
+.recipeItem DL DT {
+	PADDING-RIGHT: 12px; FLOAT: left; WIDTH: 55px
+}
+.recipeItem DL DD {
+	MARGIN-LEFT: 65px
+}
+#homeBody #recipes .moreLink {
+	FLOAT: right; PADDING-BOTTOM: 0px; MARGIN: 11px 10px 0px 0px;
+	BACKGROUND: url(/graphics/icn_morelink_bkgrd.gif);
+	
+}
+#homeBody .infoBlurb {
+	MIN-HEIGHT: 312px; FLOAT: left; MARGIN: 0px 0px 0px 20px; WIDTH: 225px
+}
+#homeBody .infoBlurb H2 {
+	PADDING-TOP: 8px; HEIGHT: 29px; color: #0060ff;
+}
+#homeBody .infoBlurb H2 A {
+	PADDING-TOP: 8px; HEIGHT: 29px; color: #A060ff;
+}
+#homeBody .infoBlurb H2 A:hover {
+	PADDING-TOP: 8px; HEIGHT: 29px; color: #0000FF;
+}
+.tabs {
+	FLOAT: left
+}
+.tabs .tab {
+	FONT-WEIGHT: bold; FONT-SIZE: 12px; FLOAT: left; CURSOR: pointer; COLOR: #c24e01;
+	BACKGROUND: #ffffff no-repeat left top; COLOR: #684a40
+}
+.tabs .tab .tab_inner {
+	PADDING-RIGHT: 10px; PADDING-LEFT: 10px; FLOAT: left; PADDING-BOTTOM: 8px; PADDING-TOP: 10px;
+	BACKGROUND: #ffffff no-repeat left top; COLOR: #684a40	
+}
+.tabs .active {
+	BACKGROUND: #fff1f1 no-repeat left top; COLOR: #684a40
+}
+.tabs .active .tab_inner {
+	BACKGROUND: #fff1f1 no-repeat right top
+}
+

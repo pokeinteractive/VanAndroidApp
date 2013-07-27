@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="reward_apply_success">申請成功! 將有專人聯絡你.</string>
+    
+    <string name="reward_apply_fail">申請失敗! 請再試.</string>
+    
+    
+    <string name="network_not_connected">網絡連接失敗，請檢查網絡設置</string>
+    <string name="xml_parser_failed">數據解析異常</string>
+    <string name="io_exception_error">文件流異常</string>
+    <string name="http_status_code_error">網絡異常，錯誤碼：%d</string>
+    <string name="http_exception_error">網絡異常，請求超時</string>
+    <string name="socket_exception_error">網絡異常，讀取數據超時</string>
+    <string name="app_run_code_error">應用程序運行時異常</string>
+    
+    <string name="app_menu_surelogout">確定退出程序嗎？</string>
+    <string name="sure">確定</string>
+    <string name="cancle">取消</string>
+    
+    <string name="app_error">應用程序錯誤</string>
+    <string name="app_error_message">很抱歉，應用程序出現錯誤，即將退出。\n請提交錯誤報告，我們會盡快修複這個問題！</string>
+    <string name="submit_report">提交報告</string>
+    
+    <string name="load_more">更多</string>
+    <string name="load_ing">加載中···</string>
+    <string name="load_full">已加載全部</string>
+    <string name="load_empty">暫無數據</string>
+    <string name="load_error">加載數據出錯</string>
+    
+    <string name="new_data_toast_message">有 %d 條更新</string>
+    <string name="new_data_toast_none">沒有新更新</string>
+    
+    <string name="select">選擇</string>
+    <string name="share">分享</string>
+    <string name="sharing">分享中. . .</string>
+    <string name="publishing">發布中. . .</string>
+    <string name="choose_image">請選擇圖片文件！</string>
+    <string name="delete_image">確定刪除該圖片嗎？</string>
+    <string name="delete_tweet">確定刪除該動彈嗎？</string>
+    <string name="delete_blog">確定刪除該博客嗎？</string>
+    <string name="republish_tweet">網絡超時，是否重新發布動彈？</string>
+    <string name="clearwords">清除文字嗎？</string>
+    
+    <string name="msg_load_is_null">讀取失敗，可能已被刪除</string>
+    <string name="msg_login_email_error">無效的郵箱地址</string>
+    <string name="msg_login_email_null">請輸入郵箱</string>
+    <string name="msg_login_pwd_null">請輸入密碼</string>
+    <string name="msg_login_success">登錄成功</string>
+    <string name="msg_login_fail">登錄失敗</string>
+    <string name="msg_login_error">用戶未登錄 或 密碼錯誤</string>
+    <string name="msg_load_userface_fail">用戶頭像加載失敗</string>
+    <string name="msg_load_image_fail">圖片加載失敗</string>
+    <string name="msg_read_detail_fail">無法獲取文章信息</string>
+    <string name="msg_noaccess_delete">您沒有刪除權限</string>
+   	
+    <!-- LoginSina -->
+    <string name="sinalogin_check_account">賬號不能爲空</string>
+    <string name="sinalogin_check_pass">密碼不能爲空</string>
+    <string name="sinalogin_check_server">服務器驗證中. . .</string>
+    
+    <!-- sina share message -->
+    <string name="OAUTH_ERROR">服務器驗證失敗</string>
+	<string name="OAUTH_RequestToken_ACCESS">第三方應用驗證成功</string>
+	<string name="OAUTH_RequestToken_ERROR">第三方應用驗證失敗</string>
+	<string name="OAUTH_AccessToken_ACCESS">用戶授權登錄成功</string>
+	<string name="OAUTH_AccessToken_ERROR">用戶授權登錄失敗</string>
+	<string name="OAUTH_AccessToken_SXPIRED">授權已過期，請重新授權登錄</string>
+	<string name="Weibo_Message_NULL">分享數據不能爲空</string>
+	<string name="Weibo_Message_LONG">已超出140個字</string>
+	<string name="Weibo_Share_Success">微博分享成功</string>
+	<string name="Weibo_Share_Error">微博分享失敗</string>
+	<string name="Weibo_Share_Repeat">已經分享過了</string>
+</resources>

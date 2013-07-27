@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/detect_point_layout_id"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#282828"
+    android:orientation="vertical"
+    android:padding="10dip" >
+
+    <TextView
+        android:id="@+id/scan_point_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="按下開關找尋 MatchPoint"
+        android:textColor="@color/red"
+        android:gravity="center"
+        android:textSize="25sp"
+        android:textStyle="bold" />
+
+    <ToggleButton
+        android:id="@+id/start_scan_button_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:background="@drawable/scan_button"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:textOff=""
+        android:textOn="" />
+
+    <!--
+    <Button
+        android:id="@+id/StartStopButton"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Start" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="fill_parent"
+        android:layout_height="200dp"
+        android:minHeight="200dp" />
+    -->
+
+</LinearLayout>

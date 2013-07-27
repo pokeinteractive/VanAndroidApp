@@ -1,0 +1,15 @@
+130727  0:49:52 [Note] Plugin 'FEDERATED' is disabled.
+130727  0:49:52 [Note] Plugin 'InnoDB' is disabled.
+130727  0:49:52 [Note] Event Scheduler: Loaded 0 events
+130727  0:49:52 [Note] MySQLS1: ready for connections.
+Version: '5.5.10'  socket: ''  port: 3306  MySQL Community Server (GPL)
+130727  0:50:06 [Note] MySQLS1: Normal shutdown
+
+130727  0:50:06 [Note] Event Scheduler: Purging the queue. 0 events
+130727  0:50:06 [Note] MySQLS1: Shutdown complete
+
+130727  1:05:24 [Note] Plugin 'FEDERATED' is disabled.
+130727  1:05:24 [Note] Plugin 'InnoDB' is disabled.
+130727  1:05:24 [Note] Event Scheduler: Loaded 0 events
+130727  1:05:24 [Note] D:/William_Development/Poke_Company/VanApp/VanAndroidApp/AdminConsolePHP/UniServer/usr/local/mysql/bin/mysqld-opt.exe: ready for connections.
+Version: '5.5.10'  socket: ''  port: 3306  MySQL Community Server (GPL)
