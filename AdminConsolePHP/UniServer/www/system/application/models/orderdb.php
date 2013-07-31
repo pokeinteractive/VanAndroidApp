@@ -18,7 +18,14 @@ class Orderdb extends Model {
    function getOrderList()
    {
        $this->load->database();
-        $query = $this->db->query("select o.order_id, o.remark, o.cust_phone, o.remark, o.order_date, t.name as timeslot, l.name as from_location, l2.name as to_locaiton from `order` o, timeslot t, location l, location l2 where o.timeslot_id=t.timeslot_id and o.to_location_id=l2.location_id and o.from_location_id=l.location_id and o.status = 'Y' and order_date >= CURRENT_DATE order by order_date, t.seq");
+        $query = $this->db->query("select o.order_id, '120' as price, o.remark, o.cust_phone, o.remark, o.order_date, t.name as timeslot, l.name as from_location, l2.name as to_locaiton from `order` o, timeslot t, location l, location l2 where o.timeslot_id=t.timeslot_id and o.to_location_id=l2.location_id and o.from_location_id=l.location_id and o.status = 'Y' and order_date >= CURRENT_DATE order by order_date, t.seq");
+        return $query->result();
+   }
+   
+   function getOrderHistoryList($driverId)
+   {
+       $this->load->database();
+        $query = $this->db->query("select o.order_id, '80' as price, o.remark, o.cust_phone, o.remark, o.order_date, t.name as timeslot, l.name as from_location, l2.name as to_locaiton from `order` o, timeslot t, location l, location l2 where o.timeslot_id=t.timeslot_id and o.to_location_id=l2.location_id and o.from_location_id=l.location_id and o.status = 'Y' and o.driver_id=$driverId order by order_date, t.seq");
         return $query->result();
    }
 

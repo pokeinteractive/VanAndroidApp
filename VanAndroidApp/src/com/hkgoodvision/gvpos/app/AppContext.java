@@ -57,6 +57,7 @@ public class AppContext extends Application {
 	private int loginUid = 0; // 登录用户的id
 
 	private String uuid = null;
+	private String driverId = null;
 	private TextView matchPointTextView = null;
 	private Hashtable<String, Object> memCacheRegion = new Hashtable<String, Object>();
 
@@ -152,6 +153,14 @@ public class AppContext extends Application {
 
 	public void setUuid(String uuid) {
 		this.uuid = uuid;
+	}
+
+	public String getDriverId() {
+		return driverId;
+	}
+
+	public void setDriverId(String driverId) {
+		this.driverId = driverId;
 	}
 
 	/**
@@ -288,53 +297,6 @@ public class AppContext extends Application {
 		return list;
 	}
 
-
-	public MembershipList getMembershipList(String uuid, int pageIndex, boolean isRefresh) throws AppException {
-		MembershipList list = null;
-		String key = "membershiplist_" + uuid + "_" + pageIndex + "_" + PAGE_SIZE;
-		if (isNetworkConnected() && (!isReadDataCache(key) || isRefresh)) {
-			try {
-				list = ApiClient.getMembershipList(this, uuid, pageIndex, PAGE_SIZE);
-				if (list != null && pageIndex == 0) {
-					list.setCacheKey(key);
-					saveObject(list, key);
-				}
-			} catch (AppException e) {
-				list = (MembershipList) readObject(key);
-				if (list == null)
-					throw e;
-			}
-		} else {
-			list = (MembershipList) readObject(key);
-			if (list == null)
-				list = new MembershipList();
-		}
-		return list;
-	}
-	
-	public RewardList getRewardList(int catalog, int pageIndex, boolean isRefresh) throws AppException {
-		RewardList list = null;
-		String key = "rewardlist_" + catalog + "_" + pageIndex + "_" + PAGE_SIZE;
-		if (isNetworkConnected() && (!isReadDataCache(key) || isRefresh)) {
-			try {
-				list = ApiClient.getRewardList(this, catalog, pageIndex, PAGE_SIZE);
-				if (list != null && pageIndex == 0) {
-					list.setCacheKey(key);
-					saveObject(list, key);
-				}
-			} catch (AppException e) {
-				list = (RewardList) readObject(key);
-				if (list == null)
-					throw e;
-			}
-		} else {
-			list = (RewardList) readObject(key);
-			if (list == null)
-				list = new RewardList();
-		}
-		return list;
-	}
-
 	/**
 	 * get Service list
 	 * 
@@ -450,42 +412,7 @@ public class AppContext extends Application {
 				"user.followers", "user.fans", "user.score", "user.isRememberMe");
 	}
 
-	/**
-	 * 保存用户头像
-	 * 
-	 * @param fileName
-	 * @param bitmap
-	 */
-	public void saveUserFace(String fileName, Bitmap bitmap) {
-		try {
-			ImageUtils.saveImage(this, fileName, bitmap);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * 获取用户头像
-	 * 
-	 * @param key
-	 * @return
-	 * @throws AppException
-	 */
-	public Bitmap getUserFace(String key) throws AppException {
-		FileInputStream fis = null;
-		try {
-			fis = openFileInput(key);
-			return BitmapFactory.decodeStream(fis);
-		} catch (Exception e) {
-			throw AppException.run(e);
-		} finally {
-			try {
-				fis.close();
-			} catch (Exception e) {
-			}
-		}
-	}
-
+	
 	/**
 	 * 是否加载显示文章图片
 	 * 

@@ -2,10 +2,14 @@ package com.hkgoodvision.gvpos.activity;
 
 import java.util.UUID;
 
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.Message;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -30,6 +34,8 @@ import com.hkgoodvision.gvpos.common.StringUtils;
 import com.hkgoodvision.gvpos.dao.vo.Result;
 import com.hkgoodvision.gvpos.page.MyFragmentPagerAdapter;
 import com.vanapp.db.KeyPairDB;
+import com.vanapp.service.IAppManager;
+import com.vanapp.service.IMService;
 
 
 public class AndroidViewPagerActivity extends SherlockFragmentActivity {
@@ -38,6 +44,8 @@ public class AndroidViewPagerActivity extends SherlockFragmentActivity {
 	int currentTab = 0;
 	int currentPage = 0;
 	AppContext appContext = null;
+	private IAppManager imService;
+
 	
 	TextView pointTextView = null;
 
@@ -49,6 +57,8 @@ public class AndroidViewPagerActivity extends SherlockFragmentActivity {
 		AppManager.getAppManager().addActivity(this);
 
 		setContentView(R.layout.activity_main);
+		
+		startService(new Intent(AndroidViewPagerActivity.this, IMService.class));
 
 		/** Getting a reference to action bar of this activity */
 		mActionBar = getSupportActionBar();
@@ -156,10 +166,11 @@ public class AndroidViewPagerActivity extends SherlockFragmentActivity {
 		appContext.setMatchPointTextView(pointTextView);
 		
 		Handler handler = this.getLvHandler();
-
+		String driverId = KeyPairDB.getDriverId(this);
+		appContext.setDriverId(driverId);
 		// add keyUUID to context
 		if (uuid != null && !StringUtils.isEmpty(uuid.toString())) {
-			registerUUID(uuid.toString(), handler);
+			//registerUUID(uuid.toString(), handler);
 			appContext.setUuid(uuid.toString());
 			// register to server
 			registerVanDriver(uuid.toString());
@@ -168,6 +179,8 @@ public class AndroidViewPagerActivity extends SherlockFragmentActivity {
 			AppManager.getAppManager().finishAllActivity();
 		}
 
+		
+		
 	}
 
 	@Override
@@ -319,5 +332,31 @@ public class AndroidViewPagerActivity extends SherlockFragmentActivity {
 		}
 
 	}
+
+	
+	private ServiceConnection mConnection = new ServiceConnection() {
+		public void onServiceConnected(ComponentName className, IBinder service) {
+			// This is called when the connection with the service has been
+			// established, giving us the service object we can use to
+			// interact with the service. Because we have bound to a explicit
+			// service that we know is running in our own process, we can
+			// cast its IBinder to a concrete class and directly access it.
+			imService = ((IMService.IMBinder) service).getService();
+
+			if (imService != null && imService.isRunningGPSSender()) {
+				
+			}
+
+		}
+
+		public void onServiceDisconnected(ComponentName className) {
+			// This is called when the connection with the service has been
+			// unexpectedly disconnected -- that is, its process crashed.
+			// Because it is running in our same process, we should never
+			// see this happen.
+			imService = null;
+
+		}
+	};
 
 }

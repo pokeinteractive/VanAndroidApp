@@ -187,21 +187,21 @@ public class CompanyInfoDialog extends SherlockActivity implements OnTouchListen
 		TextView promolb = (TextView) findViewById(R.id.company_info_promo_lb);
 		TextView desclb = (TextView) findViewById(R.id.company_info_desc_lb);
 
-		String photoURL = service.getPhoto();
-		if (photoURL == null || photoURL.endsWith("portrait.gif") || StringUtils.isEmpty(photoURL)) {
-			photo.setImageResource(R.drawable.widget_dface);
-		} else {
-			bmpManager.loadBitmap(URLs.IMAGE_PATH_URL + photoURL, photo);
-		}
-
-		name.setText(service.getServiceName());
-		address.setText(service.getAddress());
-		desc.setText(service.getDescription());
-		promo.setText(service.getPromoDesc());
-		if (!StringUtils.isEmpty(service.getDescription()))
-			desclb.setText("簡介");
-		if (!StringUtils.isEmpty(service.getPromoDesc()))
-			promolb.setText("推廣活動");
+//		String photoURL = service.getPhoto();
+//		if (photoURL == null || photoURL.endsWith("portrait.gif") || StringUtils.isEmpty(photoURL)) {
+//			photo.setImageResource(R.drawable.widget_dface);
+//		} else {
+//			bmpManager.loadBitmap(URLs.IMAGE_PATH_URL + photoURL, photo);
+//		}
+//
+//		name.setText(service.getServiceName());
+//		address.setText(service.getAddress());
+//		desc.setText(service.getDescription());
+//		promo.setText(service.getPromoDesc());
+//		if (!StringUtils.isEmpty(service.getDescription()))
+//			desclb.setText("簡介");
+//		if (!StringUtils.isEmpty(service.getPromoDesc()))
+//			promolb.setText("推廣活動");
 		
 		return;
 	}

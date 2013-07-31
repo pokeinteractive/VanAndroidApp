@@ -1280,7 +1280,7 @@ containing a value of this type.
         public static final int reward_item_point_text=0x7f050077;
         public static final int reward_item_text_section=0x7f050076;
         public static final int reward_listitem_photo=0x7f050075;
-        public static final int reward_point=0x7f05007c;
+        public static final int reward_point=0x7f05007d;
         public static final int rightToLeft=0x7f050014;
         public static final int root=0x7f050066;
         public static final int satellite=0x7f050002;
@@ -1295,6 +1295,7 @@ containing a value of this type.
         public static final int start_scan_button_id=0x7f050051;
         public static final int system_aboutus_id=0x7f05007a;
         public static final int system_account_id=0x7f05007b;
+        public static final int system_cancel_account_id=0x7f05007c;
         public static final int system_layout_id=0x7f050079;
         public static final int system_uuid_text=0x7f050040;
         public static final int tabMode=0x7f050007;

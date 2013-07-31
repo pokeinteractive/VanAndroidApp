@@ -9,8 +9,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.google.android.gcm.GCMRegistrar;
 import com.hkgoodvision.gvpos.activity.R;
 import com.hkgoodvision.gvpos.common.UIHelper;
+import com.vanapp.db.KeyPairDB;
 
 public class SystemFragment extends SherlockFragment {
 
@@ -40,6 +42,8 @@ public class SystemFragment extends SherlockFragment {
 			
 			Button account = (Button) baseGroup.findViewById(R.id.system_account_id);
 			
+			Button cancelAccount = (Button) baseGroup.findViewById(R.id.system_cancel_account_id);
+			
 			aboutus.setOnClickListener(new View.OnClickListener() {
 			    @Override
 			    public void onClick(View v) {
@@ -52,6 +56,16 @@ public class SystemFragment extends SherlockFragment {
 			    @Override
 			    public void onClick(View v) {
 			    	UIHelper.showAccount(v.getContext(), 0);
+			    }
+			});
+			
+			cancelAccount.setOnClickListener(new View.OnClickListener() {
+			    @Override
+			    public void onClick(View v) {
+			    	GCMRegistrar.setRegisteredOnServer(v.getContext(), false);
+					KeyPairDB.setDriverId(null, v.getContext());
+					KeyPairDB.setDriverPhone(null, v.getContext());
+			    	
 			    }
 			});
 

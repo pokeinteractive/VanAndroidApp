@@ -28,7 +28,7 @@ public class AboutUsDialog extends SherlockActivity implements OnTouchListener {
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setHomeButtonEnabled(true);
 
-		getSupportActionBar().setTitle("MatchPoint");
+		getSupportActionBar().setTitle("Call Van App");
 
 		findViewById(R.id.company_info_layout_id);
 		
@@ -38,7 +38,7 @@ public class AboutUsDialog extends SherlockActivity implements OnTouchListener {
         
 
         wv = (WebView) findViewById(R.id.wv);
-        wv.loadUrl("http://matchpoint.poke.com.hk/");
+        wv.loadUrl("http://van.poke.com.hk/aboutus");
 	}
 
 	@Override

@@ -52,7 +52,7 @@ public class ServiceList extends Entity {
 
 	public static ServiceList parse(InputStream inputStream) throws IOException, JSONException {
 		ServiceList serviceList = new ServiceList();
-		Service service = new Service();
+		
 		BufferedReader streamReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
 		StringBuilder responseStrBuilder = new StringBuilder();
 
@@ -63,10 +63,10 @@ public class ServiceList extends Entity {
 		JSONObject jObject = new JSONObject(responseStrBuilder.toString());
 
 		JSONArray jArray = null;
-		if (jObject.isNull("service")) {
+		if (jObject.isNull("order")) {
 			return serviceList;
 		}
-		jArray = jObject.getJSONArray("service");
+		jArray = jObject.getJSONArray("order");
 		
 		
 //		int totalRecord = jObject.getInt("total");
@@ -81,31 +81,24 @@ public class ServiceList extends Entity {
 			if (oneObject == null)
 				continue;
 			
-			// Pulling items from the array
-			String service_id = oneObject.getString("service_id");
-			String service_name = oneObject.getString("service_name");
-			String member_id = oneObject.getString("member_id");
-			String member_name = oneObject.getString("member_name");
-			String point = oneObject.getString("point");
-			String subject_id = oneObject.getString("subject_id");
-			String photo = oneObject.getString("photo");
-			String created = oneObject.getString("created");
-			String commentCount = oneObject.getString("comment");
+			String order_id = oneObject.getString("order_id");
+			String remark = oneObject.getString("remark");
+			String cust_phone = oneObject.getString("cust_phone");
+			String order_date = oneObject.getString("order_date");
+			String timeslot = oneObject.getString("timeslot");
+			String from_location = oneObject.getString("from_location");
+			String to_location = oneObject.getString("to_locaiton");
+			String price = oneObject.getString("price");
 
-			Log.d("ServiceList", service_id + ":" + service_name + ":" + member_name);
-
-			service = new Service();
-
-			service.id = Integer.parseInt(service_id);
-			service.setSubjectId(Integer.parseInt(subject_id));
-			service.setServiceId(Integer.parseInt(service_id));
-			service.setPoint(Integer.parseInt(point));
-			service.setServiceName(service_name);
-			service.setMemberId(Integer.parseInt(member_id));
-			service.setMemberName(member_name);
-			service.setPhoto(photo);
-			service.setCommentCount(Integer.parseInt(commentCount));
-			service.setCreated(created);
+			Service service = new Service();
+			service.setOrderId(order_id);
+			service.setRemark(remark);
+			service.setCustPhone(cust_phone);
+			service.setOrderDate(order_date);
+			service.setTimeslot(timeslot);
+			service.setFromLocation(from_location);
+			service.setToLocation(to_location);
+			service.setPrice(price);
 
 			serviceList.getServiceList().add(service);
 		}
@@ -115,82 +108,4 @@ public class ServiceList extends Entity {
 		return serviceList;
 
 	}
-	//
-	// public static SubjectList parse(InputStream inputStream) throws
-	// IOException, AppException {
-	// SubjectList postlist = new SubjectList();
-	// Post post = null;
-	// // 获得XmlPullParser解析器
-	// XmlPullParser xmlParser = Xml.newPullParser();
-	// try {
-	// xmlParser.setInput(inputStream, UTF8);
-	// // 获得解析到的事件类别，这里有开始文档，结束文档，开始标签，结束标签，文本等等事件。
-	// int evtType = xmlParser.getEventType();
-	// // 一直循环，直到文档结束
-	// while (evtType != XmlPullParser.END_DOCUMENT) {
-	// String tag = xmlParser.getName();
-	// switch (evtType) {
-	// case XmlPullParser.START_TAG:
-	// if (tag.equalsIgnoreCase("postCount")) {
-	// postlist.postCount = StringUtils.toInt(xmlParser.nextText(), 0);
-	// } else if (tag.equalsIgnoreCase("pageSize")) {
-	// postlist.pageSize = StringUtils.toInt(xmlParser.nextText(), 0);
-	// } else if (tag.equalsIgnoreCase(Post.NODE_START)) {
-	// post = new Post();
-	// } else if (post != null) {
-	// if (tag.equalsIgnoreCase(Post.NODE_ID)) {
-	// post.id = StringUtils.toInt(xmlParser.nextText(), 0);
-	// } else if (tag.equalsIgnoreCase(Post.NODE_TITLE)) {
-	// post.setTitle(xmlParser.nextText());
-	// } else if (tag.equalsIgnoreCase(Post.NODE_FACE)) {
-	// post.setFace(xmlParser.nextText());
-	// } else if (tag.equalsIgnoreCase(Post.NODE_AUTHOR)) {
-	// post.setAuthor(xmlParser.nextText());
-	// } else if (tag.equalsIgnoreCase(Post.NODE_AUTHORID)) {
-	// post.setAuthorId(StringUtils.toInt(xmlParser.nextText(), 0));
-	// } else if (tag.equalsIgnoreCase(Post.NODE_ANSWERCOUNT)) {
-	// post.setAnswerCount(StringUtils.toInt(xmlParser.nextText(), 0));
-	// } else if (tag.equalsIgnoreCase(Post.NODE_VIEWCOUNT)) {
-	// post.setViewCount(StringUtils.toInt(xmlParser.nextText(), 0));
-	// } else if (tag.equalsIgnoreCase(Post.NODE_PUBDATE)) {
-	// post.setPubDate(xmlParser.nextText());
-	// }
-	// }
-	// // 通知信息
-	// else if (tag.equalsIgnoreCase("notice")) {
-	// postlist.setNotice(new Notice());
-	// } else if (postlist.getNotice() != null) {
-	// if (tag.equalsIgnoreCase("atmeCount")) {
-	// postlist.getNotice().setAtmeCount(StringUtils.toInt(xmlParser.nextText(),
-	// 0));
-	// } else if (tag.equalsIgnoreCase("msgCount")) {
-	// postlist.getNotice().setMsgCount(StringUtils.toInt(xmlParser.nextText(),
-	// 0));
-	// } else if (tag.equalsIgnoreCase("reviewCount")) {
-	// postlist.getNotice().setReviewCount(StringUtils.toInt(xmlParser.nextText(),
-	// 0));
-	// } else if (tag.equalsIgnoreCase("newFansCount")) {
-	// postlist.getNotice().setNewFansCount(StringUtils.toInt(xmlParser.nextText(),
-	// 0));
-	// }
-	// }
-	// break;
-	// case XmlPullParser.END_TAG:
-	// // 如果遇到标签结束，则把对象添加进集合中
-	// if (tag.equalsIgnoreCase("post") && post != null) {
-	// postlist.getPostlist().add(post);
-	// post = null;
-	// }
-	// break;
-	// }
-	// // 如果xml没有结束，则导航到下一个节点
-	// evtType = xmlParser.next();
-	// }
-	// } catch (XmlPullParserException e) {
-	// throw AppException.xml(e);
-	// } finally {
-	// inputStream.close();
-	// }
-	// return postlist;
-	// }
 }

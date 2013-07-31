@@ -58,7 +58,8 @@ public class IMService extends Service implements IAppManager {
 
 	private final IBinder mBinder = new IMBinder();
 
-	private String driverPhone;
+	private String driverId;
+	
 
 	// timer to take the updated data from server
 	private Timer timer;
@@ -81,11 +82,11 @@ public class IMService extends Service implements IAppManager {
 		// Timer is used to take the friendList info every UPDATE_TIME_PERIOD;
 		timer = new Timer();
 
-		// // send GPS to Server
-		// driverPhone = KeyPairDB.getDriverPhone(this);
-		// if (driverPhone != null && !"".equals(driverPhone)) {
-		// sendGPSLocaiton(driverPhone);
-		// }
+		// send GPS to Server
+		driverId = KeyPairDB.getDriverId(this);
+		if (driverId != null && !"".equals(driverId)) {
+			sendGPSLocaiton(driverId);
+		}
 
 	}
 
@@ -106,11 +107,11 @@ public class IMService extends Service implements IAppManager {
 		return isRunGPSSender;
 	}
 
-	public void sendGPSLocaiton(String driverPhoneIn) {
+	public void sendGPSLocaiton(String driverId) {
 		Log.i("sendGPSLocaiton is being start", "...");
 
-		driverPhone = driverPhoneIn;
-
+		this.driverId=driverId;
+		
 		isRunGPSSender = true;
 
 		addLocationListener();
@@ -200,7 +201,7 @@ public class IMService extends Service implements IAppManager {
 			// latitude = location.getLatitude();
 			// longitude = location.getLongitude();
 			if (loc != null) {
-				String params = "action=loc&id=" + URLEncoder.encode(driverPhone) + "&lat="
+				String params = "action=loc&id=" + URLEncoder.encode(driverId) + "&lat="
 						+ URLEncoder.encode("" + loc.getLatitude()) + "&long="
 						+ URLEncoder.encode("" + loc.getLongitude());
 

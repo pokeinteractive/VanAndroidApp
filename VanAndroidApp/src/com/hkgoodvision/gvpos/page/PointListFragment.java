@@ -32,10 +32,19 @@ import com.hkgoodvision.gvpos.widget.PullToRefreshListView;
 
 public class PointListFragment extends SherlockFragment {
 
-	int CATALOG_ID = 5;
+	int CATALOG_ID = 1; // 1:current order, 2:order History
+	
 	double lat = 15;
 	double log = 22;
 	
+	public int getCATALOG_ID() {
+		return CATALOG_ID;
+	}
+
+	public void setCATALOG_ID(int cATALOG_ID) {
+		CATALOG_ID = cATALOG_ID;
+	}
+
 	ViewGroup currentViewGroup = null;
 	protected AppContext appContext;
 	private View lvNews_footer;
@@ -132,7 +141,7 @@ public class PointListFragment extends SherlockFragment {
 				// show popup the reward detail and shop detail
 				Service service = serviceListData.get(position-1); // due to header is the 1st
 				if (service != null) {
-					UIHelper.showCompanyInfo(view.getContext(), service.getServiceId());
+					//UIHelper.showCompanyInfo(view.getContext(), service.getOrderId());
 				}
 				
 			}

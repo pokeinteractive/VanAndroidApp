@@ -43,6 +43,13 @@
         <activity
             android:name="com.hkgoodvision.gvpos.ui.RewardApplySuccessDialog"
             android:theme="@style/Theme.Sherlock" />
+        <activity
+            android:name="com.hkgoodvision.gvpos.activity.RegisterActivity"
+            android:theme="@style/Theme.Sherlock" />
+        <activity
+            android:name="com.hkgoodvision.gvpos.activity.MainActivity"
+            android:theme="@style/Theme.Sherlock" />
+        
 
         <uses-library android:name="com.google.android.maps" />
         <!-- AIzaSyCfnp0iaG-5nahmPx6TxnkVPK9Ku_7t8mE ; AIzaSyATjChXDOgr9DcBtOCK5gJdxejHnkmVZds // release -->

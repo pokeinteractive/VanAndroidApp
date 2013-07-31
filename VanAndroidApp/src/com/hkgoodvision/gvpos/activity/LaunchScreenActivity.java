@@ -1,6 +1,8 @@
 package com.hkgoodvision.gvpos.activity;
 
 
+import com.vanapp.db.KeyPairDB;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -36,9 +38,18 @@ public class LaunchScreenActivity extends Activity {
                 finish();
                  
                 if (!mIsBackButtonPressed) {
-                    // start the home screen if the back button wasn't pressed already 
-                    Intent intent = new Intent(LaunchScreenActivity.this, AndroidViewPagerActivity.class);
-                    LaunchScreenActivity.this.startActivity(intent);
+                	// check if the phone is register before
+                	if (checkIsRegister()) {
+	                	// start the home screen if the back button wasn't pressed already 
+	                    Intent intent = new Intent(LaunchScreenActivity.this, AndroidViewPagerActivity.class);
+	                    LaunchScreenActivity.this.startActivity(intent);
+                	} else {
+                		// show the Register screen
+                		
+	                    Intent intent = new Intent(LaunchScreenActivity.this, RegisterActivity.class);
+	                    LaunchScreenActivity.this.startActivity(intent);
+                	}
+                	
                }
                  
             }
@@ -54,5 +65,13 @@ public class LaunchScreenActivity extends Activity {
         mIsBackButtonPressed = true;
         super.onBackPressed();
  
+    }
+    
+    private boolean checkIsRegister() {
+    	String driverId = KeyPairDB.getDriverId(this);
+    	if (driverId != null) {
+    		return true;
+    	}
+    	return false;
     }
 }

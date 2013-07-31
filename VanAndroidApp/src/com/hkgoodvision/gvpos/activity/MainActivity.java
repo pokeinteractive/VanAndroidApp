@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.google.android.gcm.GCMRegistrar;
 import com.hkgoodvision.gvpos.activity.R;
 import com.vanapp.bean.ClientOrder;
+import com.vanapp.constant.URLConstant;
 import com.vanapp.db.KeyPairDB;
 import com.vanapp.parser.OrderMessageParser;
 import com.vanapp.service.IAppManager;
@@ -151,7 +152,9 @@ public class MainActivity extends Activity {
 						ServerUtilities.register(context, name, phone, regIdGCM);
 
 						// enquiry for driver_id by phone number
-
+		                String driverId = ServerUtilities.sendHttpRequest(URLConstant.URL_GET_DRIVER_ID_BY_PHONE + params, "");
+		                KeyPairDB.setDriverId(driverId, context);
+		                
 						KeyPairDB.setDriverPhone(phone, context);
 
 						return null;
@@ -160,6 +163,9 @@ public class MainActivity extends Activity {
 					@Override
 					protected void onPostExecute(Void result) {
 						mRegisterTask = null;
+						Intent intent = new Intent(context, AndroidViewPagerActivity.class);
+						context.startActivity(intent);
+	                    
 					}
 
 				};

@@ -39,7 +39,7 @@ public class KeyPairDB {
 	public static String getDriverPhone(Context ctx) {
 		// Restore preferences
 		SharedPreferences settings = ctx.getSharedPreferences(PREFS_NAME, 0);
-		String phone = settings.getString("driver_phone", "");
+		String phone = settings.getString("driver_phone", null);
 		return phone;
 	}
 
@@ -50,6 +50,25 @@ public class KeyPairDB {
 		SharedPreferences settings = ctx.getSharedPreferences(PREFS_NAME, 0);
 		SharedPreferences.Editor editor = settings.edit();
 		editor.putString("driver_phone", phone);
+
+		// Commit the edits!
+		editor.commit();
+	}
+	
+	public static String getDriverId(Context ctx) {
+		// Restore preferences
+		SharedPreferences settings = ctx.getSharedPreferences(PREFS_NAME, 0);
+		String phone = settings.getString("driver_id", null);
+		return phone;
+	}
+
+	public static void setDriverId(String phone, Context ctx) {
+
+		// We need an Editor object to make preference changes.
+		// All objects are from android.context.Context
+		SharedPreferences settings = ctx.getSharedPreferences(PREFS_NAME, 0);
+		SharedPreferences.Editor editor = settings.edit();
+		editor.putString("driver_id", phone);
 
 		// Commit the edits!
 		editor.commit();

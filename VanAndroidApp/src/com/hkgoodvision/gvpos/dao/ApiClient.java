@@ -528,11 +528,14 @@ public class ApiClient {
 	
 	public static ServiceList getServiceList(AppContext appContext, final int catalog, final double lat, final double log, final int pageIndex, final int pageSize) throws AppException {
 		int page = pageIndex + 1;
-		String newUrl = _MakeURL(URLs.SERVICE_LIST+ "/" + catalog + "/" + (page), new HashMap<String, Object>(){{
-			put("catalog", catalog);
-			put("pageIndex", pageIndex);
-			put("pageSize", pageSize);
-		}});
+		String newUrl = null;
+		if (catalog == 1) {
+			String driverId = appContext.getDriverId();
+			newUrl = _MakeURL(URLs.SERVICE_LIST+ "/" + driverId + "/" + (page), new HashMap<String, Object>());
+		} else {
+			String driverId = appContext.getDriverId();
+			newUrl = _MakeURL(URLs.ORDERHISTRY_LIST+ "/" + driverId + "/" + (page), new HashMap<String, Object>());			
+		}
 		
 		Map<String,Object> params = new HashMap<String,Object>();
 		params.put("lat", lat);
@@ -549,45 +552,27 @@ public class ApiClient {
 		}
 	}
 	
+//	
+//	public static MembershipList getMembershipList(AppContext appContext, String uuid, final int pageIndex, final int pageSize) throws AppException {
+//		int page = pageIndex + 1;
+//		String newUrl = _MakeURL(URLs.MEMBERSHIP_LIST+ "/1/" + (page), new HashMap<String, Object>(){{
+//			put("pageIndex", pageIndex);
+//			put("pageSize", pageSize);
+//		}});
+//		
+//		Map<String,Object> params = new HashMap<String,Object>();
+//		params.put("uuid", uuid);
+//		
+//		try{
+//			return MembershipList.parse(http_post_query(appContext, newUrl, params));		
+//		}catch(Exception e){
+//			if(e instanceof AppException)
+//				throw (AppException)e;
+//			throw AppException.network(e);
+//		}
+//	}
+//	
 	
-	public static MembershipList getMembershipList(AppContext appContext, String uuid, final int pageIndex, final int pageSize) throws AppException {
-		int page = pageIndex + 1;
-		String newUrl = _MakeURL(URLs.MEMBERSHIP_LIST+ "/" + (page), new HashMap<String, Object>(){{
-			put("pageIndex", pageIndex);
-			put("pageSize", pageSize);
-		}});
-		
-		Map<String,Object> params = new HashMap<String,Object>();
-		params.put("uuid", uuid);
-		
-		try{
-			return MembershipList.parse(http_post_query(appContext, newUrl, params));		
-		}catch(Exception e){
-			if(e instanceof AppException)
-				throw (AppException)e;
-			throw AppException.network(e);
-		}
-	}
-	
-	
-	public static RewardList getRewardList(AppContext appContext, int catalog, final int pageIndex, final int pageSize) throws AppException {
-		int page = pageIndex + 1;
-		String newUrl = _MakeURL(URLs.REWARD_LIST+ "/" + (page), new HashMap<String, Object>(){{
-			put("pageIndex", pageIndex);
-			put("pageSize", pageSize);
-		}});
-		
-		Map<String,Object> params = new HashMap<String,Object>();
-		params.put("reward_cat_id", catalog);
-		
-		try{
-			return RewardList.parse(http_post_query(appContext, newUrl, params));		
-		}catch(Exception e){
-			if(e instanceof AppException)
-				throw (AppException)e;
-			throw AppException.network(e);
-		}
-	}
 		
 	/**
 	 * Get service Detail

@@ -60,14 +60,17 @@ public class DetectPointFragment extends SherlockFragment {
 	
 
 		startStopAudioButton.setChecked(true);
-		scanPointTextView.setText("正在找尋MatchPoint中......");
+		scanPointTextView.setText("接收柯打中......");
+		appContext = (AppContext) this.getActivity().getApplicationContext();
+		imService.sendGPSLocaiton(appContext.getUuid());
 	}
 	
 	void stopGPS() {
 	
 
 		startStopAudioButton.setChecked(false);
-		scanPointTextView.setText("按下開關找尋 MatchPoint");
+		scanPointTextView.setText("按下開關接收柯打");
+		imService.stopGPSLocation();
 	}
 
 	@Override

@@ -23,6 +23,8 @@ import android.util.Log;
 
 import com.google.android.gcm.GCMRegistrar;
 import com.hkgoodvision.gvpos.activity.R;
+import com.vanapp.constant.URLConstant;
+import com.vanapp.db.KeyPairDB;
 
 
 public final class ServerUtilities {
@@ -57,6 +59,7 @@ public final class ServerUtilities {
                 GCMRegistrar.setRegisteredOnServer(context, true);
                 String message = context.getString(R.string.server_registered);
                 CommonUtilities.displayMessage(context, message);
+
                 return;
             } catch (IOException e) {
                 // Here we are simplifying and retrying on any error; in a real

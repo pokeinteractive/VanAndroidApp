@@ -21,6 +21,14 @@
         android:layout_marginTop="20dip"
         android:text="你的帳戶" />
 
+    <Button
+        android:id="@+id/system_cancel_account_id"
+        style="@style/system_button"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dip"
+        android:text="取消帳戶" />
+
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

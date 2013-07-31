@@ -3,6 +3,7 @@ package com.hkgoodvision.gvpos.dao.vo;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.sql.Timestamp;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -16,246 +17,15 @@ import org.json.JSONObject;
  */
 public class Service extends Entity {
 
-
-
-	private int subjectId;
-	private int serviceId;
-	private int point;
-	private int memberId;
-	private String serviceName;
-	private String memberName;
-	private String photo;
-	private String created;
-	private int commentCount;
-
-	// detail field
-	private String subject;
-	private String website;
-	private String phone;
-	private String address;
-	private int favorite;
-	private String description;
-	private String priceDesc;
-	private String promoDesc;
-	private int good;
-	private int fair;
-	private int bad;
-	private String contactPerson;
-	private String mainPoint;
-	private String locationId;
-	private double mapLat;
-	private double mapLong;
-
-	private String companyEng;
-	private String companyChi;
-
-	public String getCompanyEng() {
-		return companyEng;
-	}
-
-	public void setCompanyEng(String companyEng) {
-		this.companyEng = companyEng;
-	}
-
-	public String getCompanyChi() {
-		return companyChi;
-	}
-
-	public void setCompanyChi(String companyChi) {
-		this.companyChi = companyChi;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public String getPriceDesc() {
-		return priceDesc;
-	}
-
-	public void setPriceDesc(String priceDesc) {
-		this.priceDesc = priceDesc;
-	}
-
-	public String getPromoDesc() {
-		return promoDesc;
-	}
-
-	public void setPromoDesc(String promoDesc) {
-		this.promoDesc = promoDesc;
-	}
-
-	public int getGood() {
-		return good;
-	}
-
-	public void setGood(int good) {
-		this.good = good;
-	}
-
-	public int getFair() {
-		return fair;
-	}
-
-	public void setFair(int fair) {
-		this.fair = fair;
-	}
-
-	public int getBad() {
-		return bad;
-	}
-
-	public void setBad(int bad) {
-		this.bad = bad;
-	}
-
-	public String getContactPerson() {
-		return contactPerson;
-	}
-
-	public void setContactPerson(String contactPerson) {
-		this.contactPerson = contactPerson;
-	}
-
-	public String getMainPoint() {
-		return mainPoint;
-	}
-
-	public void setMainPoint(String mainPoint) {
-		this.mainPoint = mainPoint;
-	}
-
-	public String getLocationId() {
-		return locationId;
-	}
-
-	public void setLocationId(String locationId) {
-		this.locationId = locationId;
-	}
-
-	public double getMapLat() {
-		return mapLat;
-	}
-
-	public void setMapLat(double mapLat) {
-		this.mapLat = mapLat;
-	}
-
-	public double getMapLong() {
-		return mapLong;
-	}
-
-	public void setMapLong(double mapLong) {
-		this.mapLong = mapLong;
-	}
-
-	public int getCommentCount() {
-		return commentCount;
-	}
-
-	public void setCommentCount(int commentCount) {
-		this.commentCount = commentCount;
-	}
-
-	public int getFavorite() {
-		return favorite;
-	}
-
-	public void setFavorite(int favorite) {
-		this.favorite = favorite;
-	}
-
-	public String getSubject() {
-		return subject;
-	}
-
-	public void setSubject(String subject) {
-		this.subject = subject;
-	}
-
-	public String getWebsite() {
-		return website;
-	}
-
-	public void setWebsite(String website) {
-		this.website = website;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public int getSubjectId() {
-		return subjectId;
-	}
-
-	public void setSubjectId(int subjectId) {
-		this.subjectId = subjectId;
-	}
-
-	public int getServiceId() {
-		return serviceId;
-	}
-
-	public void setServiceId(int serviceId) {
-		this.serviceId = serviceId;
-	}
-
-	public int getMemberId() {
-		return memberId;
-	}
-
-	public void setMemberId(int memberId) {
-		this.memberId = memberId;
-	}
-
-	public String getServiceName() {
-		return serviceName;
-	}
-
-	public void setServiceName(String serviceName) {
-		this.serviceName = serviceName;
-	}
-
-	public String getMemberName() {
-		return memberName;
-	}
-
-	public void setMemberName(String memberName) {
-		this.memberName = memberName;
-	}
-
-	public String getPhoto() {
-		return photo;
-	}
-
-	public void setPhoto(String photo) {
-		this.photo = photo;
-	}
-
-	public String getCreated() {
-		return created;
-	}
-
-	public void setCreated(String created) {
-		this.created = created;
-	}
+	String orderId;
+	String remark;
+	String custPhone;
+	String orderDate;
+	String timeslot;
+	String fromLocation;
+	String toLocation;
+	String price;
+		
 
 	public static Service parse(InputStream inputStream) throws Exception {
 		Service service = new Service();
@@ -269,75 +39,135 @@ public class Service extends Entity {
 
 		JSONObject jObject = new JSONObject(responseStrBuilder.toString());
 
-		JSONArray jArray = jObject.getJSONArray("service");
+		JSONArray jArray = jObject.getJSONArray("order");
 
 		// get the List Array
 		int i = 0;
 
 		JSONObject oneObject = jArray.getJSONObject(0);
 		// Pulling items from the array
-		String service_id = oneObject.getString("service_id");
-		String service_name = oneObject.getString("service_name");
-		String member_id = oneObject.getString("member_id");
-		String member_name = oneObject.getString("member_name");
-		String subject_id = oneObject.getString("subject_id");
-		String created = oneObject.getString("created");
-		String website = oneObject.getString("website");
-		String address = oneObject.getString("address");
-		String phone = oneObject.getString("phone");
-		String subject = oneObject.getString("subject");
+		String order_id = oneObject.getString("order_id");
+		String remark = oneObject.getString("remark");
+		String cust_phone = oneObject.getString("cust_phone");
+		String order_date = oneObject.getString("order_date");
+		String timeslot = oneObject.getString("timeslot");
+		String from_location = oneObject.getString("from_location");
+		String to_location = oneObject.getString("to_locaiton");
+		String price = oneObject.getString("price");
 
-		service.id = Integer.parseInt(service_id);
-		service.setSubjectId(Integer.parseInt(subject_id));
-		service.setServiceId(Integer.parseInt(service_id));
-		service.setServiceName(service_name);
-		service.setMemberId(Integer.parseInt(member_id));
-		service.setMemberName(member_name);
-
-		service.setCreated(created);
-		service.setWebsite(website);
-		service.setPhone(phone);
-		service.setAddress(address);
-		service.setSubject(subject);
-
-		service.setContactPerson(oneObject.getString("contact_person"));
-		service.setDescription(oneObject.getString("description"));
-		service.setPriceDesc(oneObject.getString("price_desc"));
-		service.setPromoDesc(oneObject.getString("promo_desc"));
-		service.setGood(Integer.parseInt(oneObject.getString("good")));
-		service.setFair(Integer.parseInt(oneObject.getString("fair")));
-		service.setBad(Integer.parseInt(oneObject.getString("bad")));
-		service.setMainPoint(oneObject.getString("main_point"));
-		service.setLocationId(oneObject.getString("location_id"));
-		if (!oneObject.isNull("map_lat")) {
-			service.setMapLat(Double.parseDouble(oneObject.getString("map_lat")));
-		}
-		if (!oneObject.isNull("map_long")) {
-			service.setMapLong(Double.parseDouble(oneObject.getString("map_long")));
-		}
-		System.out.println(service_id + ":" + service_name + ":" + member_name);
+		service.setOrderId(order_id);
+		service.setRemark(remark);
+		service.setCustPhone(cust_phone);
+		service.setOrderDate(order_date);
+		service.setTimeslot(timeslot);
+		service.setFromLocation(from_location);
+		service.setToLocation(to_location);
+		service.setPrice(price);
+		
+		System.out.println(order_id + ":" + cust_phone + ":" + timeslot);
 
 		oneObject = jArray.getJSONObject(1);
-		String photo = "";
-		try {
-			photo = oneObject.getString("photo");
-			service.setCompanyEng(oneObject.getString("company_name_eng"));
-			service.setCompanyChi(oneObject.getString("company_name_chi"));
-		} catch (Exception e) {
-
-		}
-		service.setPhoto(photo);
-
+	
 		return service;
 
 	}
 
-	public int getPoint() {
-		return point;
+
+
+	public String getOrderId() {
+		return orderId;
 	}
 
-	public void setPoint(int point) {
-		this.point = point;
+
+
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
 	}
+
+
+
+	public String getRemark() {
+		return remark;
+	}
+
+
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
+
+
+	public String getCustPhone() {
+		return custPhone;
+	}
+
+
+
+	public void setCustPhone(String custPhone) {
+		this.custPhone = custPhone;
+	}
+
+
+
+	public String getOrderDate() {
+		return orderDate;
+	}
+
+
+
+	public void setOrderDate(String orderDate) {
+		this.orderDate = orderDate;
+	}
+
+
+
+	public String getTimeslot() {
+		return timeslot;
+	}
+
+
+
+	public void setTimeslot(String timeslot) {
+		this.timeslot = timeslot;
+	}
+
+
+
+	public String getFromLocation() {
+		return fromLocation;
+	}
+
+
+
+	public void setFromLocation(String fromLocation) {
+		this.fromLocation = fromLocation;
+	}
+
+
+
+	public String getToLocation() {
+		return toLocation;
+	}
+
+
+
+	public void setToLocation(String toLocation) {
+		this.toLocation = toLocation;
+	}
+
+
+
+	public String getPrice() {
+		return price;
+	}
+
+
+
+	public void setPrice(String price) {
+		this.price = price;
+	}
+
+	
 
 }

@@ -33,7 +33,7 @@ public class ListViewServiceAdapter extends BaseAdapter {
 	        public TextView title;  
 		    public TextView address;
 		    public TextView pointearn;
-		    public ImageView photo;
+		    
 	 }  
 
 	/**
@@ -77,7 +77,6 @@ public class ListViewServiceAdapter extends BaseAdapter {
 			
 			listItemView = new ListItemView();
 			//获取控件对象
-			listItemView.photo = (ImageView)convertView.findViewById(R.id.servicelist_listitem_photo);
 			listItemView.title = (TextView)convertView.findViewById(R.id.servicelist_listitem_title);
 			listItemView.address = (TextView)convertView.findViewById(R.id.servicelist_listitem_address);
 			listItemView.pointearn = (TextView)convertView.findViewById(R.id.servicelist_listitem_point);
@@ -92,17 +91,17 @@ public class ListViewServiceAdapter extends BaseAdapter {
 		//设置文字和图片
 		Service service = listItems.get(position);
 		
-		String photoURL = service.getPhoto();
-		if(photoURL == null || photoURL.endsWith("portrait.gif") || StringUtils.isEmpty(photoURL)){
-			listItemView.photo.setImageResource(R.drawable.widget_dface);
-		}else{
-			bmpManager.loadBitmap(URLs.IMAGE_PATH_URL+photoURL, listItemView.photo);
-		}
+//		String photoURL = service.getPhoto();
+//		if(photoURL == null || photoURL.endsWith("portrait.gif") || StringUtils.isEmpty(photoURL)){
+//			listItemView.photo.setImageResource(R.drawable.widget_dface);
+//		}else{
+//			bmpManager.loadBitmap(URLs.IMAGE_PATH_URL+photoURL, listItemView.photo);
+//		}
 
 		listItemView.title.setTag(service);//设置隐藏参数(实体类)
-		listItemView.title.setText(service.getMemberName());
-		listItemView.address.setText(service.getServiceName());
-		listItemView.pointearn.setText(""+service.getPoint());
+		listItemView.title.setText(service.getOrderDate() + " " + service.getTimeslot());
+		listItemView.address.setText(service.getFromLocation() + "-> " +service.getToLocation());
+		listItemView.pointearn.setText(""+service.getPrice());
 		
 		return convertView;
 	}
