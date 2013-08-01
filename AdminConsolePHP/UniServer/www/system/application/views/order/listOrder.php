@@ -8,7 +8,7 @@ if (isset ($orderList))
 ?>  
      <tr><td><?=$row->order_id?></td><td><?=$row->cust_phone?></td>
        <td><?=$row->order_date?></td><td><?=$row->timeslot?></td><td><?=$row->from_location?></td>
-     <td><?=$row->to_locaiton?></td><td><?=$row->driver?></td><td><?=nl2br($row->remark)?></td><td><?=$row->status?></td>
+     <td><?=$row->to_locaiton?></td><td><?=$row->name?>(<?=$row->phone?>)</td><td><?=nl2br($row->remark)?></td><td><?=$row->status?></td>
      <td><a href="/order/matchDriver/<?=$row->order_id?>">Match Driver</a></td>
      <td><a href="/order/editOrder/<?=$row->order_id?>">Edit Order</a></td></tr>
 <? } ?> 

@@ -136,16 +136,16 @@ public class PointListFragment extends SherlockFragment {
 		
 		serviceListView.setAdapter(listViewServiceAdapter);
 		
-		serviceListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				// show popup the reward detail and shop detail
-				Service service = serviceListData.get(position-1); // due to header is the 1st
-				if (service != null) {
-					//UIHelper.showCompanyInfo(view.getContext(), service.getOrderId());
-				}
-				
-			}
-		});
+//		serviceListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//				// show popup the reward detail and shop detail
+//				Service service = serviceListData.get(position-1); // due to header is the 1st
+//				if (service != null) {
+//					//UIHelper.showCompanyInfo(view.getContext(), service.getOrderId());
+//				}
+//				
+//			}
+//		});
 		serviceListView.setOnScrollListener(new AbsListView.OnScrollListener() {
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
 				serviceListView.onScrollStateChanged(view, scrollState);

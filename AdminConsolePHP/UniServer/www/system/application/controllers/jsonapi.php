@@ -3,10 +3,15 @@
 class Jsonapi extends Base_Controller {
 
   function getDriverIdByPhone($driverPhone) {
-  	$result->data = "1";
-		$this->load->view('xml/json', $result);
+    $this->load->model('Driverdb');
+    $result->data = $this->Driverdb->getDriverIdByPhone($driverPhone);
+    
+    
+      
+    //  $result->data = "1";
+    $this->load->view('xml/json', $result);
   }
-	
+  
   //=============================
 
   function getOrderList($driverId, $page=1) {

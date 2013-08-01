@@ -39,20 +39,36 @@ class Order extends Base_Controller {
     
        $this->listOrder();
     }
-    
-   function toEditTimeslot() {
+
+   function matchDriver($orderId) {
 
       
       // get catalog and subject list
+      $this->load->model('Orderdb'); 
+      $this->load->model('Driverdb');      
+      $data['order'] = $this->Orderdb->getOrder($orderId);
+      $data['driverList'] = $this->Driverdb->getDriverList();     
+     
+      
+      $this->load->view("header", $this->headerTitle);
+      $this->load->view('order/matchDriver', $data);
+      $this->load->view("footer");
+      
+    }    
+
+  
+   function toMatchDriver() {
+
+ 
       $this->load->model('Orderdb');    
 
       $obj = $this->_convertToAdd($_POST);
-      
-    if ($obj->driver_id) {
-      $this->Driverdb->updateTimeslot($obj);
-    } 
+
+      if ($obj->driver_id) {
+        $this->Orderdb->updateDriverInOrder($obj);
+      } 
     
-       $this->listDriver();
+       $this->listOrder();
     }    
     
     function listOrder() {
@@ -60,9 +76,9 @@ class Order extends Base_Controller {
     
       $data['orderList'] = $this->Orderdb->getOrderList();
 
-    $this->load->view("header", $this->headerTitle);
-    $this->load->view('order/listOrder', $data);
-    $this->load->view("footer");
+      $this->load->view("header", $this->headerTitle);
+      $this->load->view('order/listOrder', $data);
+      $this->load->view("footer");
     }
 
     function _convertToAdd($post) {

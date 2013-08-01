@@ -11,6 +11,7 @@ if (isset ($driverList))
      <tr><td><?=$row->driver_id?></td><td><?=$row->name?></td><td><?=$row->phone?></td><td><?=$row->wechat?></td>
      <td><?=$row->line?></td><td><?=$row->car_plate?></td><td><?=nl2br($row->remark)?></td><td><?=$row->status?></td>
      <td><a href="/driver/editDriver/<?=$row->driver_id?>">Edit</a></td>
-     <td><a href="/driver/editTimeslot/<?=$row->driver_id?>">TimeSlot</a></td></tr>
+     <td><a href="/driver/editTimeslot/<?=$row->driver_id?>">Regular Weekly TimeSlot</a></td>
+     <td><a href="/driver/editAdhocTimeslot/<?=$row->driver_id?>">Adhoc TimeSlot</a></td></tr>
 <? } ?> 
 </table>

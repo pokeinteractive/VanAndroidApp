@@ -1,4 +1,4 @@
-<form action="/driver/toEditTimeslot" method="post">
+<form action="/driver/toEditAdhocTimeslot" method="post">
 <input type="hidden" name="driver_id" value="<?=$driver->driver_id?>"/>
 
 Name: <?=$driver->name?><BR>
@@ -6,11 +6,20 @@ Phone: <?=$driver->phone?><BR>
 Car Plate: <?=$driver->car_plate?><BR>
 Remark:<?=$driver->remark?><BR>
 
-<?  $weekday=1;
-  while( $weekday < 8 ) { ?>
+<? 
+  
+  $today=date('Y-m-d');
+  $i = 0;
+  while( $i < 7 ) {
+    
+   $sdate = strtotime("+$i day",  strtotime ( $today )); 
+    
+   $weekday= date('N', $sdate);  
+   $inputdate = date('Y-m-d',$sdate);
+?>
 <BR>
 <BR>
-<B>WEEKDAY <?=$weekday?> (1=Monday, 2=Tue, ... 7=Sunday)</B>  
+<B><?=$inputdate ?> WEEKDAY <?=$weekday?> (1=Monday, 2=Tue, ... 7=Sunday)</B>  
 <table>
 <tr>
 <td>Timeslot\Location</td>
@@ -28,11 +37,11 @@ Remark:<?=$driver->remark?><BR>
        $checkedbox = "";
        foreach ($driverTimeSlotList as $driverRegularTimeSlot) {
        
-         if ($loc->location_id == $driverRegularTimeSlot->location_id && $row->timeslot_id == $driverRegularTimeSlot->timeslot_id && $weekday == $driverRegularTimeSlot->weekday) {
+         if ($loc->location_id == $driverRegularTimeSlot->location_id && $row->timeslot_id == $driverRegularTimeSlot->timeslot_id && $inputdate == $driverRegularTimeSlot->timeslot_date) {
             $checkedbox="checked";
          }
        }
-       ?><td><input <?=$checkedbox?> type="checkbox" name="time_<?=$row->timeslot_id?>_<?=$loc->location_id?>_<?=$weekday?>" value="Y" /></td><?
+       ?><td><input <?=$checkedbox?> type="checkbox" name="time_<?=$row->timeslot_id?>_<?=$loc->location_id?>_<?=$inputdate?>" value="Y" /></td><?
        
     }
     
@@ -43,7 +52,7 @@ Remark:<?=$driver->remark?><BR>
 </table>
 
 <? 
-  $weekday = $weekday+1;
+  $i= $i+1;
   } 
     
 ?>

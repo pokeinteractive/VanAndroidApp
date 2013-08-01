@@ -92,7 +92,8 @@ switch($action)
   case "loc":
     
      
-       $sql = "update driver_gps set gps_lat= ".$_REQUEST['lat']." , gps_long= ".$_REQUEST['long']. " where driver_id = (select driver_id from driver where phone = '".$_REQUEST['id'] ."' )" ;
+    //       $sql = "update driver_gps set gps_lat= ".$_REQUEST['lat']." , gps_long= ".$_REQUEST['long']. " where driver_id = (select driver_id from driver where phone = '".$_REQUEST['id'] ."' )" ;
+    $sql = "update driver_gps set gps_lat= ".$_REQUEST['lat']." , gps_long= ".$_REQUEST['long']. " where driver_id = '".$_REQUEST['id'] ."' " ;
     // echo $sql;
        $db->query($sql); 
     

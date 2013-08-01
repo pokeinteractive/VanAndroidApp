@@ -7,9 +7,9 @@ $json = array();
  * Registering a user device
  * Store reg id in users table
  */
-if (isset($_POST["name"]) && isset($_POST["phoneUUID"]) && isset($_POST["regId"])) {
+if (isset($_POST["name"]) && isset($_POST["phone"]) && isset($_POST["regId"])) {
     $name = $_POST["name"];
-    $phone = $_POST["phoneUUID"];
+    $phone = $_POST["phone"];
     $gcm_regid = $_POST["regId"]; // GCM Registration ID
     // Store user details in db
     include_once './db_functions.php';

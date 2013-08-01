@@ -17,7 +17,7 @@
      <!--outer div-->
   
 
-  <span><a href="/mainact/main">Main</a></span>&nbsp;&nbsp;&nbsp;
+  <span><a href="/driver/showFreeTimeSlot/1">Free Timeslot</a></span>&nbsp;&nbsp;&nbsp;
   <span><a href="/order/addOrder">Add Customer Order</a></span>&nbsp;&nbsp;&nbsp;
   <span><a href="/order/listOrder">List Order</a></span>&nbsp;&nbsp;&nbsp;  
   <span><a href="/driver/listDriver">Manage Driver</a></span>&nbsp;&nbsp;&nbsp;

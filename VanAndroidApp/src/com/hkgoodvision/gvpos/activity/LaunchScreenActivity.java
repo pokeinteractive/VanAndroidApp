@@ -43,11 +43,13 @@ public class LaunchScreenActivity extends Activity {
 	                	// start the home screen if the back button wasn't pressed already 
 	                    Intent intent = new Intent(LaunchScreenActivity.this, AndroidViewPagerActivity.class);
 	                    LaunchScreenActivity.this.startActivity(intent);
+	                    finish();
                 	} else {
                 		// show the Register screen
                 		
 	                    Intent intent = new Intent(LaunchScreenActivity.this, RegisterActivity.class);
 	                    LaunchScreenActivity.this.startActivity(intent);
+	                    finish();
                 	}
                 	
                }

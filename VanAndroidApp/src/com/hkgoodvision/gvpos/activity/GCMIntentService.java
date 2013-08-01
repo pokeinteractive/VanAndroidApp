@@ -34,7 +34,7 @@ public class GCMIntentService extends GCMBaseIntentService {
         //Log.d("NAME", MainActivity.name);
         AppContext appContext = (AppContext) getApplication();
         
-        ServerUtilities.register(context, "NewComer", appContext.getUuid(), registrationId);
+        ServerUtilities.register(context, RegisterActivity.name, RegisterActivity.phone, registrationId);
     }
 
     /**
@@ -127,9 +127,7 @@ public class GCMIntentService extends GCMBaseIntentService {
         notification.defaults |= Notification.DEFAULT_VIBRATE;
         notificationManager.notify(0, notification);      
         
-        // record the customer order
-        OrderDBManager orderDB = new OrderDBManager(context);
-        orderDB.createOrder(order);
+
 
     }
 

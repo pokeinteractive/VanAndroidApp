@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.hkgoodvision.gvpos.activity.AndroidViewPagerActivity;
 import com.hkgoodvision.gvpos.activity.R;
 import com.hkgoodvision.gvpos.app.AppContext;
 import com.hkgoodvision.gvpos.common.FreqMapUtils;
@@ -27,7 +28,7 @@ public class DetectPointFragment extends SherlockFragment {
 
 	// show PopUp
 	TextView pointTextView = null;
-	
+
 	TextView scanPointTextView = null;
 
 	FreqMapUtils freqAnalysis = null;
@@ -36,41 +37,43 @@ public class DetectPointFragment extends SherlockFragment {
 	ImageView imageViewTemp = null;
 	protected int page = 0;
 	LocationTrackUtils locaitonTracker = null;
-	
+
 	ToggleButton startStopAudioButton = null;
-	
+
 	long counter = 1;
 
-//	protected void startEarnPoint() {
-//
-//		// show pop-up
-//		Intent intent = new Intent(this.getActivity().getApplicationContext(), ImageDialog.class);
-//		intent.putExtra("point", 100);
-//		intent.putExtra("companyName", "美聯社公司");
-//		startActivity(intent);
-//
-//		//earnPoint();
-//
-//		// add point to menubar
-//		pointTextView.setText("2050");
-//
-//	}
-	
+	// protected void startEarnPoint() {
+	//
+	// // show pop-up
+	// Intent intent = new Intent(this.getActivity().getApplicationContext(),
+	// ImageDialog.class);
+	// intent.putExtra("point", 100);
+	// intent.putExtra("companyName", "美聯社公司");
+	// startActivity(intent);
+	//
+	// //earnPoint();
+	//
+	// // add point to menubar
+	// pointTextView.setText("2050");
+	//
+	// }
+
 	void startGPS() {
-	
 
 		startStopAudioButton.setChecked(true);
 		scanPointTextView.setText("接收柯打中......");
-		appContext = (AppContext) this.getActivity().getApplicationContext();
-		imService.sendGPSLocaiton(appContext.getUuid());
+		IAppManager imService = AndroidViewPagerActivity.imService;
+		if (imService != null)
+			imService.sendGPSLocaiton(appContext.getDriverId());
 	}
-	
+
 	void stopGPS() {
-	
 
 		startStopAudioButton.setChecked(false);
 		scanPointTextView.setText("按下開關接收柯打");
-		imService.stopGPSLocation();
+		IAppManager imService = AndroidViewPagerActivity.imService;
+		if (imService != null)
+			imService.stopGPSLocation();
 	}
 
 	@Override
@@ -81,10 +84,8 @@ public class DetectPointFragment extends SherlockFragment {
 		View pointView = (View) this.getSherlockActivity().getSupportActionBar().getCustomView();
 
 		pointTextView = (TextView) pointView.findViewById(R.id.membership_point_total_text);
-		
+
 		myFragmentView = inflater.inflate(R.layout.detect_point_fragment, container, false);
-
-
 
 		appContext = (AppContext) this.getActivity().getApplicationContext();
 
@@ -93,7 +94,7 @@ public class DetectPointFragment extends SherlockFragment {
 		scanPointTextView = (TextView) baseGroup.findViewById(R.id.scan_point_text);
 
 		currentViewGroup = baseGroup;
-		
+
 		locaitonTracker = new LocationTrackUtils(this.getActivity());
 		Location location = locaitonTracker.getLocation();
 		if (location != null)
@@ -102,7 +103,7 @@ public class DetectPointFragment extends SherlockFragment {
 		// init...
 
 		startStopAudioButton = (ToggleButton) baseGroup.findViewById(R.id.start_scan_button_id);
-		
+
 		startStopAudioButton.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 			@Override
@@ -110,48 +111,57 @@ public class DetectPointFragment extends SherlockFragment {
 
 				if (isChecked) {
 					startGPS();
-					
+
 				} else {
 					stopGPS();
 					// TODO: hack for testing only
-					//startEarnPoint();
+					// startEarnPoint();
 				}
 
 			}
 
 		});
 
+		IAppManager imService = appContext.getImService();
+		if (imService != null) {
+			if (imService.isRunningGPSSender()) {
+				startGPS();
+			} else {
+				stopGPS();
+			}
+		}
 
 		return myFragmentView;
 	}
 
-
-	private IAppManager imService;
-
-	private ServiceConnection mConnection = new ServiceConnection() {
-		public void onServiceConnected(ComponentName className, IBinder service) {
-			// This is called when the connection with the service has been
-			// established, giving us the service object we can use to
-			// interact with the service. Because we have bound to a explicit
-			// service that we know is running in our own process, we can
-			// cast its IBinder to a concrete class and directly access it.
-			imService = ((IMService.IMBinder) service).getService();
-
-			if (imService != null && imService.isRunningGPSSender()) {
-
-				//btnStartRevJob.setText("Stop Rev Job");
-			}
-
-		}
-
-		public void onServiceDisconnected(ComponentName className) {
-			// This is called when the connection with the service has been
-			// unexpectedly disconnected -- that is, its process crashed.
-			// Because it is running in our same process, we should never
-			// see this happen.
-			imService = null;
-
-		}
-	};
+	
+	//
+	// private ServiceConnection mConnection = new ServiceConnection() {
+	// public void onServiceConnected(ComponentName className, IBinder service)
+	// {
+	// // This is called when the connection with the service has been
+	// // established, giving us the service object we can use to
+	// // interact with the service. Because we have bound to a explicit
+	// // service that we know is running in our own process, we can
+	// // cast its IBinder to a concrete class and directly access it.
+	// imService = ((IMService.IMBinder) service).getService();
+	//
+	// if (imService != null && imService.isRunningGPSSender()) {
+	// startGPS();
+	// } else {
+	// stopGPS();
+	// }
+	//
+	// }
+	//
+	// public void onServiceDisconnected(ComponentName className) {
+	// // This is called when the connection with the service has been
+	// // unexpectedly disconnected -- that is, its process crashed.
+	// // Because it is running in our same process, we should never
+	// // see this happen.
+	// imService = null;
+	//
+	// }
+	// };
 
 }

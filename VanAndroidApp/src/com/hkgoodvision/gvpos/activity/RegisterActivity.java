@@ -32,8 +32,8 @@ public class RegisterActivity extends SherlockActivity {
 	Button btnRegister;
 
 	String regIdGCM = null;
-	static String name;
-	static String phone;
+	public static String name;
+	public static String phone;
 
 	// Asyntask
 	AsyncTask<Void, Void, Void> mRegisterTask;
@@ -97,7 +97,7 @@ public class RegisterActivity extends SherlockActivity {
 			// startActivity(i);
 			// finish();
 
-			GCMRegistrar.setRegisteredOnServer(this, false);
+			//GCMRegistrar.setRegisteredOnServer(this, false);
 
 		} else {
 			// ===================================================
@@ -114,8 +114,8 @@ public class RegisterActivity extends SherlockActivity {
 				@Override
 				public void onClick(View arg0) {
 					// Read EditText dat
-					String name = txtName.getText().toString();
-					String phone = txtEmail.getText().toString();
+					name = txtName.getText().toString();
+					phone = txtEmail.getText().toString();
 
 					// Check if user filled the form
 					if (name.trim().length() > 0 && phone.trim().length() > 0) {
@@ -155,11 +155,7 @@ public class RegisterActivity extends SherlockActivity {
 		// Get GCM registration id
 		regIdGCM = GCMRegistrar.getRegistrationId(this);
 
-		// Check if regid already presents
-		if (regIdGCM.equals("")) {
-			// Registration is not present, register now with GCM
-			GCMRegistrar.register(this, SENDER_ID);
-		}
+
 
 		// Device is already registered on GCM
 		if (GCMRegistrar.isRegisteredOnServer(this)) {
@@ -173,6 +169,13 @@ public class RegisterActivity extends SherlockActivity {
 			
 
 		} else {
+			
+			// Check if regid already presents
+			if (regIdGCM.equals("")) {
+				// Registration is not present, register now with GCM
+				GCMRegistrar.register(this, SENDER_ID);
+			}
+			
 			// Try to register again, but not in the UI thread.
 			// It's also necessary to cancel the thread onDestroy(),
 			// hence the use of AsyncTask instead of a raw thread.
@@ -183,17 +186,15 @@ public class RegisterActivity extends SherlockActivity {
 				protected Void doInBackground(Void... params) {
 					// Register on our server
 					// On server creates a new user
-					ServerUtilities.register(context, name, phone, regIdGCM);
+					//ServerUtilities.register(context, name, phone, regIdGCM);
 
 					// enquiry for driver_id by phone number
-					String driverId = ServerUtilities.sendHttpRequest(URLConstant.URL_GET_DRIVER_ID_BY_PHONE + phone,"");
-					KeyPairDB.setDriverId(driverId, context);
-
-					KeyPairDB.setDriverPhone(phone, context);
 
 					Intent intent = new Intent(RegisterActivity.this, AndroidViewPagerActivity.class);
 					RegisterActivity.this.startActivity(intent);
-
+					
+					finish(); // prevent show the register screen
+					
 					return null;
 				}
 
@@ -211,4 +212,11 @@ public class RegisterActivity extends SherlockActivity {
 
 	}
 
+	
+    @Override
+   public void onBackPressed() {
+
+        super.onBackPressed();
+ 
+    }
 }

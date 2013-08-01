@@ -36,6 +36,7 @@ import com.hkgoodvision.gvpos.dao.vo.RewardList;
 import com.hkgoodvision.gvpos.dao.vo.Service;
 import com.hkgoodvision.gvpos.dao.vo.ServiceList;
 import com.hkgoodvision.gvpos.dao.vo.SubjectList;
+import com.vanapp.service.IAppManager;
 
 /**
  * 全局应用程序类：用于保存和调用全局应用配置及访问网络数据
@@ -55,6 +56,9 @@ public class AppContext extends Application {
 
 	private boolean login = false; // 登录状态
 	private int loginUid = 0; // 登录用户的id
+	
+	private IAppManager imService;
+
 
 	private String uuid = null;
 	private String driverId = null;
@@ -78,6 +82,15 @@ public class AppContext extends Application {
 		Thread.setDefaultUncaughtExceptionHandler(AppException.getAppExceptionHandler());
 	}
 
+
+	public IAppManager getImService() {
+		return imService;
+	}
+
+	public void setImService(IAppManager imService) {
+		this.imService = imService;
+	}
+	
 	/**
 	 * 检测当前系统声音是否为正常模式
 	 * 

@@ -35,6 +35,7 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.util.Log;
 
+import com.hkgoodvision.gvpos.activity.AndroidViewPagerActivity;
 import com.hkgoodvision.gvpos.activity.ServerUtilities;
 import com.vanapp.constant.URLConstant;
 import com.vanapp.db.KeyPairDB;
@@ -87,6 +88,8 @@ public class IMService extends Service implements IAppManager {
 		if (driverId != null && !"".equals(driverId)) {
 			sendGPSLocaiton(driverId);
 		}
+		
+		AndroidViewPagerActivity.imService = this;
 
 	}
 

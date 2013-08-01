@@ -18,7 +18,7 @@ class Orderdb extends Model {
    function getOrderList()
    {
        $this->load->database();
-        $query = $this->db->query("select o.order_id, '120' as price, o.remark, o.cust_phone, o.remark, o.order_date, t.name as timeslot, l.name as from_location, l2.name as to_locaiton from `order` o, timeslot t, location l, location l2 where o.timeslot_id=t.timeslot_id and o.to_location_id=l2.location_id and o.from_location_id=l.location_id and o.status = 'Y' and order_date >= CURRENT_DATE order by order_date, t.seq");
+        $query = $this->db->query("select o.order_id, '120' as price, o.remark, o.cust_phone, o.remark, o.order_date, t.name as timeslot, l.name as from_location, l2.name as to_locaiton, d.name, d.phone, o.driver_id from `order` o LEFT JOIN `driver` AS d ON d.driver_id = o.driver_id, timeslot t, location l, location l2 where o.timeslot_id=t.timeslot_id and o.to_location_id=l2.location_id and o.from_location_id=l.location_id and o.status = 'Y' and order_date >= CURRENT_DATE order by order_date, t.seq");
         return $query->result();
    }
    
@@ -32,7 +32,7 @@ class Orderdb extends Model {
    function getOrder($id)
    {
        $this->load->database();
-        $query = $this->db->query("select o.order_id,  o.remark, o.cust_phone, o.remark, o.order_date, o.from_location_id, o.to_location_id, o.timeslot_id, t.name as timeslot, l.name as from_location, l2.name as to_locaiton from `order` o, timeslot t, location l, location l2 where o.timeslot_id=t.timeslot_id and o.to_location_id=l2.location_id and o.from_location_id=l.location_id and o.status = 'Y' and o.order_id=" . $id);
+        $query = $this->db->query("select o.order_id,  o.remark, o.cust_phone, o.remark, o.order_date, o.from_location_id, o.to_location_id, o.timeslot_id, t.name as timeslot, l.name as from_location, l2.name as to_locaiton, d.name, d.phone, o.driver_id from `order` o LEFT JOIN `driver` AS d ON d.driver_id = o.driver_id, timeslot t, location l, location l2 where o.timeslot_id=t.timeslot_id and o.to_location_id=l2.location_id and o.from_location_id=l.location_id and o.status = 'Y' and o.order_id=" . $id);
         $data = $query->result();
         if ($data)
           return $data[0];
@@ -85,6 +85,17 @@ class Orderdb extends Model {
     return $result;
       
    }
+  
+  function updateDriverInOrder($obj) {
+      $this->load->database();
+
+      $this->db->set('driver_id', $obj->driver_id);
+      $this->db->where('order_id', $obj->order_id);
+      $result = $this->db->update('order');
+    //   echo "result=".$result;
+      return $result;
+   }
+  
 }
 
 ?>

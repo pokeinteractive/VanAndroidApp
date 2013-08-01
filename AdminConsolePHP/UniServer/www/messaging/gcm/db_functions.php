@@ -24,7 +24,7 @@ class DB_Functions {
      */
     public function storeUser($name, $phone, $gcm_regid) {
         // insert user into database
-        $result = mysql_query("INSERT INTO driver(name, phoneUUID, gcm_regid, created_at) VALUES('$name', '$phone', '$gcm_regid', NOW())");
+        $result = mysql_query("INSERT INTO driver(name, phone, gcm_regid, created_at) VALUES('$name', '$phone', '$gcm_regid', NOW())");
         // check for successful store
         if ($result) {
             // get user details

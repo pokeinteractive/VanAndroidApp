@@ -44,7 +44,7 @@ public class AndroidViewPagerActivity extends SherlockFragmentActivity {
 	int currentTab = 0;
 	int currentPage = 0;
 	AppContext appContext = null;
-	private IAppManager imService;
+	public static IAppManager imService;
 
 	
 	TextView pointTextView = null;
@@ -173,7 +173,7 @@ public class AndroidViewPagerActivity extends SherlockFragmentActivity {
 			//registerUUID(uuid.toString(), handler);
 			appContext.setUuid(uuid.toString());
 			// register to server
-			registerVanDriver(uuid.toString());
+//			registerVanDriver(uuid.toString());
 			
 		} else {
 			AppManager.getAppManager().finishAllActivity();
@@ -277,61 +277,7 @@ public class AndroidViewPagerActivity extends SherlockFragmentActivity {
 	AsyncTask<Void, Void, Void> mRegisterTask;
 	public static final String SENDER_ID = "569974433968"; 
 	
-	private void registerVanDriver(final String uuid) {
-
-		// Make sure the device has the proper dependencies.
-		GCMRegistrar.checkDevice(this);
-
-		// Make sure the manifest was properly set - comment out this line
-		// while developing the app, then uncomment it when it's ready.
-		GCMRegistrar.checkManifest(this);
-
-		// Get GCM registration id
-		regIdGCM = GCMRegistrar.getRegistrationId(this);
-
-		// Check if regid already presents
-		if (regIdGCM.equals("")) {
-			// Registration is not present, register now with GCM
-			GCMRegistrar.register(this, SENDER_ID);
-		} else {
-			// Device is already registered on GCM
-			if (GCMRegistrar.isRegisteredOnServer(this)) {
-				// Skips registration.
-				//Toast.makeText(getApplicationContext(), "Already registered with GCM", Toast.LENGTH_LONG).show();
-
-				// ServerUtilities.unregister(this, regId);
-
-			} else {
-				// Try to register again, but not in the UI thread.
-				// It's also necessary to cancel the thread onDestroy(),
-				// hence the use of AsyncTask instead of a raw thread.
-				final Context context = this;
-				mRegisterTask = new AsyncTask<Void, Void, Void>() {
-
-					@Override
-					protected Void doInBackground(Void... params) {
-						// Register on our server
-						// On server creates a new user
-						ServerUtilities.register(context, "New Comer", uuid, regIdGCM);
-
-						// enquiry for driver_id by phone number
-
-						KeyPairDB.setDriverPhone(uuid, context);
-
-						return null;
-					}
-
-					@Override
-					protected void onPostExecute(Void result) {
-						mRegisterTask = null;
-					}
-
-				};
-				mRegisterTask.execute(null, null, null);
-			}
-		}
-
-	}
+	
 
 	
 	private ServiceConnection mConnection = new ServiceConnection() {
@@ -344,7 +290,7 @@ public class AndroidViewPagerActivity extends SherlockFragmentActivity {
 			imService = ((IMService.IMBinder) service).getService();
 
 			if (imService != null && imService.isRunningGPSSender()) {
-				
+				appContext.setImService(imService);
 			}
 
 		}
