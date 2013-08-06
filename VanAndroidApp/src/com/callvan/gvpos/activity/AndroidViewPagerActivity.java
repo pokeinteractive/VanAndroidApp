@@ -6,14 +6,12 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.IBinder;
-import android.os.Message;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -22,16 +20,12 @@ import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.hkgoodvision.gvpos.app.AppContext;
-import com.hkgoodvision.gvpos.app.AppException;
 import com.hkgoodvision.gvpos.app.AppManager;
 import com.hkgoodvision.gvpos.common.DeviceUuidFactory;
 import com.hkgoodvision.gvpos.common.StringUtils;
-import com.hkgoodvision.gvpos.dao.vo.Result;
 import com.hkgoodvision.gvpos.page.MyFragmentPagerAdapter;
 import com.vanapp.db.KeyPairDB;
-import com.vanapp.service.IAppManager;
 import com.vanapp.service.IMService;
-
 
 public class AndroidViewPagerActivity extends SherlockFragmentActivity {
 	ActionBar mActionBar;
@@ -39,21 +33,26 @@ public class AndroidViewPagerActivity extends SherlockFragmentActivity {
 	int currentTab = 0;
 	int currentPage = 0;
 	AppContext appContext = null;
-	public static IAppManager imService;
+	public static IMService imService;
+	public static Context context = null;
 
-	
 	TextView pointTextView = null;
 
 	public void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
+		
+		context = this;
 
 		// 添加Activity到堆栈
 		AppManager.getAppManager().addActivity(this);
 
 		setContentView(R.layout.activity_main);
 		
-		startService(new Intent(AndroidViewPagerActivity.this, IMService.class));
+		if (IMService.getInstance() == null) {
+			Log.i("IMService going to onCreate", "...");
+			startService(new Intent(AndroidViewPagerActivity.this, IMService.class));
+		}
 
 		/** Getting a reference to action bar of this activity */
 		mActionBar = getSupportActionBar();
@@ -177,16 +176,16 @@ public class AndroidViewPagerActivity extends SherlockFragmentActivity {
 		
 		
 	}
-	
+
 	@Override
 	public void onResume() {
-	    super.onResume();
-        AppContext appContext = (AppContext) getApplication();
-        if (appContext.getShowTabPage() >= 0) {
-        
-        	mPager.setCurrentItem(getPageFromTab(appContext.getShowTabPage()));
-        	appContext.setShowTabPage(-1); // reset the show tab page
-        }
+		super.onResume();
+		AppContext appContext = (AppContext) getApplication();
+		if (appContext.getShowTabPage() >= 0) {
+
+			mPager.setCurrentItem(getPageFromTab(appContext.getShowTabPage()));
+			appContext.setShowTabPage(-1); // reset the show tab page
+		}
 	}
 
 	@Override
@@ -235,8 +234,6 @@ public class AndroidViewPagerActivity extends SherlockFragmentActivity {
 		AppManager.getAppManager().finishActivity(this);
 	}
 
-	
-	
 	private ServiceConnection mConnection = new ServiceConnection() {
 		public void onServiceConnected(ComponentName className, IBinder service) {
 			// This is called when the connection with the service has been

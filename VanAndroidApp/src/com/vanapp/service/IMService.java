@@ -52,7 +52,7 @@ import com.vanapp.db.KeyPairDB;
  * interact with the user, rather than doing something more disruptive such as
  * calling startActivity().
  */
-public class IMService extends Service implements IAppManager {
+public class IMService extends Service {
 	// private NotificationManager mNM;
 
 	private final int UPDATE_TIME_PERIOD = 5000;
@@ -60,18 +60,24 @@ public class IMService extends Service implements IAppManager {
 	private final IBinder mBinder = new IMBinder();
 
 	private String driverId;
-	
+
+	protected static IMService imService = null;
 
 	// timer to take the updated data from server
 	private Timer timer;
 
 	private boolean isRunGPSSender = false;
-	
+
 	LocationManager locationManager = null;
 	MyLocationListener myLocationListener = null;
 
+	public static IMService getInstance() {
+
+		return imService;
+	}
+
 	public class IMBinder extends Binder {
-		public IAppManager getService() {
+		public IMService getService() {
 			return IMService.this;
 		}
 
@@ -80,15 +86,20 @@ public class IMService extends Service implements IAppManager {
 	@Override
 	public void onCreate() {
 
+		Log.i("IMService onCreate", "...");
 		// Timer is used to take the friendList info every UPDATE_TIME_PERIOD;
 		timer = new Timer();
 
-//		// send GPS to Server
-//		driverId = KeyPairDB.getDriverId(this);
-//		if (driverId != null && !"".equals(driverId)) {
-//			sendGPSLocaiton(driverId);
-//		}
-		
+		imService = this;
+
+		if (KeyPairDB.getGPSUpdaterStatus(AndroidViewPagerActivity.context)) {
+			// send GPS to Server
+			driverId = KeyPairDB.getDriverId(this);
+			if (driverId != null && !"".equals(driverId)) {
+				sendGPSLocaiton(driverId);
+			}
+		}
+
 		AndroidViewPagerActivity.imService = this;
 
 	}
@@ -113,8 +124,8 @@ public class IMService extends Service implements IAppManager {
 	public void sendGPSLocaiton(String driverId) {
 		Log.i("sendGPSLocaiton is being start", "...");
 
-		this.driverId=driverId;
-		
+		this.driverId = driverId;
+
 		isRunGPSSender = true;
 
 		addLocationListener();
@@ -126,11 +137,13 @@ public class IMService extends Service implements IAppManager {
 		isRunGPSSender = false;
 		timer.cancel();
 		this.stopSelf();
+		imService = null;
 	}
 
 	@Override
 	public void onDestroy() {
 		Log.i("IMService is being destroyed", "...");
+		imService = null;
 		super.onDestroy();
 	}
 
@@ -145,7 +158,7 @@ public class IMService extends Service implements IAppManager {
 
 	/*----------Listener class to get coordinates ------------- */
 	private void addLocationListener() {
-		//timer.scheduleAtFixedRate(new TimerTask() {
+		// timer.scheduleAtFixedRate(new TimerTask() {
 		timer.schedule(new TimerTask() {
 			public void run() {
 				try {

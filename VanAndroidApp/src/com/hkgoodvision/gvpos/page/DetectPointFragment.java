@@ -1,6 +1,8 @@
 package com.hkgoodvision.gvpos.page;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,11 +13,11 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.actionbarsherlock.app.SherlockFragment;
-import com.callvan.gvpos.activity.AndroidViewPagerActivity;
 import com.callvan.gvpos.activity.R;
 import com.hkgoodvision.gvpos.app.AppContext;
 import com.hkgoodvision.gvpos.common.LocationTrackUtils;
-import com.vanapp.service.IAppManager;
+import com.vanapp.db.KeyPairDB;
+import com.vanapp.service.IMService;
 
 public class DetectPointFragment extends SherlockFragment {
 
@@ -24,6 +26,7 @@ public class DetectPointFragment extends SherlockFragment {
 
 	TextView scanPointTextView = null;
 
+	Context context = null;
 	AppContext appContext = null;
 	ViewGroup currentViewGroup = null;
 	ImageView imageViewTemp = null;
@@ -34,18 +37,20 @@ public class DetectPointFragment extends SherlockFragment {
 
 	void startGPS() {
 
+		KeyPairDB.setGPSUpdaterStatus(true, context);
 		startStopAudioButton.setChecked(true);
 		scanPointTextView.setText("接收柯打中......");
-		IAppManager imService = AndroidViewPagerActivity.imService;
+		IMService imService = IMService.getInstance();
 		if (imService != null)
 			imService.sendGPSLocaiton(appContext.getDriverId());
 	}
 
 	void stopGPS() {
 
+		KeyPairDB.setGPSUpdaterStatus(false, context);
 		startStopAudioButton.setChecked(false);
 		scanPointTextView.setText("按下開關接收柯打");
-		IAppManager imService = AndroidViewPagerActivity.imService;
+		IMService imService = IMService.getInstance();
 		if (imService != null)
 			imService.stopGPSLocation();
 	}
@@ -55,6 +60,8 @@ public class DetectPointFragment extends SherlockFragment {
 
 		View myFragmentView = null;
 
+		context = this.getActivity();
+		
 		View pointView = (View) this.getSherlockActivity().getSupportActionBar().getCustomView();
 
 		pointTextView = (TextView) pointView.findViewById(R.id.membership_point_total_text);
@@ -90,9 +97,12 @@ public class DetectPointFragment extends SherlockFragment {
 
 		});
 
-		IAppManager imService = AndroidViewPagerActivity.imService;
+		
+		IMService imService = IMService.getInstance();
+		Log.d("DetectPointFragment", "test if the imService checking:" + imService);
 		if (imService != null) {
-			if (imService.isRunningGPSSender()) {
+			Log.d("DetectPointFragment", "test if the imService checking=" + imService.isRunningGPSSender());
+			if (KeyPairDB.getGPSUpdaterStatus(this.getActivity())) {
 				startGPS();
 			} else {
 				stopGPS();

@@ -29,7 +29,7 @@ import com.hkgoodvision.gvpos.common.StringUtils;
 import com.hkgoodvision.gvpos.dao.ApiClient;
 import com.hkgoodvision.gvpos.dao.vo.Service;
 import com.hkgoodvision.gvpos.dao.vo.ServiceList;
-import com.vanapp.service.IAppManager;
+import com.vanapp.service.IMService;
 
 /**
  * 全局应用程序类：用于保存和调用全局应用配置及访问网络数据
@@ -50,7 +50,7 @@ public class AppContext extends Application {
 	private boolean login = false; // 登录状态
 	private int loginUid = 0; // 登录用户的id
 	
-	private IAppManager imService;
+	private IMService imService;
 
 
 	private int showTabPage = -1;
@@ -78,11 +78,11 @@ public class AppContext extends Application {
 	}
 
 
-	public IAppManager getImService() {
+	public IMService getImService() {
 		return imService;
 	}
 
-	public void setImService(IAppManager imService) {
+	public void setImService(IMService imService) {
 		this.imService = imService;
 	}
 	
