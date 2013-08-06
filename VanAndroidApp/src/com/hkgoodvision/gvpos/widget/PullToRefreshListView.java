@@ -17,7 +17,10 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.hkgoodvision.gvpos.activity.R;
+import com.callvan.gvpos.activity.R;
+
+
+
 
 /**
  * 下拉刷新控件

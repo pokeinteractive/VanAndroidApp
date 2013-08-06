@@ -5,13 +5,13 @@
  * should not be modified by hand.
  */
 
-package com.hkgoodvision.gvpos.activity;
+package com.callvan.gvpos.activity;
 
 public final class Manifest {
     public static final class permission {
         /**  Creates a custom permission so only this app can receive its messages. 
          */
-        public static final String C2D_MESSAGE="com.hkgoodvision.gvpos.activity.permission.C2D_MESSAGE";
+        public static final String C2D_MESSAGE="com.callvan.gvpos.activity.permission.C2D_MESSAGE";
         public static final String MAPS_RECEIVE="com.hkgoodvision.permission.MAPS_RECEIVE";
     }
 }

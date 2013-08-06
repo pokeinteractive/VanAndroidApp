@@ -35,8 +35,8 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.util.Log;
 
-import com.hkgoodvision.gvpos.activity.AndroidViewPagerActivity;
-import com.hkgoodvision.gvpos.activity.ServerUtilities;
+import com.callvan.gvpos.activity.AndroidViewPagerActivity;
+import com.callvan.gvpos.activity.ServerUtilities;
 import com.vanapp.constant.URLConstant;
 import com.vanapp.db.KeyPairDB;
 

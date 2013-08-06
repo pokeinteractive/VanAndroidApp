@@ -35,7 +35,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityEvent;
 
-import com.hkgoodvision.gvpos.activity.R;
+import com.callvan.gvpos.activity.R;
 
 
 public class MultiDirectionSlidingDrawer extends ViewGroup {

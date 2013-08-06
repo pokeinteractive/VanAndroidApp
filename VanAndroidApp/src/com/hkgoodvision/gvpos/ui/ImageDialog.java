@@ -4,13 +4,12 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.WindowManager.LayoutParams;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.hkgoodvision.gvpos.activity.R;
+import com.callvan.gvpos.activity.R;
 
 
 public class ImageDialog extends Activity implements OnTouchListener {

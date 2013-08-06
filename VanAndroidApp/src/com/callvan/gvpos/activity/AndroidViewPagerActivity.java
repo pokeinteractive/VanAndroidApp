@@ -1,4 +1,4 @@
-package com.hkgoodvision.gvpos.activity;
+package com.callvan.gvpos.activity;
 
 import java.util.UUID;
 
@@ -21,11 +21,6 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
-import com.google.android.gcm.GCMRegistrar;
-import com.hkgoodvision.gvpos.activity.R;
-import com.hkgoodvision.gvpos.activity.R.id;
-import com.hkgoodvision.gvpos.activity.R.layout;
-import com.hkgoodvision.gvpos.activity.R.menu;
 import com.hkgoodvision.gvpos.app.AppContext;
 import com.hkgoodvision.gvpos.app.AppException;
 import com.hkgoodvision.gvpos.app.AppManager;
@@ -181,6 +176,17 @@ public class AndroidViewPagerActivity extends SherlockFragmentActivity {
 
 		
 		
+	}
+	
+	@Override
+	public void onResume() {
+	    super.onResume();
+        AppContext appContext = (AppContext) getApplication();
+        if (appContext.getShowTabPage() >= 0) {
+        
+        	mPager.setCurrentItem(getPageFromTab(appContext.getShowTabPage()));
+        	appContext.setShowTabPage(-1); // reset the show tab page
+        }
 	}
 
 	@Override

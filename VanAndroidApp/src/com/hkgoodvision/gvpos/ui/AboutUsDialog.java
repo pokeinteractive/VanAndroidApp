@@ -10,7 +10,7 @@ import android.widget.ImageView;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
-import com.hkgoodvision.gvpos.activity.R;
+import com.callvan.gvpos.activity.R;
 import com.hkgoodvision.gvpos.app.AppContext;
 
 public class AboutUsDialog extends SherlockActivity implements OnTouchListener {
@@ -28,7 +28,7 @@ public class AboutUsDialog extends SherlockActivity implements OnTouchListener {
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setHomeButtonEnabled(true);
 
-		getSupportActionBar().setTitle("Call Van App");
+		getSupportActionBar().setTitle("有運行");
 
 		findViewById(R.id.company_info_layout_id);
 		

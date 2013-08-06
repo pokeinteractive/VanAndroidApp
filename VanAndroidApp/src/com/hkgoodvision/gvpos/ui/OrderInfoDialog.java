@@ -1,8 +1,5 @@
 package com.hkgoodvision.gvpos.ui;
 
-import java.util.UUID;
-
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -10,56 +7,79 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
-import com.hkgoodvision.gvpos.activity.R;
+import com.callvan.gvpos.activity.R;
 import com.hkgoodvision.gvpos.app.AppContext;
 import com.hkgoodvision.gvpos.app.AppException;
 import com.hkgoodvision.gvpos.common.BitmapManager;
-import com.hkgoodvision.gvpos.common.DeviceUuidFactory;
-import com.hkgoodvision.gvpos.common.StringUtils;
 import com.hkgoodvision.gvpos.common.UIHelper;
-import com.hkgoodvision.gvpos.constant.URLs;
 import com.hkgoodvision.gvpos.dao.vo.Service;
 
-public class AccountDialog extends SherlockActivity implements OnTouchListener {
+public class OrderInfoDialog extends SherlockActivity implements OnTouchListener {
 
 	private ImageView mDialog;
-
+	TextView phone;
+	
 	ViewGroup currentViewGroup = null;
 	protected AppContext appContext;
 
 	private Handler listViewServiceHandler;
 
-	private ProgressBar compnay_info_progress;
+	private ProgressBar order_info_progress;
 
 	private Service serviceData = null;
 
 	BitmapManager bmpManager = null;
 
-	int serviceId = 0;
+	String orderId = "";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.account_popup);
+		setContentView(R.layout.order_popup);
 
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setHomeButtonEnabled(true);
 
-		getSupportActionBar().setTitle("Call Van App");
+		//getSupportActionBar().setTitle("MatchPoint");
 
+		// Make us non-modal, so that others can receive touch events.
+		// getWindow().setFlags(LayoutParams.FLAG_NOT_TOUCH_MODAL,
+		// LayoutParams.FLAG_NOT_TOUCH_MODAL);
+		// getWindow().setFlags(LayoutParams.FLAG_,
+		// LayoutParams.FLAG_NOT_TOUCH_MODAL);
+		//
+		// // ...but notify us that it happened.
+		// getWindow().setFlags(LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH,
+		// LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH);
 
 		appContext = (AppContext) this.getApplicationContext();
 		
-		TextView uuidView = (TextView) findViewById(R.id.system_uuid_text);
+		orderId = getIntent().getStringExtra("orderId");
 		
-		AppContext appContext = (AppContext) this.getApplicationContext();
-		uuidView.setText(appContext.getUuid());
+		order_info_progress = (ProgressBar) findViewById(R.id.order_info_progress);
+
+		initFrameListView();
+
+		// mDialog.setClickable(true);
+		//
+		//
+		//
+		// //finish the activity (dismiss the image dialog) if the user clicks
+		// //anywhere on the image
+		// mDialog.setOnClickListener(new OnClickListener() {
+		// @Override
+		// public void onClick(View v) {
+		// mDialog.setImageResource(R.drawable.food2);
+		// // finish();
+		// }
+		// });
 
 	}
 
@@ -92,7 +112,7 @@ public class AccountDialog extends SherlockActivity implements OnTouchListener {
 
 		// 加载资讯数据
 		if (serviceData == null) {
-			loadLvNewsData(serviceId, 0, listViewServiceHandler, UIHelper.LISTVIEW_ACTION_INIT);
+			loadLvNewsData(orderId, 0, listViewServiceHandler, UIHelper.LISTVIEW_ACTION_INIT);
 		}
 	}
 
@@ -122,7 +142,7 @@ public class AccountDialog extends SherlockActivity implements OnTouchListener {
 					((AppException) msg.obj).makeToast(currentViewGroup.getContext());
 				}
 
-				compnay_info_progress.setVisibility(ProgressBar.GONE);
+				order_info_progress.setVisibility(ProgressBar.GONE);
 				
 				// mHeadProgress.setVisibility(ProgressBar.GONE);
 				// if (msg.arg1 == UIHelper.LISTVIEW_ACTION_REFRESH) {
@@ -153,17 +173,34 @@ public class AccountDialog extends SherlockActivity implements OnTouchListener {
 	 */
 	private void handleLvData(int what, Object obj, int objtype, int actiontype) {
 		Service service = (Service) obj;
-		bmpManager = new BitmapManager(BitmapFactory.decodeResource(this.getResources(),
-				R.drawable.widget_dface_loading));
 
-		ImageView photo = (ImageView) findViewById(R.id.company_info_image_id);
-		TextView name = (TextView) findViewById(R.id.company_info_name_id);
-		TextView address = (TextView) findViewById(R.id.company_info_address_id);
-		TextView desc = (TextView) findViewById(R.id.company_info_desc_id);
-		TextView promo = (TextView) findViewById(R.id.company_info_promo_id);
-		TextView promolb = (TextView) findViewById(R.id.company_info_promo_lb);
-		TextView desclb = (TextView) findViewById(R.id.company_info_desc_lb);
+	
+		TextView remark = (TextView) findViewById(R.id.cust_remark_id);
+		phone = (TextView) findViewById(R.id.cust_phone_id);
+		Button acceptButton = (Button) findViewById(R.id.order_accept_id);
+		Button backButton = (Button) findViewById(R.id.order_back_id);
 
+		phone.setVisibility(View.INVISIBLE);
+		remark.setText(service.getRemark());
+		phone.setText(service.getCustPhone());
+		
+		
+		acceptButton.setOnClickListener(new View.OnClickListener() {
+		    @Override
+		    public void onClick(View v) {
+		    	phone.setVisibility(View.VISIBLE);
+		    	
+		    }
+		});
+		
+		backButton.setOnClickListener(new View.OnClickListener() {
+		    @Override
+		    public void onClick(View v) {
+		    	finish();
+		    	
+		    }
+		});
+		
 //		String photoURL = service.getPhoto();
 //		if (photoURL == null || photoURL.endsWith("portrait.gif") || StringUtils.isEmpty(photoURL)) {
 //			photo.setImageResource(R.drawable.widget_dface);
@@ -179,7 +216,7 @@ public class AccountDialog extends SherlockActivity implements OnTouchListener {
 //			desclb.setText("簡介");
 //		if (!StringUtils.isEmpty(service.getPromoDesc()))
 //			promolb.setText("推廣活動");
-//		
+		
 		return;
 	}
 
@@ -195,7 +232,7 @@ public class AccountDialog extends SherlockActivity implements OnTouchListener {
 	 * @param action
 	 *            动作标识
 	 */
-	private void loadLvNewsData(final int catalog, final int pageIndex, final Handler handler, final int action) {
+	private void loadLvNewsData(final String orderId, final int pageIndex, final Handler handler, final int action) {
 		// mHeadProgress.setVisibility(ProgressBar.VISIBLE);
 		new Thread() {
 			public void run() {
@@ -206,7 +243,7 @@ public class AccountDialog extends SherlockActivity implements OnTouchListener {
 				try {
 					// NewsList list = appContext.getNewsList(catalog,
 					// pageIndex, isRefresh);
-					Service list = appContext.getService(catalog, isRefresh);
+					Service list = appContext.getService(orderId, isRefresh);
 					msg.what = 1;
 					msg.obj = list;
 				} catch (AppException e) {

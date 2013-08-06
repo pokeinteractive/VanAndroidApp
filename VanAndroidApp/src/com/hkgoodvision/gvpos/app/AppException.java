@@ -18,7 +18,7 @@ import android.os.Environment;
 import android.os.Looper;
 import android.widget.Toast;
 
-import com.hkgoodvision.gvpos.activity.R;
+import com.callvan.gvpos.activity.R;
 import com.hkgoodvision.gvpos.common.UIHelper;
 
 /**

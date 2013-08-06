@@ -4,11 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +17,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.callvan.gvpos.activity.R;
 import com.hkgoodvision.gvpos.ListAdapter.ListViewServiceAdapter;
-import com.hkgoodvision.gvpos.activity.R;
 import com.hkgoodvision.gvpos.app.AppContext;
 import com.hkgoodvision.gvpos.app.AppException;
-import com.hkgoodvision.gvpos.common.LocationTrackUtils;
 import com.hkgoodvision.gvpos.common.StringUtils;
 import com.hkgoodvision.gvpos.common.UIHelper;
 import com.hkgoodvision.gvpos.dao.vo.Service;
@@ -107,6 +104,15 @@ public class PointListFragment extends SherlockFragment {
 	}
 
 	/**
+	 * Auto refresh the data in list
+	 */
+	@Override
+	public void onResume() {
+	    super.onResume();
+	    loadLvNewsData(CATALOG_ID, lat, log, 0, listViewServiceHandler, UIHelper.LISTVIEW_ACTION_INIT);
+	}
+
+	/**
 	 * 初始化所有ListView数据
 	 */
 	private void initFrameListViewData() {
@@ -136,16 +142,19 @@ public class PointListFragment extends SherlockFragment {
 		
 		serviceListView.setAdapter(listViewServiceAdapter);
 		
-//		serviceListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//				// show popup the reward detail and shop detail
-//				Service service = serviceListData.get(position-1); // due to header is the 1st
-//				if (service != null) {
-//					//UIHelper.showCompanyInfo(view.getContext(), service.getOrderId());
-//				}
-//				
-//			}
-//		});
+		serviceListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				// show popup the reward detail and shop detail
+				if (serviceListData.size() > position-1) {
+					Service service = serviceListData.get(position-1); // due to header is the 1st
+					if (service != null) {
+						int a=0;
+						UIHelper.showOrderInfo(view.getContext(), service.getOrderId());
+					}
+				}
+				
+			}
+		});
 		serviceListView.setOnScrollListener(new AbsListView.OnScrollListener() {
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
 				serviceListView.onScrollStateChanged(view, scrollState);

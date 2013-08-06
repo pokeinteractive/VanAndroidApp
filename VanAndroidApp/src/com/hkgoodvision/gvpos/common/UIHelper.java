@@ -21,13 +21,12 @@ import android.text.style.StyleSpan;
 import android.view.View;
 import android.widget.Toast;
 
-import com.hkgoodvision.gvpos.activity.R;
+import com.callvan.gvpos.activity.R;
 import com.hkgoodvision.gvpos.app.AppContext;
 import com.hkgoodvision.gvpos.app.AppManager;
 import com.hkgoodvision.gvpos.ui.AboutUsDialog;
-import com.hkgoodvision.gvpos.ui.AccountDialog;
-import com.hkgoodvision.gvpos.ui.CompanyInfoDialog;
 import com.hkgoodvision.gvpos.ui.ImageDialog;
+import com.hkgoodvision.gvpos.ui.OrderInfoDialog;
 import com.hkgoodvision.gvpos.ui.RewardApplyDialog;
 import com.hkgoodvision.gvpos.ui.RewardApplySuccessDialog;
 
@@ -124,26 +123,20 @@ public class UIHelper {
 		context.startActivity(intent);
 	}
 
-	public static void showCompanyInfo(Context context,final int serviceId)
+	
+	public static void showOrderInfo(Context context,final String orderId)
 	{
-		Intent intent = new Intent(context, CompanyInfoDialog.class);
-		intent.putExtra("serviceId", serviceId);
+		Intent intent = new Intent(context, OrderInfoDialog.class);
+		intent.putExtra("orderId", orderId);
 		context.startActivity(intent);
-	}
+	}	
 	
 	public static void showAboutUs(Context context)
 	{
 		Intent intent = new Intent(context, AboutUsDialog.class);
 		context.startActivity(intent);
 	}
-	
-	public static void showAccount(Context context,final int memberId)
-	{
-		Intent intent = new Intent(context, AccountDialog.class);
-		intent.putExtra("memberId", memberId);
-		context.startActivity(intent);
-	}
-	
+
 	
 	
 	/**

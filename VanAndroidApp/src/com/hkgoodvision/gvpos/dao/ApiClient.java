@@ -581,9 +581,9 @@ public class ApiClient {
 	 * @return
 	 * @throws AppException
 	 */
-	public static Service getServiceDetail(AppContext appContext, final int service_id) throws AppException {
-		String newUrl = _MakeURL(URLs.SERVICE_DETAIL +"/"+ service_id, new HashMap<String, Object>(){{
-			put("id", service_id);
+	public static Service getServiceDetail(AppContext appContext, final String order_id) throws AppException {
+		String newUrl = _MakeURL(URLs.SERVICE_DETAIL +"/"+ order_id, new HashMap<String, Object>(){{
+			put("id", order_id);
 		}});
 		
 		try{

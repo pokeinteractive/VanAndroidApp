@@ -1,7 +1,7 @@
-package com.hkgoodvision.gvpos.activity;
+package com.callvan.gvpos.activity;
 
-import static com.hkgoodvision.gvpos.activity.CommonUtilities.SENDER_ID;
-import static com.hkgoodvision.gvpos.activity.CommonUtilities.displayMessage;
+import static com.callvan.gvpos.activity.CommonUtilities.SENDER_ID;
+import static com.callvan.gvpos.activity.CommonUtilities.displayMessage;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -10,10 +10,8 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.google.android.gcm.GCMBaseIntentService;
-import com.hkgoodvision.gvpos.activity.R;
 import com.hkgoodvision.gvpos.app.AppContext;
 import com.vanapp.bean.ClientOrder;
-import com.vanapp.db.OrderDBManager;
 import com.vanapp.parser.OrderMessageParser;
 
 public class GCMIntentService extends GCMBaseIntentService {
@@ -127,7 +125,8 @@ public class GCMIntentService extends GCMBaseIntentService {
         notification.defaults |= Notification.DEFAULT_VIBRATE;
         notificationManager.notify(0, notification);      
         
-
+        AppContext appContext = (AppContext) context.getApplicationContext();
+        appContext.setShowTabPage(0);
 
     }
 

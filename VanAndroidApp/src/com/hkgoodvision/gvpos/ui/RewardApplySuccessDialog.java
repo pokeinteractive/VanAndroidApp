@@ -2,23 +2,18 @@ package com.hkgoodvision.gvpos.ui;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
-import com.hkgoodvision.gvpos.activity.R;
+import com.callvan.gvpos.activity.R;
 import com.hkgoodvision.gvpos.app.AppContext;
-import com.hkgoodvision.gvpos.app.AppException;
 import com.hkgoodvision.gvpos.common.BitmapManager;
-import com.hkgoodvision.gvpos.dao.vo.Result;
 import com.hkgoodvision.gvpos.dao.vo.Service;
 
 public class RewardApplySuccessDialog extends SherlockActivity implements OnTouchListener {

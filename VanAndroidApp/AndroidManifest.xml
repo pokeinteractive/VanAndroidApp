@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.hkgoodvision.gvpos.activity"
+    package="com.callvan.gvpos.activity"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -29,25 +29,22 @@
             android:name="com.hkgoodvision.gvpos.ui.ImageDialog"
             android:theme="@style/myDialogTheme" />
         <activity
-            android:name="com.hkgoodvision.gvpos.ui.CompanyInfoDialog"
-            android:theme="@style/Theme.Sherlock" />
-        <activity
             android:name="com.hkgoodvision.gvpos.ui.AboutUsDialog"
-            android:theme="@style/Theme.Sherlock" />
-        <activity
-            android:name="com.hkgoodvision.gvpos.ui.AccountDialog"
             android:theme="@style/Theme.Sherlock" />
         <activity
             android:name="com.hkgoodvision.gvpos.ui.RewardApplyDialog"
             android:theme="@style/Theme.Sherlock" />
         <activity
+            android:name="com.hkgoodvision.gvpos.ui.OrderInfoDialog"
+            android:theme="@style/Theme.Sherlock" />
+        <activity
             android:name="com.hkgoodvision.gvpos.ui.RewardApplySuccessDialog"
             android:theme="@style/Theme.Sherlock" />
         <activity
-            android:name="com.hkgoodvision.gvpos.activity.RegisterActivity"
+            android:name="com.callvan.gvpos.activity.RegisterActivity"
             android:theme="@style/Theme.Sherlock" />
         <activity
-            android:name="com.hkgoodvision.gvpos.activity.MainActivity"
+            android:name="com.callvan.gvpos.activity.MainActivity"
             android:theme="@style/Theme.Sherlock" />
         
 
@@ -57,7 +54,7 @@
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyCfnp0iaG-5nahmPx6TxnkVPK9Ku_7t8mE" />
  -->
-        <service android:name="com.hkgoodvision.gvpos.activity.GCMIntentService" />
+        <service android:name="com.callvan.gvpos.activity.GCMIntentService" />
         <service android:name="com.vanapp.service.IMService" >
         </service>
 
@@ -71,7 +68,7 @@
                 <!-- Receives the registration id. -->
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
 
-                <category android:name="com.hkgoodvision.gvpos.activity" />
+                <category android:name="com.callvan.gvpos.activity" />
             </intent-filter>
         </receiver>
     </application>
@@ -101,10 +98,10 @@
     
     <!-- Creates a custom permission so only this app can receive its messages. -->
     <permission
-        android:name="com.hkgoodvision.gvpos.activity.permission.C2D_MESSAGE"
+        android:name="com.callvan.gvpos.activity.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="com.hkgoodvision.gvpos.activity.permission.C2D_MESSAGE" />
+    <uses-permission android:name="com.callvan.gvpos.activity.permission.C2D_MESSAGE" />
 
     <!-- This app has permission to register and receive data message. -->
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />

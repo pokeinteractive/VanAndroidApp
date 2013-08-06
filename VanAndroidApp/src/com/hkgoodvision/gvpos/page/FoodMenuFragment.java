@@ -1,30 +1,20 @@
 package com.hkgoodvision.gvpos.page;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.Animation.AnimationListener;
-import android.view.animation.TranslateAnimation;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
 import com.actionbarsherlock.app.SherlockFragment;
-import com.hkgoodvision.gvpos.activity.R;
+import com.callvan.gvpos.activity.R;
 import com.hkgoodvision.gvpos.dao.Food;
 import com.hkgoodvision.gvpos.dao.SQLiteManager;
-import com.hkgoodvision.gvpos.session.AppSession;
-import com.hkgoodvision.gvpos.ui.ImageDialog;
 
 public class FoodMenuFragment extends SherlockFragment {
 

@@ -11,13 +11,11 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.hkgoodvision.gvpos.activity.R;
+import com.callvan.gvpos.activity.R;
 import com.hkgoodvision.gvpos.common.BitmapManager;
 import com.hkgoodvision.gvpos.common.StringUtils;
-import com.hkgoodvision.gvpos.common.UIHelper;
 import com.hkgoodvision.gvpos.constant.URLs;
 import com.hkgoodvision.gvpos.dao.vo.EarnPoint;
-import com.hkgoodvision.gvpos.dao.vo.Service;
 
 /**
  * 新闻资讯Adapter类
@@ -102,13 +100,13 @@ public class ListViewMembershipAdapter extends BaseAdapter {
 			bmpManager.loadBitmap(URLs.IMAGE_PATH_URL+photoURL, listItemView.photo);
 		}
 		
-		listItemView.photo.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-
-				EarnPoint service = (EarnPoint) v.getTag();
-				UIHelper.showCompanyInfo(v.getContext(), service.getServiceId());
-			}
-		});
+//		listItemView.photo.setOnClickListener(new View.OnClickListener() {
+//			public void onClick(View v) {
+//
+//				EarnPoint service = (EarnPoint) v.getTag();
+//				UIHelper.showCompanyInfo(v.getContext(), service.getServiceId());
+//			}
+//		});
 
 
 		listItemView.title.setTag(service);//设置隐藏参数(实体类)

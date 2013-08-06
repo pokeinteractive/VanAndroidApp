@@ -1,10 +1,7 @@
 package com.hkgoodvision.gvpos.page;
 
-import android.content.ComponentName;
-import android.content.ServiceConnection;
 import android.location.Location;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,13 +13,12 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.actionbarsherlock.app.SherlockFragment;
-import com.hkgoodvision.gvpos.activity.AndroidViewPagerActivity;
-import com.hkgoodvision.gvpos.activity.R;
+import com.callvan.gvpos.activity.AndroidViewPagerActivity;
+import com.callvan.gvpos.activity.R;
 import com.hkgoodvision.gvpos.app.AppContext;
 import com.hkgoodvision.gvpos.common.FreqMapUtils;
 import com.hkgoodvision.gvpos.common.LocationTrackUtils;
 import com.vanapp.service.IAppManager;
-import com.vanapp.service.IMService;
 
 public class DetectPointFragment extends SherlockFragment {
 

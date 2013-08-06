@@ -39,12 +39,12 @@ public class Service extends Entity {
 
 		JSONObject jObject = new JSONObject(responseStrBuilder.toString());
 
-		JSONArray jArray = jObject.getJSONArray("order");
+		JSONObject oneObject = jObject.getJSONObject("order");
 
 		// get the List Array
 		int i = 0;
 
-		JSONObject oneObject = jArray.getJSONObject(0);
+		//JSONObject oneObject = jArray.getJSONObject(0);
 		// Pulling items from the array
 		String order_id = oneObject.getString("order_id");
 		String remark = oneObject.getString("remark");
@@ -53,7 +53,7 @@ public class Service extends Entity {
 		String timeslot = oneObject.getString("timeslot");
 		String from_location = oneObject.getString("from_location");
 		String to_location = oneObject.getString("to_locaiton");
-		String price = oneObject.getString("price");
+		//String price = oneObject.getString("price");
 
 		service.setOrderId(order_id);
 		service.setRemark(remark);
@@ -62,12 +62,12 @@ public class Service extends Entity {
 		service.setTimeslot(timeslot);
 		service.setFromLocation(from_location);
 		service.setToLocation(to_location);
-		service.setPrice(price);
+		//service.setPrice(price);
+
 		
 		System.out.println(order_id + ":" + cust_phone + ":" + timeslot);
 
-		oneObject = jArray.getJSONObject(1);
-	
+		
 		return service;
 
 	}

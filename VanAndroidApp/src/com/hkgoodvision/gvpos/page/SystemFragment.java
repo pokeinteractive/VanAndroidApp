@@ -9,8 +9,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.callvan.gvpos.activity.R;
 import com.google.android.gcm.GCMRegistrar;
-import com.hkgoodvision.gvpos.activity.R;
 import com.hkgoodvision.gvpos.common.UIHelper;
 import com.vanapp.db.KeyPairDB;
 
@@ -52,12 +52,12 @@ public class SystemFragment extends SherlockFragment {
 			});
 			
 			
-			account.setOnClickListener(new View.OnClickListener() {
-			    @Override
-			    public void onClick(View v) {
-			    	UIHelper.showAccount(v.getContext(), 0);
-			    }
-			});
+//			account.setOnClickListener(new View.OnClickListener() {
+//			    @Override
+//			    public void onClick(View v) {
+//			    	UIHelper.showAccount(v.getContext(), 0);
+//			    }
+//			});
 			
 			cancelAccount.setOnClickListener(new View.OnClickListener() {
 			    @Override

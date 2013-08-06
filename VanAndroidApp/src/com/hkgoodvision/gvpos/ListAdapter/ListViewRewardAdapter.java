@@ -11,7 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.hkgoodvision.gvpos.activity.R;
+import com.callvan.gvpos.activity.R;
 import com.hkgoodvision.gvpos.common.BitmapManager;
 import com.hkgoodvision.gvpos.common.StringUtils;
 import com.hkgoodvision.gvpos.common.UIHelper;

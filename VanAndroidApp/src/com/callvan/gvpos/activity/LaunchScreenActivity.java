@@ -1,12 +1,12 @@
-package com.hkgoodvision.gvpos.activity;
+package com.callvan.gvpos.activity;
 
-
-import com.vanapp.db.KeyPairDB;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+
+import com.vanapp.db.KeyPairDB;
  
 /**
  * Splash screen activity

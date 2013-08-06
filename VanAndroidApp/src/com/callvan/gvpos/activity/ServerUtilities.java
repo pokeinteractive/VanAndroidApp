@@ -1,8 +1,8 @@
-package com.hkgoodvision.gvpos.activity;
+package com.callvan.gvpos.activity;
 
-import static com.hkgoodvision.gvpos.activity.CommonUtilities.SERVER_URL;
-import static com.hkgoodvision.gvpos.activity.CommonUtilities.TAG;
-import static com.hkgoodvision.gvpos.activity.CommonUtilities.displayMessage;
+import static com.callvan.gvpos.activity.CommonUtilities.SERVER_URL;
+import static com.callvan.gvpos.activity.CommonUtilities.TAG;
+import static com.callvan.gvpos.activity.CommonUtilities.displayMessage;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -22,7 +22,6 @@ import android.content.Context;
 import android.util.Log;
 
 import com.google.android.gcm.GCMRegistrar;
-import com.hkgoodvision.gvpos.activity.R;
 import com.vanapp.constant.URLConstant;
 import com.vanapp.db.KeyPairDB;
 

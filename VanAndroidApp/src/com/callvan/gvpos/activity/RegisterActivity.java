@@ -1,7 +1,7 @@
-package com.hkgoodvision.gvpos.activity;
+package com.callvan.gvpos.activity;
 
-import static com.hkgoodvision.gvpos.activity.CommonUtilities.SENDER_ID;
-import static com.hkgoodvision.gvpos.activity.CommonUtilities.SERVER_URL;
+import static com.callvan.gvpos.activity.CommonUtilities.SENDER_ID;
+import static com.callvan.gvpos.activity.CommonUtilities.SERVER_URL;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -9,13 +9,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.google.android.gcm.GCMRegistrar;
-import com.vanapp.constant.URLConstant;
-import com.vanapp.db.KeyPairDB;
-import com.vanapp.service.IMService;
 
 public class RegisterActivity extends SherlockActivity {
 	// alert dialog manager

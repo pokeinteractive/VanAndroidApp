@@ -11,7 +11,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_toLeftOf="@+id/membership_point_text_section"
                 android:singleLine="false"
-                android:text="Call Van App"
+                android:text="有運行"
                 android:paddingTop="5dip"
                 android:layout_gravity="center_vertical"
                 android:textColor="@color/white"

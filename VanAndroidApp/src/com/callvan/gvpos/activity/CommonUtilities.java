@@ -1,4 +1,4 @@
-package com.hkgoodvision.gvpos.activity;
+package com.callvan.gvpos.activity;
 
 import android.content.Context;
 import android.content.Intent;

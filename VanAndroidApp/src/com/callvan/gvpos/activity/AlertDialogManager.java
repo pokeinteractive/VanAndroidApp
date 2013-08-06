@@ -1,10 +1,8 @@
-package com.hkgoodvision.gvpos.activity;
+package com.callvan.gvpos.activity;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-
-import com.hkgoodvision.gvpos.activity.R;
 
 public class AlertDialogManager {
 	/**

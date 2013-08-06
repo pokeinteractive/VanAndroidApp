@@ -3,7 +3,7 @@ package com.tjerkw.slideexpandable.library;
 import android.view.View;
 import android.widget.ListAdapter;
 
-import com.hkgoodvision.gvpos.activity.R;
+import com.callvan.gvpos.activity.R;
 
 /**
  * ListAdapter that adds sliding functionality to a list.

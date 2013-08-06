@@ -1,8 +1,8 @@
-package com.hkgoodvision.gvpos.activity;
+package com.callvan.gvpos.activity;
 
-import static com.hkgoodvision.gvpos.activity.CommonUtilities.DISPLAY_MESSAGE_ACTION;
-import static com.hkgoodvision.gvpos.activity.CommonUtilities.EXTRA_MESSAGE;
-import static com.hkgoodvision.gvpos.activity.CommonUtilities.SENDER_ID;
+import static com.callvan.gvpos.activity.CommonUtilities.DISPLAY_MESSAGE_ACTION;
+import static com.callvan.gvpos.activity.CommonUtilities.EXTRA_MESSAGE;
+import static com.callvan.gvpos.activity.CommonUtilities.SENDER_ID;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
@@ -23,7 +23,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gcm.GCMRegistrar;
-import com.hkgoodvision.gvpos.activity.R;
 import com.vanapp.bean.ClientOrder;
 import com.vanapp.constant.URLConstant;
 import com.vanapp.db.KeyPairDB;

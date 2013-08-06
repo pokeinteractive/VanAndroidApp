@@ -2,6 +2,29 @@
 
 class Jsonapi extends Base_Controller {
 
+     function matchOrder($orderId=0, $driverId=0) {
+
+      $this->load->model('Orderdb');    
+
+       $obj->driver_id=$driverId;
+       $obj->order_id=$orderId;
+      if ($obj->driver_id) {
+        if ($this->Orderdb->updateDriverInOrder($obj)) 
+           echo "ok";
+        else
+            echo "fail";   
+        
+       
+        return;
+           
+      } 
+      
+        echo "fail";
+       return;
+     
+       
+    }    
+  
   function getDriverIdByPhone($driverPhone) {
     $this->load->model('Driverdb');
     $result->data = $this->Driverdb->getDriverIdByPhone($driverPhone);
@@ -18,7 +41,7 @@ class Jsonapi extends Base_Controller {
 
     $this->load->model('Orderdb');
     
-    $order->order = $this->Orderdb->getOrderList();
+    $order->order = $this->Orderdb->getPendingOrderList($driverId);
     
     //print_r($serviceFinal);
     //$result->data = $this->simplejsonclass->toJSON($serviceFinal);
@@ -29,6 +52,20 @@ class Jsonapi extends Base_Controller {
     $this->load->view('xml/json', $result);
   }
   
+  function getOrder($orderId) {
+
+    $this->load->model('Orderdb');
+    
+    $order->order = $this->Orderdb->getOrder($orderId);
+    
+    //print_r($serviceFinal);
+    //$result->data = $this->simplejsonclass->toJSON($serviceFinal);
+    //echo "fasdfsdfsdaf =========" . $result->data ; 
+    
+    $result->data = json_encode($order);
+    
+    $this->load->view('xml/json', $result);
+  }
   
   function getOrderHistory($driverId, $page=1) {
 

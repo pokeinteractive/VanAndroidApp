@@ -1,9 +1,9 @@
 <resources>
 
-    <string name="app_name">CallVanApp</string>
+    <string name="app_name">有運行</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
-    <string name="title_activity_main">Call Van App</string>
+    <string name="title_activity_main">有運行</string>
 
         <!-- for drawer -->
     <string name="close">Close</string>

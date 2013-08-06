@@ -34,7 +34,7 @@ public class URLs implements Serializable {
 	// Weddingido URL
 	public final static String SUBJECT_LIST = URL_WEDDINGIDO_API_HOST+"jsonapi/getSubjectList";
 	public final static String SERVICE_LIST = URL_WEDDINGIDO_API_HOST+"jsonapi/getOrderList";
-	public final static String SERVICE_DETAIL = URL_WEDDINGIDO_API_HOST+"jsonapi/getService";
+	public final static String SERVICE_DETAIL = URL_WEDDINGIDO_API_HOST+"jsonapi/getOrder";
 	public final static String FULL_COMMENT_LIST = URL_WEDDINGIDO_API_HOST+"jsonapi/getCommentList/0";
 	public final static String SERVICE_COMMENT_LIST = URL_WEDDINGIDO_API_HOST+"jsonapi/getCommentList";
 	

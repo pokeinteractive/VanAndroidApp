@@ -22,6 +22,14 @@ class Orderdb extends Model {
         return $query->result();
    }
    
+   function getPendingOrderList()
+   {
+       $this->load->database();
+        $query = $this->db->query("select o.order_id, '120' as price, o.remark, o.cust_phone, o.remark, o.order_date, t.name as timeslot, l.name as from_location, l2.name as to_locaiton,  o.driver_id from `order` o, timeslot t, location l, location l2 where o.timeslot_id=t.timeslot_id and o.to_location_id=l2.location_id and o.from_location_id=l.location_id and o.status = 'Y' and order_date >= CURRENT_DATE and driver_id is null order by order_date, t.seq");
+        return $query->result();
+   }
+  
+    
    function getOrderHistoryList($driverId)
    {
        $this->load->database();
@@ -88,11 +96,19 @@ class Orderdb extends Model {
   
   function updateDriverInOrder($obj) {
       $this->load->database();
-
-      $this->db->set('driver_id', $obj->driver_id);
-      $this->db->where('order_id', $obj->order_id);
-      $result = $this->db->update('order');
-    //   echo "result=".$result;
+    
+      $query = $this->db->query("select o.driver_id from `order` o where o.driver_id IS NULL and o.order_id=" .  $obj->order_id);
+      $data = $query->result();
+      if ($data) {
+        if ($data[0]->driver_id > 0) {
+          return false;
+        } else {
+           $this->db->set('driver_id', $obj->driver_id);
+           $this->db->where('order_id', $obj->order_id);
+           $result = $this->db->update('order');
+        }
+      }
+ 
       return $result;
    }
   

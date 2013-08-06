@@ -60,6 +60,8 @@ public class AppContext extends Application {
 	private IAppManager imService;
 
 
+	private int showTabPage = -1;
+	
 	private String uuid = null;
 	private String driverId = null;
 	private TextView matchPointTextView = null;
@@ -357,12 +359,12 @@ public class AppContext extends Application {
 	 * @return
 	 * @throws ApiException
 	 */
-	public Service getService(int service_id, boolean isRefresh) throws AppException {
+	public Service getService(String order_id, boolean isRefresh) throws AppException {
 		Service news = null;
-		String key = "service_" + service_id;
+		String key = "order_" + order_id;
 		if (isNetworkConnected() && (!isReadDataCache(key) || isRefresh)) {
 			try {
-				news = ApiClient.getServiceDetail(this, service_id);
+				news = ApiClient.getServiceDetail(this, order_id);
 				if (news != null) {
 
 					news.setCacheKey(key);
@@ -792,4 +794,16 @@ public class AppContext extends Application {
 	public void setMatchPointTextView(TextView matchPointTextView) {
 		this.matchPointTextView = matchPointTextView;
 	}
+
+
+	public int getShowTabPage() {
+		return showTabPage;
+	}
+
+
+	public void setShowTabPage(int showTabPage) {
+		this.showTabPage = showTabPage;
+	}
+	
+	
 }
