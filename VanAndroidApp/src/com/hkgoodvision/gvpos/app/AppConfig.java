@@ -41,7 +41,6 @@ public class AppConfig{
 	public final static String CONF_VOICE = "perf_voice";
 	
 	private Context mContext;
-	private AccessInfo accessInfo = null;
 	private static AppConfig appConfig;
 	
 	public static AppConfig getAppConfig(Context context)
@@ -98,30 +97,6 @@ public class AppConfig{
 		return StringUtils.toLong(get(CONF_EXPIRESIN));
 	}
 	
-	public void setAccessInfo(String accessToken, String accessSecret, long expiresIn)
-	{
-		if(accessInfo == null)
-			accessInfo = new AccessInfo();
-		accessInfo.setAccessToken(accessToken);
-		accessInfo.setAccessSecret(accessSecret);
-		accessInfo.setExpiresIn(expiresIn);
-		//保存到配置
-		this.setAccessToken(accessToken);
-		this.setAccessSecret(accessSecret);
-		this.setExpiresIn(expiresIn);
-	}
-	
-	public AccessInfo getAccessInfo()
-	{
-		if(accessInfo == null && !StringUtils.isEmpty(getAccessToken()) && !StringUtils.isEmpty(getAccessSecret()))
-		{
-			accessInfo = new AccessInfo();
-			accessInfo.setAccessToken(getAccessToken());
-			accessInfo.setAccessSecret(getAccessSecret());
-			accessInfo.setExpiresIn(getExpiresIn());
-		}
-		return accessInfo;
-	}
 	
 	public String get(String key)
 	{

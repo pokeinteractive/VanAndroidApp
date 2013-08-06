@@ -30,12 +30,9 @@ import android.os.AsyncTask;
 import com.hkgoodvision.gvpos.app.AppContext;
 import com.hkgoodvision.gvpos.app.AppException;
 import com.hkgoodvision.gvpos.constant.URLs;
-import com.hkgoodvision.gvpos.dao.vo.MembershipList;
 import com.hkgoodvision.gvpos.dao.vo.Result;
-import com.hkgoodvision.gvpos.dao.vo.RewardList;
 import com.hkgoodvision.gvpos.dao.vo.Service;
 import com.hkgoodvision.gvpos.dao.vo.ServiceList;
-import com.hkgoodvision.gvpos.dao.vo.SubjectList;
 
 /**
  * API客户端接口：用于访问网络数据
@@ -408,123 +405,6 @@ public class ApiClient {
 		return bitmap;
 	}
 	
-	/**
-	 * 检查版本更新
-	 * @param url
-	 * @return
-	 */
-//	public static Update checkVersion(AppContext appContext) throws AppException {
-//		try{
-//			return Update.parse(http_get(appContext, URLs.UPDATE_VERSION));		
-//		}catch(Exception e){
-//			if(e instanceof AppException)
-//				throw (AppException)e;
-//			throw AppException.network(e);
-//		}
-//	}
-//	
-	
-	
-	
-
-	
-
-	public static Result rewardApply(AppContext appContext, final String uuid, final String email, final int rewardId) throws AppException {
-		Map<String,Object> params = new HashMap<String,Object>();
-		params.put("uuid", uuid);
-		params.put("email", email);
-		params.put("reward_id", rewardId);
-				
-		try{
-			return Result.parse(_post(appContext, URLs.REWARD_APPLY, params, null));		
-		}catch(Exception e){
-			if(e instanceof AppException)
-				throw (AppException)e;
-			throw AppException.network(e);
-		}
-	}
-	
-	/**
-	 * Register account
-	 * @param uid
-	 * @param type 1:@我的信息 2:未读消息 3:评论个数 4:新粉丝个数
-	 * @return
-	 * @throws AppException
-	 */
-	public static Result registerService(AppContext appContext, String uuid) throws AppException {
-		Map<String,Object> params = new HashMap<String,Object>();
-		params.put("uuid", uuid);
-				
-		try{
-			return Result.parse(_post(appContext, URLs.REGISTER, params, null));		
-		}catch(Exception e){
-			if(e instanceof AppException)
-				throw (AppException)e;
-			throw AppException.network(e);
-		}
-	}
-	
-	/**
-	 * Earn point
-	 * @param appContext
-	 * @param uuid
-	 * @return
-	 * @throws AppException
-	 */
-//	public static Result earnPoint(AppContext appContext, String uuid, String serviceId, int point) throws AppException {
-//		Map<String,Object> params = new HashMap<String,Object>();
-//		params.put("uuid", uuid);
-//		params.put("service_id", serviceId);
-//		params.put("point", ""+point);
-//				
-//		try{
-//			return Result.parse(_post(appContext, URLs.EARN_POINT, params, null));		
-//		}catch(Exception e){
-//			if(e instanceof AppException)
-//				throw (AppException)e;
-//			throw AppException.network(e);
-//		}
-//	}
-	
-	/**
-	 * Earn point
-	 * @param appContext
-	 * @param uuid
-	 * @return
-	 * @throws AppException
-	 */
-	public static Result audioCheck(AppContext appContext, String uuid, String audioKey, double log, double lat) throws AppException {
-		Map<String,Object> params = new HashMap<String,Object>();
-		params.put("uuid", uuid);
-		params.put("audiokey", audioKey);
-		params.put("log", log);
-		params.put("lat", lat);
-		
-		try{
-			return Result.parse(_post(appContext, URLs.AUDIO_CHECK, params, null));		
-		}catch(Exception e){
-			if(e instanceof AppException)
-				throw (AppException)e;
-			throw AppException.network(e);
-		}
-	}
-	
-	
-	public static SubjectList getSubjectList(AppContext appContext, final int catalog, final int pageIndex, final int pageSize) throws AppException {
-		String newUrl = _MakeURL(URLs.SUBJECT_LIST, new HashMap<String, Object>(){{
-			put("catalog", catalog);
-			put("pageIndex", pageIndex);
-			put("pageSize", pageSize);
-		}});
-		
-		try{
-			return SubjectList.parse(http_get(appContext, newUrl));		
-		}catch(Exception e){
-			if(e instanceof AppException)
-				throw (AppException)e;
-			throw AppException.network(e);
-		}
-	}
 	
 	public static ServiceList getServiceList(AppContext appContext, final int catalog, final double lat, final double log, final int pageIndex, final int pageSize) throws AppException {
 		int page = pageIndex + 1;
@@ -552,27 +432,7 @@ public class ApiClient {
 		}
 	}
 	
-//	
-//	public static MembershipList getMembershipList(AppContext appContext, String uuid, final int pageIndex, final int pageSize) throws AppException {
-//		int page = pageIndex + 1;
-//		String newUrl = _MakeURL(URLs.MEMBERSHIP_LIST+ "/1/" + (page), new HashMap<String, Object>(){{
-//			put("pageIndex", pageIndex);
-//			put("pageSize", pageSize);
-//		}});
-//		
-//		Map<String,Object> params = new HashMap<String,Object>();
-//		params.put("uuid", uuid);
-//		
-//		try{
-//			return MembershipList.parse(http_post_query(appContext, newUrl, params));		
-//		}catch(Exception e){
-//			if(e instanceof AppException)
-//				throw (AppException)e;
-//			throw AppException.network(e);
-//		}
-//	}
-//	
-	
+
 		
 	/**
 	 * Get service Detail

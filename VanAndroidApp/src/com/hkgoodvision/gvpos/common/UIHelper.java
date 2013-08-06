@@ -12,10 +12,8 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
-import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
 import android.view.View;
@@ -27,8 +25,6 @@ import com.hkgoodvision.gvpos.app.AppManager;
 import com.hkgoodvision.gvpos.ui.AboutUsDialog;
 import com.hkgoodvision.gvpos.ui.ImageDialog;
 import com.hkgoodvision.gvpos.ui.OrderInfoDialog;
-import com.hkgoodvision.gvpos.ui.RewardApplyDialog;
-import com.hkgoodvision.gvpos.ui.RewardApplySuccessDialog;
 
 /**
  * 应用程序UI工具包：封装UI相关的一些操作
@@ -69,61 +65,7 @@ public class UIHelper {
 			"a.tag {font-size:15px;text-decoration:none;background-color:#bbd6f3;border-bottom:2px solid #3E6D8E;border-right:2px solid #7F9FB6;color:#284a7b;margin:2px 2px 2px 0;padding:2px 4px;white-space:nowrap;}</style>";
 	
 	
-	
-	
-	
-//	/**
-//	 * 动态点击跳转到相关新闻、帖子等
-//	 * @param context
-//	 * @param id
-//	 * @param catalog 0其他  1新闻  2帖子  3动弹  4博客  
-//	 */
-//	public static void showActiveRedirect(Context context, Active active)
-//	{
-//		String url = active.getUrl();
-//		//url为空-旧方法
-//		if(StringUtils.isEmpty(url)) {
-//			int id = active.getObjectId();
-//			int catalog = active.getActiveType();
-//			switch (catalog) {
-//				case Active.CATALOG_OTHER:
-//					//其他-无跳转
-//					break;
-//				case Active.CATALOG_NEWS:
-//					showNewsDetail(context, id);
-//					break;
-//				case Active.CATALOG_POST:
-//					showQuestionDetail(context, id);
-//					break;
-//				case Active.CATALOG_TWEET:
-//					showTweetDetail(context, id);
-//					break;
-//				case Active.CATALOG_BLOG:
-//					showBlogDetail(context, id);
-//					break;
-//			}
-//		} else {
-//			showUrlRedirect(context, url);
-//		}
-//	}
-
-	public static void showRewardApply(Context context,final int rewardId, String rewardTitle, int rewardPoint)
-	{
-		Intent intent = new Intent(context, RewardApplyDialog.class);
-		intent.putExtra("rewardId", rewardId);
-		intent.putExtra("title", rewardTitle);
-		intent.putExtra("point", rewardPoint);
-		context.startActivity(intent);
-	}
-	
-	public static void showRewardApplySuccess(Context context)
-	{
-		Intent intent = new Intent(context, RewardApplySuccessDialog.class);
-
-		context.startActivity(intent);
-	}
-
-	
+		
 	public static void showOrderInfo(Context context,final String orderId)
 	{
 		Intent intent = new Intent(context, OrderInfoDialog.class);
@@ -169,26 +111,7 @@ public class UIHelper {
 		} 
 	}
 		
-	
-	/**
-	 * 获取TextWatcher对象
-	 * @param context
-	 * @param tmlKey
-	 * @return
-	 */
-	public static TextWatcher getTextWatcher(final Activity context, final String temlKey) {
-		return new TextWatcher() {		
-			public void onTextChanged(CharSequence s, int start, int before, int count) {
-				//保存当前EditText正在编辑的内容
-				((AppContext)context.getApplication()).setProperty(temlKey, s.toString());
-			}		
-			public void beforeTextChanged(CharSequence s, int start, int count, int after) {}		
-			public void afterTextChanged(Editable s) {}
-		};
-	}
-	
 
-	
 	/**
 	 * 组合动态的回复文本
 	 * @param name

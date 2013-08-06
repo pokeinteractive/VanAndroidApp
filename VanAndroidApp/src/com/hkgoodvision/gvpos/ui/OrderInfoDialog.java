@@ -1,12 +1,12 @@
 package com.hkgoodvision.gvpos.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -14,22 +14,28 @@ import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
+import com.callvan.gvpos.activity.AlertDialogManager;
 import com.callvan.gvpos.activity.R;
+import com.callvan.gvpos.activity.ServerUtilities;
 import com.hkgoodvision.gvpos.app.AppContext;
 import com.hkgoodvision.gvpos.app.AppException;
 import com.hkgoodvision.gvpos.common.BitmapManager;
 import com.hkgoodvision.gvpos.common.UIHelper;
 import com.hkgoodvision.gvpos.dao.vo.Service;
+import com.vanapp.constant.URLConstant;
 
 public class OrderInfoDialog extends SherlockActivity implements OnTouchListener {
 
 	private ImageView mDialog;
 	TextView phone;
+	Service service = null;
 	
-	ViewGroup currentViewGroup = null;
+	protected Context context = null;
 	protected AppContext appContext;
 
 	private Handler listViewServiceHandler;
+	
+	private Handler showPhoneHandler;
 
 	private ProgressBar order_info_progress;
 
@@ -47,39 +53,14 @@ public class OrderInfoDialog extends SherlockActivity implements OnTouchListener
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setHomeButtonEnabled(true);
 
-		//getSupportActionBar().setTitle("MatchPoint");
-
-		// Make us non-modal, so that others can receive touch events.
-		// getWindow().setFlags(LayoutParams.FLAG_NOT_TOUCH_MODAL,
-		// LayoutParams.FLAG_NOT_TOUCH_MODAL);
-		// getWindow().setFlags(LayoutParams.FLAG_,
-		// LayoutParams.FLAG_NOT_TOUCH_MODAL);
-		//
-		// // ...but notify us that it happened.
-		// getWindow().setFlags(LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH,
-		// LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH);
-
 		appContext = (AppContext) this.getApplicationContext();
-		
+		context = this;
 		orderId = getIntent().getStringExtra("orderId");
 		
 		order_info_progress = (ProgressBar) findViewById(R.id.order_info_progress);
 
 		initFrameListView();
 
-		// mDialog.setClickable(true);
-		//
-		//
-		//
-		// //finish the activity (dismiss the image dialog) if the user clicks
-		// //anywhere on the image
-		// mDialog.setOnClickListener(new OnClickListener() {
-		// @Override
-		// public void onClick(View v) {
-		// mDialog.setImageResource(R.drawable.food2);
-		// // finish();
-		// }
-		// });
 
 	}
 
@@ -109,6 +90,8 @@ public class OrderInfoDialog extends SherlockActivity implements OnTouchListener
 	private void initFrameListViewData() {
 		// 初始化Handler
 		listViewServiceHandler = this.getLvHandler();
+		
+		showPhoneHandler = getShowPhoneHandler();
 
 		// 加载资讯数据
 		if (serviceData == null) {
@@ -123,13 +106,6 @@ public class OrderInfoDialog extends SherlockActivity implements OnTouchListener
 
 	}
 
-	/**
-	 * 获取listview的初始化Handler
-	 * 
-	 * @param lv
-	 * @param adapter
-	 * @return
-	 */
 	private Handler getLvHandler() {
 		return new Handler() {
 			public void handleMessage(Message msg) {
@@ -139,21 +115,29 @@ public class OrderInfoDialog extends SherlockActivity implements OnTouchListener
 
 				} else if (msg.what == -1) {
 
-					((AppException) msg.obj).makeToast(currentViewGroup.getContext());
+					((AppException) msg.obj).makeToast(context);
 				}
 
 				order_info_progress.setVisibility(ProgressBar.GONE);
 				
-				// mHeadProgress.setVisibility(ProgressBar.GONE);
-				// if (msg.arg1 == UIHelper.LISTVIEW_ACTION_REFRESH) {
-				// lv.onRefreshComplete(getString(R.string.pull_to_refresh_update)
-				// + new Date().toLocaleString());
-				// lv.setSelection(0);
-				// } else if (msg.arg1 ==
-				// UIHelper.LISTVIEW_ACTION_CHANGE_CATALOG) {
-				// lv.onRefreshComplete();
-				// lv.setSelection(0);
-				// }
+				
+			}
+		};
+	}
+	
+	private Handler getShowPhoneHandler() {
+		return new Handler() {
+			public void handleMessage(Message msg) {
+				if (msg.what >= 0) {
+					
+					phone.setVisibility(View.VISIBLE);
+
+				} else if (msg.what == -1) {
+
+					AlertDialogManager.showAlertDialog(context, "Error in accept Order", "Cannot accpet order", false);
+					
+				}
+
 			}
 		};
 	}
@@ -172,7 +156,7 @@ public class OrderInfoDialog extends SherlockActivity implements OnTouchListener
 	 * @return notice 通知信息
 	 */
 	private void handleLvData(int what, Object obj, int objtype, int actiontype) {
-		Service service = (Service) obj;
+		service = (Service) obj;
 
 	
 		TextView remark = (TextView) findViewById(R.id.cust_remark_id);
@@ -188,7 +172,9 @@ public class OrderInfoDialog extends SherlockActivity implements OnTouchListener
 		acceptButton.setOnClickListener(new View.OnClickListener() {
 		    @Override
 		    public void onClick(View v) {
-		    	phone.setVisibility(View.VISIBLE);
+		    	
+		    	// send to confirm order
+		    	confirmOrder(service.getOrderId(), appContext.getDriverId());
 		    	
 		    }
 		});
@@ -201,23 +187,26 @@ public class OrderInfoDialog extends SherlockActivity implements OnTouchListener
 		    }
 		});
 		
-//		String photoURL = service.getPhoto();
-//		if (photoURL == null || photoURL.endsWith("portrait.gif") || StringUtils.isEmpty(photoURL)) {
-//			photo.setImageResource(R.drawable.widget_dface);
-//		} else {
-//			bmpManager.loadBitmap(URLs.IMAGE_PATH_URL + photoURL, photo);
-//		}
-//
-//		name.setText(service.getServiceName());
-//		address.setText(service.getAddress());
-//		desc.setText(service.getDescription());
-//		promo.setText(service.getPromoDesc());
-//		if (!StringUtils.isEmpty(service.getDescription()))
-//			desclb.setText("簡介");
-//		if (!StringUtils.isEmpty(service.getPromoDesc()))
-//			promolb.setText("推廣活動");
+
 		
 		return;
+	}
+	
+	private void confirmOrder(final String orderId, final String driverId) {
+		new Thread() {
+			public void run() {
+				String result = ServerUtilities.sendHttpRequest(URLConstant.URL_MATCH_ORDER + orderId+"/"+driverId, "");
+				if (!"ok".equals(result)) {
+					Message msg = new Message();
+					msg.what = -1;
+					showPhoneHandler.sendMessage(msg);
+				} else {
+					Message msg = new Message();
+					msg.what = 1;
+					showPhoneHandler.sendMessage(msg);
+				}
+			}
+		}.start();
 	}
 
 	/**

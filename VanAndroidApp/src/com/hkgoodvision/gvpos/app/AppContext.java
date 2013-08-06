@@ -17,8 +17,6 @@ import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.media.AudioManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -26,16 +24,11 @@ import android.os.Handler;
 import android.os.Message;
 import android.widget.TextView;
 
-import com.hkgoodvision.gvpos.common.ImageUtils;
 import com.hkgoodvision.gvpos.common.MethodsCompat;
 import com.hkgoodvision.gvpos.common.StringUtils;
 import com.hkgoodvision.gvpos.dao.ApiClient;
-import com.hkgoodvision.gvpos.dao.vo.MembershipList;
-import com.hkgoodvision.gvpos.dao.vo.Result;
-import com.hkgoodvision.gvpos.dao.vo.RewardList;
 import com.hkgoodvision.gvpos.dao.vo.Service;
 import com.hkgoodvision.gvpos.dao.vo.ServiceList;
-import com.hkgoodvision.gvpos.dao.vo.SubjectList;
 import com.vanapp.service.IAppManager;
 
 /**
@@ -244,73 +237,6 @@ public class AppContext extends Application {
 		return this.unLoginHandler;
 	}
 
-
-	
-	public Result rewardApply(final String uuid, final String email, final int rewardId) throws AppException {
-		return ApiClient.rewardApply(this, uuid, email, rewardId);
-	}
-
-	
-	/**
-	 * Register the account
-	 * 
-	 * @param uuid
-	 * @return
-	 * @throws AppException
-	 */
-	public Result registerService(String uuid) throws AppException {
-		return ApiClient.registerService(this, uuid);
-	}
-
-	/**
-	 * To earn the point of a service
-	 * 
-	 * @param uuid
-	 * @param serviceId
-	 * @param point
-	 * @return
-	 * @throws AppException
-	 */
-//	public Result earnPoint(String uuid, String serviceId, int point) throws AppException {
-//		return ApiClient.earnPoint(this, uuid, serviceId, point);
-//	}
-
-	public Result audioCheck(String uuid, String audiokey, double log, double lag) throws AppException {
-		return ApiClient.audioCheck(this, uuid, audiokey, log, lag);
-	}
-
-	
-	/**
-	 * 新闻列表
-	 * 
-	 * @param catalog
-	 * @param pageIndex
-	 * @param pageSize
-	 * @return
-	 * @throws ApiException
-	 */
-	public SubjectList getSubjectList(int catalog, int pageIndex, boolean isRefresh) throws AppException {
-		SubjectList list = null;
-		String key = "subjectlist_" + catalog + "_" + pageIndex + "_" + PAGE_SIZE;
-		if (isNetworkConnected() && (!isReadDataCache(key) || isRefresh)) {
-			try {
-				list = ApiClient.getSubjectList(this, catalog, pageIndex, PAGE_SIZE);
-				if (list != null && pageIndex == 0) {
-					list.setCacheKey(key);
-					saveObject(list, key);
-				}
-			} catch (AppException e) {
-				list = (SubjectList) readObject(key);
-				if (list == null)
-					throw e;
-			}
-		} else {
-			list = (SubjectList) readObject(key);
-			if (list == null)
-				list = new SubjectList();
-		}
-		return list;
-	}
 
 	/**
 	 * get Service list

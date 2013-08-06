@@ -160,7 +160,7 @@ public class AndroidViewPagerActivity extends SherlockFragmentActivity {
 		
 		appContext.setMatchPointTextView(pointTextView);
 		
-		Handler handler = this.getLvHandler();
+		
 		String driverId = KeyPairDB.getDriverId(this);
 		appContext.setDriverId(driverId);
 		// add keyUUID to context
@@ -235,56 +235,7 @@ public class AndroidViewPagerActivity extends SherlockFragmentActivity {
 		AppManager.getAppManager().finishActivity(this);
 	}
 
-	private Handler getLvHandler() {
-		return new Handler() {
-			public void handleMessage(Message msg) {
-				if (msg.what >= 0) {
-					Result result = (Result)msg.obj;
-					pointTextView.setText(result.getParam1());
-				} else if (msg.what == -1) {
-
-					((AppException) msg.obj).makeToast(mPager.getContext());
-					AppManager.getAppManager().AppExit(appContext);
-				}
-
-			}
-		};
-	}
-
-	private void registerUUID(final String uuid, final Handler handler) {
-		// mHeadProgress.setVisibility(ProgressBar.VISIBLE);
-		new Thread() {
-			public void run() {
-				Message msg = new Message();
-
-				try {
-					// NewsList list = appContext.getNewsList(catalog,
-					// pageIndex, isRefresh);
-					Result res = appContext.registerService(uuid);
-					msg.what = 1;
-					msg.obj = res;
-				} catch (AppException e) {
-					e.printStackTrace();
-					msg.what = -1;
-					msg.obj = e;
-				}
-				// if (curNewsCatalog == catalog)
-				handler.sendMessage(msg);
-			}
-		}.start();
-	}
 	
-	
-	String regIdGCM = null;
-
-	Context ctx = null;
-
-	// Asyntask
-	AsyncTask<Void, Void, Void> mRegisterTask;
-	public static final String SENDER_ID = "569974433968"; 
-	
-	
-
 	
 	private ServiceConnection mConnection = new ServiceConnection() {
 		public void onServiceConnected(ComponentName className, IBinder service) {

@@ -145,7 +145,7 @@ public class PointListFragment extends SherlockFragment {
 		serviceListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				// show popup the reward detail and shop detail
-				if (serviceListData.size() > position-1) {
+				if (serviceListData.size() > position-1 && CATALOG_ID == 1) {
 					Service service = serviceListData.get(position-1); // due to header is the 1st
 					if (service != null) {
 						int a=0;

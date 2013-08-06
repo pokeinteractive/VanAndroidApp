@@ -83,11 +83,11 @@ public class IMService extends Service implements IAppManager {
 		// Timer is used to take the friendList info every UPDATE_TIME_PERIOD;
 		timer = new Timer();
 
-		// send GPS to Server
-		driverId = KeyPairDB.getDriverId(this);
-		if (driverId != null && !"".equals(driverId)) {
-			sendGPSLocaiton(driverId);
-		}
+//		// send GPS to Server
+//		driverId = KeyPairDB.getDriverId(this);
+//		if (driverId != null && !"".equals(driverId)) {
+//			sendGPSLocaiton(driverId);
+//		}
 		
 		AndroidViewPagerActivity.imService = this;
 
@@ -139,7 +139,8 @@ public class IMService extends Service implements IAppManager {
 		isRunGPSSender = false;
 		timer.cancel();
 		timer = new Timer();
-		locationManager.removeUpdates(myLocationListener);
+		if (locationManager != null)
+			locationManager.removeUpdates(myLocationListener);
 	}
 
 	/*----------Listener class to get coordinates ------------- */

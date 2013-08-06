@@ -1,8 +1,6 @@
 package com.hkgoodvision.gvpos.page;
 
-import android.location.Location;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +14,6 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.callvan.gvpos.activity.AndroidViewPagerActivity;
 import com.callvan.gvpos.activity.R;
 import com.hkgoodvision.gvpos.app.AppContext;
-import com.hkgoodvision.gvpos.common.FreqMapUtils;
 import com.hkgoodvision.gvpos.common.LocationTrackUtils;
 import com.vanapp.service.IAppManager;
 
@@ -27,7 +24,6 @@ public class DetectPointFragment extends SherlockFragment {
 
 	TextView scanPointTextView = null;
 
-	FreqMapUtils freqAnalysis = null;
 	AppContext appContext = null;
 	ViewGroup currentViewGroup = null;
 	ImageView imageViewTemp = null;
@@ -35,24 +31,6 @@ public class DetectPointFragment extends SherlockFragment {
 	LocationTrackUtils locaitonTracker = null;
 
 	ToggleButton startStopAudioButton = null;
-
-	long counter = 1;
-
-	// protected void startEarnPoint() {
-	//
-	// // show pop-up
-	// Intent intent = new Intent(this.getActivity().getApplicationContext(),
-	// ImageDialog.class);
-	// intent.putExtra("point", 100);
-	// intent.putExtra("companyName", "美聯社公司");
-	// startActivity(intent);
-	//
-	// //earnPoint();
-	//
-	// // add point to menubar
-	// pointTextView.setText("2050");
-	//
-	// }
 
 	void startGPS() {
 
@@ -91,13 +69,7 @@ public class DetectPointFragment extends SherlockFragment {
 
 		currentViewGroup = baseGroup;
 
-		locaitonTracker = new LocationTrackUtils(this.getActivity());
-		Location location = locaitonTracker.getLocation();
-		if (location != null)
-			Log.d("Detection", "lat=" + location.getLatitude() + "long=" + location.getLongitude());
-
-		// init...
-
+		
 		startStopAudioButton = (ToggleButton) baseGroup.findViewById(R.id.start_scan_button_id);
 
 		startStopAudioButton.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -118,7 +90,7 @@ public class DetectPointFragment extends SherlockFragment {
 
 		});
 
-		IAppManager imService = appContext.getImService();
+		IAppManager imService = AndroidViewPagerActivity.imService;
 		if (imService != null) {
 			if (imService.isRunningGPSSender()) {
 				startGPS();

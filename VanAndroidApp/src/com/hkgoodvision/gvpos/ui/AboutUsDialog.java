@@ -38,7 +38,7 @@ public class AboutUsDialog extends SherlockActivity implements OnTouchListener {
         
 
         wv = (WebView) findViewById(R.id.wv);
-        wv.loadUrl("http://van.poke.com.hk/aboutus");
+        wv.loadUrl("http://van.poke.com.hk/mainact/aboutus");
 	}
 
 	@Override
