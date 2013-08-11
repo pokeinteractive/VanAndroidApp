@@ -4,10 +4,13 @@ class Order extends Base_Controller {
   
   function addOrder() {
     $this->load->model('Timeslotdb');  
+    $this->load->model('Orderdb');  
     
     $data['timeslotList'] = $this->Timeslotdb->getTimeslotList();
-    $data['locationList'] = $this->Timeslotdb->getLocationList();
+    $data['locationList'] = $this->Orderdb->getDistinctLocation();
+    $data['areaList'] = $this->Timeslotdb->getLocationList();
     
+   
     $this->load->view("header", $this->headerTitle);
     $this->load->view('order/addOrder', $data);
     $this->load->view("footer");
@@ -18,7 +21,8 @@ class Order extends Base_Controller {
     $this->load->model('Timeslotdb');    
     $data['order'] = $this->Orderdb->getOrder($order_id);
     $data['timeslotList'] = $this->Timeslotdb->getTimeslotList();
-    $data['locationList'] = $this->Timeslotdb->getLocationList();
+    $data['locationList'] = $this->Orderdb->getDistinctLocation();
+    $data['areaList'] = $this->Timeslotdb->getLocationList();
     $this->load->view("header", $this->headerTitle);
     $this->load->view('order/addOrder', $data);
     $this->load->view("footer");

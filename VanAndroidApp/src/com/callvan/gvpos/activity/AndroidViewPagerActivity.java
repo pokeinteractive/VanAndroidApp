@@ -7,7 +7,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
@@ -24,8 +26,11 @@ import com.hkgoodvision.gvpos.app.AppManager;
 import com.hkgoodvision.gvpos.common.DeviceUuidFactory;
 import com.hkgoodvision.gvpos.common.StringUtils;
 import com.hkgoodvision.gvpos.page.MyFragmentPagerAdapter;
+import com.vanapp.constant.URLConstant;
 import com.vanapp.db.KeyPairDB;
 import com.vanapp.service.IMService;
+import com.vanapp.util.AlertDialogManager;
+import com.vanapp.util.ServerUtilities;
 
 public class AndroidViewPagerActivity extends SherlockFragmentActivity {
 	ActionBar mActionBar;
@@ -36,6 +41,8 @@ public class AndroidViewPagerActivity extends SherlockFragmentActivity {
 	public static IMService imService;
 	public static Context context = null;
 
+	private Handler showAccountBalanceHandler;
+	
 	TextView pointTextView = null;
 
 	public void onCreate(Bundle savedInstanceState) {
@@ -60,7 +67,7 @@ public class AndroidViewPagerActivity extends SherlockFragmentActivity {
 		getSupportActionBar().setCustomView(R.layout.main_menu_custom);
 		getSupportActionBar().setDisplayShowCustomEnabled(true);		
 		
-		
+		showAccountBalanceHandler = getShowAccountBalanceHandler();
 
 		/** Set tab navigation mode */
 		mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -150,29 +157,15 @@ public class AndroidViewPagerActivity extends SherlockFragmentActivity {
 			}
 		}
 
-		// register account
-		DeviceUuidFactory uuidFactory = new DeviceUuidFactory(this);
-		UUID uuid = uuidFactory.getDeviceUuid();
-
 		View pointView = (View) getSupportActionBar().getCustomView();
 		pointTextView = (TextView) pointView.findViewById(R.id.membership_point_total_text);
 		
 		appContext.setMatchPointTextView(pointTextView);
 		
-		
 		String driverId = KeyPairDB.getDriverId(this);
 		appContext.setDriverId(driverId);
-		// add keyUUID to context
-		if (uuid != null && !StringUtils.isEmpty(uuid.toString())) {
-			//registerUUID(uuid.toString(), handler);
-			appContext.setUuid(uuid.toString());
-			// register to server
-//			registerVanDriver(uuid.toString());
-			
-		} else {
-			AppManager.getAppManager().finishAllActivity();
-		}
-
+		
+		showAccountBanalce(driverId);
 		
 		
 	}
@@ -233,6 +226,45 @@ public class AndroidViewPagerActivity extends SherlockFragmentActivity {
 		// 结束Activity&从堆栈中移除
 		AppManager.getAppManager().finishActivity(this);
 	}
+	
+	private Handler getShowAccountBalanceHandler() {
+		return new Handler() {
+			public void handleMessage(Message msg) {
+				if (msg.what >= 0) {
+					
+					String driverAcctBal = KeyPairDB.getDriverAccountBalance(context);
+					pointTextView.setText(driverAcctBal);
+
+				} else if (msg.what == -1) {
+
+					AlertDialogManager.showAlertDialog(context, "Error in getting Account Balance", "Account Balance error!", false);
+					
+				}
+
+			}
+		};
+	}
+	
+	private void showAccountBanalce(final String driverId) {
+		new Thread() {
+			public void run() {
+				// check the driver account balance...
+				String balance = ServerUtilities.sendHttpRequest(URLConstant.URL_GET_DRIVER_ACCOUNT_BALANCE + driverId, "");
+				KeyPairDB.setDriverAccountBalance(balance, context);
+				
+				if ("".equals(balance)) {
+					Message msg = new Message();
+					msg.what = -1;
+					showAccountBalanceHandler.sendMessage(msg);
+				} else {
+					Message msg = new Message();
+					msg.what = 1;
+					showAccountBalanceHandler.sendMessage(msg);
+				}
+			}
+		}.start();
+	}
+
 
 	private ServiceConnection mConnection = new ServiceConnection() {
 		public void onServiceConnected(ComponentName className, IBinder service) {
@@ -242,10 +274,6 @@ public class AndroidViewPagerActivity extends SherlockFragmentActivity {
 			// service that we know is running in our own process, we can
 			// cast its IBinder to a concrete class and directly access it.
 			imService = ((IMService.IMBinder) service).getService();
-
-			if (imService != null && imService.isRunningGPSSender()) {
-				appContext.setImService(imService);
-			}
 
 		}
 

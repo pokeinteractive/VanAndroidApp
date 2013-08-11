@@ -39,7 +39,7 @@ public final class LocationTrackUtils implements LocationListener {
 
 	public LocationTrackUtils(Context context) {
 		this.mContext = context;
-		getLocation();
+		//getLocation();
 	}
 
 	/**
@@ -49,6 +49,9 @@ public final class LocationTrackUtils implements LocationListener {
 	 */
 	public Location getLocation() {
 		try {
+			if (mContext == null)
+				return null;
+			
 			locationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
 
 			// getting GPS status
@@ -178,6 +181,7 @@ public final class LocationTrackUtils implements LocationListener {
 
 	@Override
 	public void onLocationChanged(Location location) {
+		Log.d("test location change", "location change!" + location.getLatitude() + " "  + location.getLongitude());
 	}
 
 	@Override

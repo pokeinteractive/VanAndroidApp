@@ -1,7 +1,5 @@
 package com.callvan.gvpos.activity;
 
-import static com.callvan.gvpos.activity.CommonUtilities.SENDER_ID;
-import static com.callvan.gvpos.activity.CommonUtilities.displayMessage;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -12,15 +10,18 @@ import android.util.Log;
 import com.google.android.gcm.GCMBaseIntentService;
 import com.hkgoodvision.gvpos.app.AppContext;
 import com.vanapp.bean.ClientOrder;
+import com.vanapp.constant.URLConstant;
 import com.vanapp.db.KeyPairDB;
 import com.vanapp.parser.OrderMessageParser;
+import com.vanapp.util.AlertDialogManager;
+import com.vanapp.util.ServerUtilities;
 
 public class GCMIntentService extends GCMBaseIntentService {
 
 	private static final String TAG = "GCMIntentService";
 
 	public GCMIntentService() {
-		super(SENDER_ID);
+		super(URLConstant.GCM_SENDER_ID);
 	}
 
 	/**
@@ -29,7 +30,6 @@ public class GCMIntentService extends GCMBaseIntentService {
 	@Override
 	protected void onRegistered(Context context, String registrationId) {
 		Log.i(TAG, "Device registered: regId = " + registrationId);
-		displayMessage(context, "Your device registred with GCM");
 
 		ServerUtilities.register(context, RegisterActivity.name, RegisterActivity.phone, registrationId);
 
@@ -52,7 +52,6 @@ public class GCMIntentService extends GCMBaseIntentService {
 	@Override
 	protected void onUnregistered(Context context, String registrationId) {
 		Log.i(TAG, "Device unregistered");
-		displayMessage(context, getString(R.string.gcm_unregistered));
 		ServerUtilities.unregister(context, registrationId);
 	}
 
@@ -63,8 +62,6 @@ public class GCMIntentService extends GCMBaseIntentService {
 	protected void onMessage(Context context, Intent intent) {
 		Log.i(TAG, "Received message");
 		String message = intent.getExtras().getString("price");
-
-		displayMessage(context, message);
 		// notifies user
 		generateNotification(context, message);
 	}
@@ -76,7 +73,6 @@ public class GCMIntentService extends GCMBaseIntentService {
 	protected void onDeletedMessages(Context context, int total) {
 		Log.i(TAG, "Received deleted messages notification");
 		String message = getString(R.string.gcm_deleted, total);
-		displayMessage(context, message);
 		// notifies user
 		generateNotification(context, message);
 	}
@@ -87,14 +83,12 @@ public class GCMIntentService extends GCMBaseIntentService {
 	@Override
 	public void onError(Context context, String errorId) {
 		Log.i(TAG, "Received error: " + errorId);
-		displayMessage(context, getString(R.string.gcm_error, errorId));
 	}
 
 	@Override
 	protected boolean onRecoverableError(Context context, String errorId) {
 		// log message
 		Log.i(TAG, "Received recoverable error: " + errorId);
-		displayMessage(context, getString(R.string.gcm_recoverable_error, errorId));
 		return super.onRecoverableError(context, errorId);
 	}
 

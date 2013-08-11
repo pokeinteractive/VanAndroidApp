@@ -53,7 +53,7 @@
             
         </RelativeLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dip"
@@ -66,7 +66,28 @@
                 android:text=""
                 android:textColor="@color/listitem_blue"
                 android:textSize="18dp" />
-        </LinearLayout>
+            
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/servicelist_listitem_phone_section"
+                android:layout_alignParentRight="true"
+                android:paddingLeft="10dip"
+                android:paddingRight="10dip" >
+
+				<TextView
+	                android:id="@+id/servicelist_listitem_phone"
+	                android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                android:text=""
+	                android:textColor="@color/red"
+	                android:textSize="15dp" />
+                
+            </LinearLayout>
+            
+            
+        </RelativeLayout>
     </LinearLayout>
 
 </LinearLayout>

@@ -50,7 +50,7 @@ public class ServiceList extends Entity {
 		this.serviceList = serviceList;
 	}
 
-	public static ServiceList parse(InputStream inputStream) throws IOException, JSONException {
+	public static ServiceList parse(InputStream inputStream, boolean showPhone) throws IOException, JSONException {
 		ServiceList serviceList = new ServiceList();
 		
 		BufferedReader streamReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
@@ -87,7 +87,7 @@ public class ServiceList extends Entity {
 			String order_date = oneObject.getString("order_date");
 			String timeslot = oneObject.getString("timeslot");
 			String from_location = oneObject.getString("from_location");
-			String to_location = oneObject.getString("to_locaiton");
+			String to_location = oneObject.getString("to_location");
 			String price = oneObject.getString("price");
 
 			Service service = new Service();
@@ -99,6 +99,7 @@ public class ServiceList extends Entity {
 			service.setFromLocation(from_location);
 			service.setToLocation(to_location);
 			service.setPrice(price);
+			service.setShowPhone(showPhone);
 
 			serviceList.getServiceList().add(service);
 		}

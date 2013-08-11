@@ -37,22 +37,26 @@ public class DetectPointFragment extends SherlockFragment {
 
 	void startGPS() {
 
-		KeyPairDB.setGPSUpdaterStatus(true, context);
+		//KeyPairDB.setGPSUpdaterStatus(true, context);
 		startStopAudioButton.setChecked(true);
 		scanPointTextView.setText("接收柯打中......");
 		IMService imService = IMService.getInstance();
-		if (imService != null)
+		if (imService != null) {
+			imService.writeGPSUpdaterStatus(true);
 			imService.sendGPSLocaiton(appContext.getDriverId());
+		}
 	}
 
 	void stopGPS() {
 
-		KeyPairDB.setGPSUpdaterStatus(false, context);
+		//KeyPairDB.setGPSUpdaterStatus(false, context);
 		startStopAudioButton.setChecked(false);
 		scanPointTextView.setText("按下開關接收柯打");
 		IMService imService = IMService.getInstance();
-		if (imService != null)
+		if (imService != null) {
+			imService.writeGPSUpdaterStatus(false);
 			imService.stopGPSLocation();
+		}
 	}
 
 	@Override
@@ -102,7 +106,7 @@ public class DetectPointFragment extends SherlockFragment {
 		Log.d("DetectPointFragment", "test if the imService checking:" + imService);
 		if (imService != null) {
 			Log.d("DetectPointFragment", "test if the imService checking=" + imService.isRunningGPSSender());
-			if (KeyPairDB.getGPSUpdaterStatus(this.getActivity())) {
+			if (imService.readGPSUpdaterStatus()) {
 				startGPS();
 			} else {
 				stopGPS();

@@ -16,29 +16,31 @@
 
 package com.vanapp.service;
 
+import java.io.BufferedReader;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URLEncoder;
-import java.util.Timer;
-import java.util.TimerTask;
 
+import android.app.AlarmManager;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.location.Criteria;
+import android.content.IntentFilter;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.net.ConnectivityManager;
 import android.os.Binder;
-import android.os.Bundle;
 import android.os.IBinder;
-import android.os.Looper;
+import android.os.SystemClock;
 import android.util.Log;
 
 import com.callvan.gvpos.activity.AndroidViewPagerActivity;
-import com.callvan.gvpos.activity.ServerUtilities;
+import com.hkgoodvision.gvpos.common.LocationTrackUtils;
 import com.vanapp.constant.URLConstant;
 import com.vanapp.db.KeyPairDB;
+import com.vanapp.util.ServerUtilities;
 
 /**
  * This is an example of implementing an application service that runs locally
@@ -55,7 +57,7 @@ import com.vanapp.db.KeyPairDB;
 public class IMService extends Service {
 	// private NotificationManager mNM;
 
-	private final int UPDATE_TIME_PERIOD = 5000;
+	private final int UPDATE_TIME_PERIOD = 1000*60*10;
 
 	private final IBinder mBinder = new IMBinder();
 
@@ -63,13 +65,15 @@ public class IMService extends Service {
 
 	protected static IMService imService = null;
 
-	// timer to take the updated data from server
-	private Timer timer;
-
 	private boolean isRunGPSSender = false;
 
-	LocationManager locationManager = null;
-	MyLocationListener myLocationListener = null;
+	AlarmManager am;
+	final static private long ONE_SECOND = 1000;
+	final static private long TWENTY_SECONDS = ONE_SECOND * 5;
+	PendingIntent pi;
+	BroadcastReceiver br;
+
+	private Context context = null;
 
 	public static IMService getInstance() {
 
@@ -87,12 +91,11 @@ public class IMService extends Service {
 	public void onCreate() {
 
 		Log.i("IMService onCreate", "...");
-		// Timer is used to take the friendList info every UPDATE_TIME_PERIOD;
-		timer = new Timer();
 
 		imService = this;
+		context = AndroidViewPagerActivity.context;
 
-		if (KeyPairDB.getGPSUpdaterStatus(AndroidViewPagerActivity.context)) {
+		if (readGPSUpdaterStatus()) {
 			// send GPS to Server
 			driverId = KeyPairDB.getDriverId(this);
 			if (driverId != null && !"".equals(driverId)) {
@@ -101,6 +104,46 @@ public class IMService extends Service {
 		}
 
 		AndroidViewPagerActivity.imService = this;
+
+	}
+
+	public void writeGPSUpdaterStatus(boolean status) {
+		try {
+			FileOutputStream fos = openFileOutput("GPSStatusFile", Context.MODE_PRIVATE);
+			fos.write(status ? "Y".getBytes() : "N".getBytes());
+			fos.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public boolean readGPSUpdaterStatus() {
+		String status = "N";
+
+		try {
+			InputStream instream = openFileInput("GPSStatusFile");
+
+			// prepare the file for reading
+			InputStreamReader inputreader = new InputStreamReader(instream);
+			BufferedReader buffreader = new BufferedReader(inputreader);
+
+			// read every line of the file into the line-variable, on line at
+			// the time
+			String line = "";
+			while ((line = buffreader.readLine()) != null) {
+				status = line;
+			}
+
+			// close the file again
+			instream.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		if ("Y".equals(status))
+			return true;
+		else
+			return false;
 
 	}
 
@@ -125,6 +168,7 @@ public class IMService extends Service {
 		Log.i("sendGPSLocaiton is being start", "...");
 
 		this.driverId = driverId;
+		context = AndroidViewPagerActivity.context;
 
 		isRunGPSSender = true;
 
@@ -132,10 +176,21 @@ public class IMService extends Service {
 
 	}
 
+	public void stopGPSLocation() {
+		Log.d("stopGPSLocation", "NOW STOP SEND GPS to SERVER");
+		context = AndroidViewPagerActivity.context;
+
+		isRunGPSSender = false;
+		if (am != null)
+			am.cancel(pi);
+		if (br != null)
+			unregisterReceiver(br);
+		am = null;
+	}
+
 	public void exitAll() {
 		Log.d("exitAll", "NOW STOP SEND GPS to SERVER ALL TOTALLY");
 		isRunGPSSender = false;
-		timer.cancel();
 		this.stopSelf();
 		imService = null;
 	}
@@ -144,120 +199,62 @@ public class IMService extends Service {
 	public void onDestroy() {
 		Log.i("IMService is being destroyed", "...");
 		imService = null;
+		if (am != null)
+			am.cancel(pi);
+		if (br != null)
+			unregisterReceiver(br);
 		super.onDestroy();
-	}
-
-	public void stopGPSLocation() {
-		Log.d("stopGPSLocation", "NOW STOP SEND GPS to SERVER");
-		isRunGPSSender = false;
-		timer.cancel();
-		timer = new Timer();
-		if (locationManager != null)
-			locationManager.removeUpdates(myLocationListener);
 	}
 
 	/*----------Listener class to get coordinates ------------- */
 	private void addLocationListener() {
-		// timer.scheduleAtFixedRate(new TimerTask() {
-		timer.schedule(new TimerTask() {
+
+		if (am == null) {
+			setup();
+		}
+		am.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + TWENTY_SECONDS,
+				UPDATE_TIME_PERIOD, pi);
+
+	}
+
+	private void setup() {
+		br = new BroadcastReceiver() {
+			@Override
+			public void onReceive(Context c, Intent i) {
+				// Toast.makeText(c, "Rise and Shine!",
+				// Toast.LENGTH_LONG).show();
+				LocationTrackUtils a = new LocationTrackUtils(context);
+				Location d = a.getLocation();
+				if (d != null)
+					updateLocation(d);
+				// am.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+				// SystemClock.elapsedRealtime() + TWENTY_SECONDS, pi);
+			}
+		};
+		registerReceiver(br, new IntentFilter("com.callvan.updateGPS"));
+		pi = PendingIntent.getBroadcast(this, 0, new Intent("com.callvan.updateGPS"), 0);
+		am = (AlarmManager) (this.getSystemService(Context.ALARM_SERVICE));
+	}
+
+	public void updateLocation(final Location loc) {
+
+		new Thread() {
 			public void run() {
-				try {
-					if (isRunGPSSender) {
-						Looper.prepare();// Initialise the current thread as a
-											// looper.
-						Log.d("LOC_SERVICE", "Location sending start");
+				Log.d("Send GPS start", "step 1");
+				if (isRunGPSSender) {
 
-						locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+					if (loc != null) {
+						String params = "id=" + URLEncoder.encode(driverId) + "&lat="
+								+ URLEncoder.encode("" + loc.getLatitude()) + "&long="
+								+ URLEncoder.encode("" + loc.getLongitude());
 
-						Criteria c = new Criteria();
-						c.setAccuracy(Criteria.ACCURACY_COARSE);
+						ServerUtilities.sendHttpRequest(URLConstant.URL_UPDATE_GPS_LOCATION + params, "");
 
-						final String PROVIDER = locationManager.getBestProvider(c, true);
-
-						myLocationListener = new MyLocationListener();
-						locationManager.requestLocationUpdates(PROVIDER, 600, 0, myLocationListener);
-						Log.d("LOC_SERVICE", "Location sending end");
-						Looper.loop();
 					}
-				} catch (Exception ex) {
-					ex.printStackTrace();
 				}
-
 			}
-		}, UPDATE_TIME_PERIOD);
+		}.start();
 
-		// Thread triggerService = new Thread(new Runnable() {
-		// public void run() {
-		// try {
-		// Looper.prepare();// Initialise the current thread as a
-		// // looper.
-		// LocationManager lm = (LocationManager)
-		// getSystemService(Context.LOCATION_SERVICE);
-		//
-		// Criteria c = new Criteria();
-		// c.setAccuracy(Criteria.ACCURACY_COARSE);
-		//
-		// final String PROVIDER = lm.getBestProvider(c, true);
-		//
-		// MyLocationListener myLocationListener = new MyLocationListener();
-		// lm.requestLocationUpdates(PROVIDER, 600000, 0, myLocationListener);
-		// Log.d("LOC_SERVICE", "Service RUNNING!");
-		// Looper.loop();
-		// } catch (Exception ex) {
-		// ex.printStackTrace();
-		// }
-		// }
-		// }, "LocationThread");
-		// triggerService.start();
-	}
-
-	public void updateLocation(Location loc) {
-		// Context appCtx = MyApplication.getAppContext();
-
-		if (isRunGPSSender) {
-			// latitude = location.getLatitude();
-			// longitude = location.getLongitude();
-			if (loc != null) {
-				String params = "action=loc&id=" + URLEncoder.encode(driverId) + "&lat="
-						+ URLEncoder.encode("" + loc.getLatitude()) + "&long="
-						+ URLEncoder.encode("" + loc.getLongitude());
-
-				ServerUtilities.sendHttpRequest(URLConstant.URL_BASE + params, "");
-
-			}
-		}
-
-		// Intent filterRes = new Intent();
-		// filterRes.setAction("xxx.yyy.intent.action.LOCATION");
-		// filterRes.putExtra("latitude", latitude);
-		// filterRes.putExtra("longitude", longitude);
-		// appCtx.sendBroadcast(filterRes);
-	}
-
-	class MyLocationListener implements LocationListener {
-
-		@Override
-		public void onLocationChanged(Location location) {
-			updateLocation(location);
-		}
-
-		@Override
-		public void onProviderDisabled(String provider) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void onProviderEnabled(String provider) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void onStatusChanged(String provider, int status, Bundle extras) {
-			// TODO Auto-generated method stub
-
-		}
 	}
 
 }

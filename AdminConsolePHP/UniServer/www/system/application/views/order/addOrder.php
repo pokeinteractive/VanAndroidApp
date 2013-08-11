@@ -1,3 +1,34 @@
+<script language="javascript" type="text/javascript"  charset="utf8">
+ function dropdownlist(listindex, select_id)
+ {
+   var selectBox = document.getElementById(select_id);
+   selectBox.options.length = 0;
+ switch (listindex)
+ {
+  <? 
+    $currentAreaId = "";
+    $count=0;
+    foreach ($locationList as $row) { 
+      if ($currentAreaId !=  $row->from_id) {
+        if ($currentAreaId <> "")
+          echo " break; \r\n";
+     
+         echo " case \"". $row->from_id . "\" :";
+         $count = 0;
+         $currentAreaId = $row->from_id;
+      }
+      echo "selectBox.options[$count]=new Option(\"".$row->from_name."\",\"".$row->from_name."\");";
+   
+      $count = $count + 1;
+     }
+  ?>
+
+ 
+ }
+ return true;
+ }
+</script>
+
 <form action="/order/toAddOrder" method="post">
 <input type="hidden" name="order_id" value="<?=$order->order_id?>"/>
 
@@ -18,36 +49,42 @@
 <BR>
   Remark: <textarea name="remark" cols=50 rows=3><?=$order->remark?></textarea>
 <BR>
-<table>
-  <tr><td colspan="16"><center>Source</center></td></tr>
-<tr>
-
-<td>To \ From</td>
-<?
-  foreach ($locationList as $row) {
-    echo "<td width=75>$row->name <BR>($row->area)</td>";
-  }
-?>
-</tr>
-<?
-  foreach ($locationList  as $row) {
-    echo "<tr height=50><td width='85'>$row->name <BR>($row->area)</td>";
+  From Area:
+  <select name="from_area" size='12' onchange="javascript:dropdownlist(this.options[this.selectedIndex].value, 'fromLocationID');">
+    <? foreach ($areaList  as $row) { ?>
+    <option <?php if ($order->from_location_id == $row->location_id) echo "selected"; ?> value='<?=$row->location_id?>'><?=$row->name?></option>
+    <? } ?> 
+  </select>
+  From Location:
+  <select name="from_location" id="fromLocationID" >
+    <?php if ($order->from_location) { ?>     
+    <option value="<?=$order->from_location?>"><?=$order->from_location?></option>
+    <?php } else { ?>
+    <option value="">Select Sub-Category</option>
+    <?php } ?>
     
-    foreach ($locationList as $loc) {
-      $checked = "";
-      if ($loc->location_id == $order->from_location_id && $row->location_id == $order->to_location_id)
-          $checked = "checked";
-      
-        ?><td><input <?=$checked?> type="radio"  name="location_map" value="loc_<?=$loc->location_id?>_<?=$row->location_id?>" /></td><?
-    }
+  </select>
+
+  
+  To Area:
+  <select name="to_area" size='12' onchange="javascript:dropdownlist(this.options[this.selectedIndex].value, 'toLocationID');">>
+    <? foreach ($areaList  as $row) { ?>
+    <option  <?php if ($order->to_location_id == $row->location_id) echo "selected"; ?> value='<?=$row->location_id?>'><?=$row->name?></option>
+    <? } ?> 
+  </select>
+  To Location:
+  <select name="to_location" id="toLocationID" >
+    <?php if ($order->to_location) { ?>     
+    <option value="<?=$order->to_location?>"><?=$order->to_location?></option>
+    <?php } else { ?>
+    <option value="">Select Sub-Category</option>
+    <?php } ?>
     
-    echo "</tr>";
-  }
-?>
 
-</table>
+  </select>
 
 
+<BR><BR>
 <input type="submit" class="submit button" name="submit" value="Submit" />
 
 </form>

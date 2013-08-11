@@ -29,10 +29,10 @@ import android.os.AsyncTask;
 
 import com.hkgoodvision.gvpos.app.AppContext;
 import com.hkgoodvision.gvpos.app.AppException;
-import com.hkgoodvision.gvpos.constant.URLs;
 import com.hkgoodvision.gvpos.dao.vo.Result;
 import com.hkgoodvision.gvpos.dao.vo.Service;
 import com.hkgoodvision.gvpos.dao.vo.ServiceList;
+import com.vanapp.constant.URLConstant;
 
 /**
  * API客户端接口：用于访问网络数据
@@ -96,7 +96,7 @@ public class ApiClient {
 		GetMethod httpGet = new GetMethod(url);
 		// 设置 请求超时时间
 		httpGet.getParams().setSoTimeout(TIMEOUT_SOCKET);
-		httpGet.setRequestHeader("Host", URLs.HOST);
+		httpGet.setRequestHeader("Host", URLConstant.VANAPPHOST);
 		httpGet.setRequestHeader("Connection","Keep-Alive");
 		httpGet.setRequestHeader("Cookie", cookie);
 		httpGet.setRequestHeader("User-Agent", userAgent);
@@ -107,7 +107,7 @@ public class ApiClient {
 		PostMethod httpPost = new PostMethod(url);
 		// 设置 请求超时时间
 		httpPost.getParams().setSoTimeout(TIMEOUT_SOCKET);
-		httpPost.setRequestHeader("Host", URLs.HOST);
+		httpPost.setRequestHeader("Host", URLConstant.VANAPPHOST);
 		httpPost.setRequestHeader("Connection","Keep-Alive");
 		httpPost.setRequestHeader("Cookie", cookie);
 		httpPost.setRequestHeader("User-Agent", userAgent);
@@ -197,8 +197,7 @@ public class ApiClient {
 			try {
 				Result res = Result.parse(new ByteArrayInputStream(responseBody.getBytes()));	
 				if(res.getErrorCode() == 0){
-					appContext.Logout();
-					appContext.getUnLoginHandler().sendEmptyMessage(1);
+					// TODO: error
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -226,8 +225,7 @@ public class ApiClient {
 			try {
 				Result res = Result.parse(new ByteArrayInputStream(responseBody.getBytes()));	
 				if(res.getErrorCode() == 0){
-					appContext.Logout();
-					appContext.getUnLoginHandler().sendEmptyMessage(1);
+					// TODO: error
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -411,10 +409,10 @@ public class ApiClient {
 		String newUrl = null;
 		if (catalog == 1) {
 			String driverId = appContext.getDriverId();
-			newUrl = _MakeURL(URLs.SERVICE_LIST+ "/" + driverId + "/" + (page), new HashMap<String, Object>());
+			newUrl = _MakeURL(URLConstant.SERVICE_LIST+ "/" + driverId + "/" + (page), new HashMap<String, Object>());
 		} else {
 			String driverId = appContext.getDriverId();
-			newUrl = _MakeURL(URLs.ORDERHISTRY_LIST+ "/" + driverId + "/" + (page), new HashMap<String, Object>());			
+			newUrl = _MakeURL(URLConstant.ORDERHISTRY_LIST+ "/" + driverId + "/" + (page), new HashMap<String, Object>());			
 		}
 		
 		Map<String,Object> params = new HashMap<String,Object>();
@@ -424,7 +422,11 @@ public class ApiClient {
 		
 		
 		try{
-			return ServiceList.parse(http_post_query(appContext, newUrl, params));		
+			if (catalog == 1) {
+				return ServiceList.parse(http_post_query(appContext, newUrl, params), false);	
+			} else {
+				return ServiceList.parse(http_post_query(appContext, newUrl, params), true);			
+			}
 		}catch(Exception e){
 			if(e instanceof AppException)
 				throw (AppException)e;
@@ -442,7 +444,7 @@ public class ApiClient {
 	 * @throws AppException
 	 */
 	public static Service getServiceDetail(AppContext appContext, final String order_id) throws AppException {
-		String newUrl = _MakeURL(URLs.SERVICE_DETAIL +"/"+ order_id, new HashMap<String, Object>(){{
+		String newUrl = _MakeURL(URLConstant.SERVICE_DETAIL +"/"+ order_id, new HashMap<String, Object>(){{
 			put("id", order_id);
 		}});
 		

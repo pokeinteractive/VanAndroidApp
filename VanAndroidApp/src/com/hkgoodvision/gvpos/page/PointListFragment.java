@@ -34,13 +34,7 @@ public class PointListFragment extends SherlockFragment {
 	double lat = 15;
 	double log = 22;
 	
-	public int getCATALOG_ID() {
-		return CATALOG_ID;
-	}
-
-	public void setCATALOG_ID(int cATALOG_ID) {
-		CATALOG_ID = cATALOG_ID;
-	}
+	
 
 	ViewGroup currentViewGroup = null;
 	protected AppContext appContext;

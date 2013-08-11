@@ -1,6 +1,14 @@
 <?php
 
 class Jsonapi extends Base_Controller {
+  
+  
+     function getDriverAccountBalance($driverId) {
+        $this->load->model('Driverdb');
+        $data = $this->Driverdb->getDriver($driverId);
+        echo $data->acct_balance;
+     }
+  
 
      function matchOrder($orderId=0, $driverId=0) {
 

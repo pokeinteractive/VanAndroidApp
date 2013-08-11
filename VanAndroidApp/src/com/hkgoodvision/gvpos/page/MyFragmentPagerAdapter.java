@@ -26,9 +26,7 @@ public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
 		} else if (arg0 == 1) {
 			androidFragment = new DetectPointFragment();
 		} else if (arg0 == 2) {
-			PointListFragment androidFragment1 = new PointListFragment(); //new MembershipFragment();
-			androidFragment1.setCATALOG_ID(2);
-			androidFragment = androidFragment1;
+			androidFragment = new OrderHistoryFragment();;
 		} else if (arg0 == 3) {
 //			androidFragment = new RewardFragment();
 //		} else {

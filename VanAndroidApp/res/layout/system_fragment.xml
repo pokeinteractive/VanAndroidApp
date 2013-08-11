@@ -5,28 +5,41 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <Button
-        android:id="@+id/system_aboutus_id"
-        style="@style/system_button"
+    <TextView
+        android:gravity="center_vertical|center_horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dip"
+        android:paddingTop="20dip"
+        android:paddingBottom="20dip"
+        android:text="系統管理"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/system_aboutus_id"
+        style="@style/ButtonText"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dip"
+        android:background="@drawable/blue_btn"
         android:text="有關我們" />
 
     <Button
         android:id="@+id/system_account_id"
-        style="@style/system_button"
+        style="@style/ButtonText"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dip"
+        android:background="@drawable/blue_btn"
         android:text="你的帳戶" />
 
     <Button
         android:id="@+id/system_cancel_account_id"
-        style="@style/system_button"
+        style="@style/ButtonText"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dip"
+        android:background="@drawable/blue_btn"
         android:text="取消帳戶" />
 
     <TextView

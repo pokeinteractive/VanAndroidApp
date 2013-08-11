@@ -25,6 +25,9 @@ public class Service extends Entity {
 	String fromLocation;
 	String toLocation;
 	String price;
+	
+	boolean showPhone = false;
+	
 		
 
 	public static Service parse(InputStream inputStream) throws Exception {
@@ -52,8 +55,8 @@ public class Service extends Entity {
 		String order_date = oneObject.getString("order_date");
 		String timeslot = oneObject.getString("timeslot");
 		String from_location = oneObject.getString("from_location");
-		String to_location = oneObject.getString("to_locaiton");
-		//String price = oneObject.getString("price");
+		String to_location = oneObject.getString("to_location");
+		String price = oneObject.getString("price");
 
 		service.setOrderId(order_id);
 		service.setRemark(remark);
@@ -62,7 +65,7 @@ public class Service extends Entity {
 		service.setTimeslot(timeslot);
 		service.setFromLocation(from_location);
 		service.setToLocation(to_location);
-		//service.setPrice(price);
+		service.setPrice(price);
 
 		
 		System.out.println(order_id + ":" + cust_phone + ":" + timeslot);
@@ -166,6 +169,18 @@ public class Service extends Entity {
 
 	public void setPrice(String price) {
 		this.price = price;
+	}
+
+
+
+	public boolean isShowPhone() {
+		return showPhone;
+	}
+
+
+
+	public void setShowPhone(boolean showPhone) {
+		this.showPhone = showPhone;
 	}
 
 	

@@ -23,7 +23,7 @@ import com.callvan.gvpos.activity.R;
 import com.hkgoodvision.gvpos.app.AppContext;
 import com.hkgoodvision.gvpos.app.AppManager;
 import com.hkgoodvision.gvpos.ui.AboutUsDialog;
-import com.hkgoodvision.gvpos.ui.ImageDialog;
+import com.hkgoodvision.gvpos.ui.AccountInfoDialog;
 import com.hkgoodvision.gvpos.ui.OrderInfoDialog;
 
 /**
@@ -79,20 +79,12 @@ public class UIHelper {
 		context.startActivity(intent);
 	}
 
-	
-	
-	/**
-	 * 显示图片对话框
-	 * @param context
-	 * @param imgUrl
-	 */
-	public static void showImageDialog(Context context, String imgUrl)
+	public static void showAccount(Context context)
 	{
-		Intent intent = new Intent(context, ImageDialog.class);
-		intent.putExtra("img_url", imgUrl);
+		Intent intent = new Intent(context, AccountInfoDialog.class);
 		context.startActivity(intent);
 	}
-	
+
 
 
 	/**

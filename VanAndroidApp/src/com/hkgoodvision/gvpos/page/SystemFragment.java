@@ -52,12 +52,12 @@ public class SystemFragment extends SherlockFragment {
 			});
 			
 			
-//			account.setOnClickListener(new View.OnClickListener() {
-//			    @Override
-//			    public void onClick(View v) {
-//			    	UIHelper.showAccount(v.getContext(), 0);
-//			    }
-//			});
+			account.setOnClickListener(new View.OnClickListener() {
+			    @Override
+			    public void onClick(View v) {
+			    	UIHelper.showAccount(v.getContext());
+			    }
+			});
 			
 			cancelAccount.setOnClickListener(new View.OnClickListener() {
 			    @Override

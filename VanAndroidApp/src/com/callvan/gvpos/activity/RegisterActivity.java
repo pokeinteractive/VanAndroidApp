@@ -1,13 +1,7 @@
 package com.callvan.gvpos.activity;
 
-import static com.callvan.gvpos.activity.CommonUtilities.SENDER_ID;
-import static com.callvan.gvpos.activity.CommonUtilities.SERVER_URL;
 import android.content.Context;
-import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,7 +9,8 @@ import android.widget.EditText;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.google.android.gcm.GCMRegistrar;
 import com.vanapp.constant.URLConstant;
-import com.vanapp.db.KeyPairDB;
+import com.vanapp.util.AlertDialogManager;
+import com.vanapp.util.ConnectionDetector;
 
 public class RegisterActivity extends SherlockActivity {
 
@@ -24,7 +19,7 @@ public class RegisterActivity extends SherlockActivity {
 
 	// UI elements
 	EditText txtName;
-	EditText txtEmail;
+	EditText txtPhone;
 
 	// Register button
 	Button btnRegister;
@@ -55,20 +50,11 @@ public class RegisterActivity extends SherlockActivity {
 			// stop executing code by return
 			return;
 		}
-
-		// Check if GCM configuration is set
-		if (SERVER_URL == null || SENDER_ID == null || SERVER_URL.length() == 0 || SENDER_ID.length() == 0) {
-			// GCM sernder id / server url is missing
-			AlertDialogManager.showAlertDialog(RegisterActivity.this, "Configuration Error!",
-					"Please set your Server URL and GCM Sender ID", false);
-			// stop executing code by return
-			return;
-		}
-
+		
 		// ===================================================
 
 		txtName = (EditText) findViewById(R.id.txtName);
-		txtEmail = (EditText) findViewById(R.id.txtEmail);
+		txtPhone = (EditText) findViewById(R.id.txtEmail);
 		btnRegister = (Button) findViewById(R.id.btnRegister);
 
 		/*
@@ -79,8 +65,8 @@ public class RegisterActivity extends SherlockActivity {
 			@Override
 			public void onClick(View arg0) {
 				// Read EditText dat
-				name = txtName.getText().toString();
-				phone = txtEmail.getText().toString();
+				name = txtName.getText().toString().trim();
+				phone = txtPhone.getText().toString().trim();
 
 				// Check if user filled the form
 				if (name.trim().length() > 0 && phone.trim().length() > 0) {
@@ -106,7 +92,7 @@ public class RegisterActivity extends SherlockActivity {
 		// while developing the app, then uncomment it when it's ready.
 		GCMRegistrar.checkManifest(this);
 
-		GCMRegistrar.register(this, SENDER_ID);
+		GCMRegistrar.register(this, URLConstant.GCM_SENDER_ID);
 
 	}
 

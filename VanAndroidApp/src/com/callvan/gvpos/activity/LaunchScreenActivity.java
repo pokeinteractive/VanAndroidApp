@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
+import com.vanapp.constant.URLConstant;
 import com.vanapp.db.KeyPairDB;
+import com.vanapp.util.ServerUtilities;
  
 /**
  * Splash screen activity
@@ -18,7 +20,7 @@ public class LaunchScreenActivity extends Activity {
     // used to know if the back button was pressed in the splash screen activity and avoid opening the next activity
     private boolean mIsBackButtonPressed;
     private static final int SPLASH_DURATION = 2000; // 2 seconds
- 
+    String driverId = "";
  
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +42,7 @@ public class LaunchScreenActivity extends Activity {
                 if (!mIsBackButtonPressed) {
                 	// check if the phone is register before
                 	if (checkIsRegister()) {
+                		
 	                	// start the home screen if the back button wasn't pressed already 
 	                    Intent intent = new Intent(LaunchScreenActivity.this, AndroidViewPagerActivity.class);
 	                    LaunchScreenActivity.this.startActivity(intent);
@@ -70,7 +73,7 @@ public class LaunchScreenActivity extends Activity {
     }
     
     private boolean checkIsRegister() {
-    	String driverId = KeyPairDB.getDriverId(this);
+    	driverId = KeyPairDB.getDriverId(this);
     	if (driverId != null) {
     		return true;
     	}

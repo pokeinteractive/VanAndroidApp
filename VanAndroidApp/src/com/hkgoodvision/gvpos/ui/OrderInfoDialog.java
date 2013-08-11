@@ -1,9 +1,13 @@
 package com.hkgoodvision.gvpos.ui;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -14,20 +18,21 @@ import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
-import com.callvan.gvpos.activity.AlertDialogManager;
 import com.callvan.gvpos.activity.R;
-import com.callvan.gvpos.activity.ServerUtilities;
 import com.hkgoodvision.gvpos.app.AppContext;
 import com.hkgoodvision.gvpos.app.AppException;
 import com.hkgoodvision.gvpos.common.BitmapManager;
 import com.hkgoodvision.gvpos.common.UIHelper;
 import com.hkgoodvision.gvpos.dao.vo.Service;
 import com.vanapp.constant.URLConstant;
+import com.vanapp.util.AlertDialogManager;
+import com.vanapp.util.ServerUtilities;
 
 public class OrderInfoDialog extends SherlockActivity implements OnTouchListener {
 
 	private ImageView mDialog;
-	TextView phone;
+	Button phone;
+	Button acceptButton;
 	Service service = null;
 	
 	protected Context context = null;
@@ -131,6 +136,7 @@ public class OrderInfoDialog extends SherlockActivity implements OnTouchListener
 				if (msg.what >= 0) {
 					
 					phone.setVisibility(View.VISIBLE);
+					acceptButton.setVisibility(View.INVISIBLE);
 
 				} else if (msg.what == -1) {
 
@@ -160,14 +166,32 @@ public class OrderInfoDialog extends SherlockActivity implements OnTouchListener
 
 	
 		TextView remark = (TextView) findViewById(R.id.cust_remark_id);
-		phone = (TextView) findViewById(R.id.cust_phone_id);
-		Button acceptButton = (Button) findViewById(R.id.order_accept_id);
+		phone = (Button) findViewById(R.id.cust_phone_id);
+		TextView generalText = (TextView) findViewById(R.id.cust_general_text_id);
+		acceptButton = (Button) findViewById(R.id.order_accept_id);
 		Button backButton = (Button) findViewById(R.id.order_back_id);
 
+		generalText.setText(service.getOrderDate() +":"+ service.getFromLocation() + "->" + service.getToLocation() + " $" + service.getPrice());
 		phone.setVisibility(View.INVISIBLE);
-		remark.setText(service.getRemark());
-		phone.setText(service.getCustPhone());
 		
+		remark.setText(service.getRemark());
+		phone.setText("打電話: "+service.getCustPhone());
+		
+		phone.setOnClickListener(new View.OnClickListener() {
+		    @Override
+		    public void onClick(View v) {
+		    	
+		    	try {
+		             Intent callIntent = new Intent(Intent.ACTION_CALL);
+		             callIntent.setData(Uri.parse("tel:"+service.getCustPhone()));
+		             startActivity(callIntent);
+		         } catch (ActivityNotFoundException activityException) {
+		             Log.e("Calling a Phone Number", "Call failed", activityException);
+		         }
+		    	
+		    }
+		});
+		 
 		
 		acceptButton.setOnClickListener(new View.OnClickListener() {
 		    @Override

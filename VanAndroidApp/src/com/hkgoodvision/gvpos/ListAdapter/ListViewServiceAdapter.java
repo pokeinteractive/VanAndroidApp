@@ -30,7 +30,7 @@ public class ListViewServiceAdapter extends BaseAdapter {
 	        public TextView title;  
 		    public TextView address;
 		    public TextView pointearn;
-		    
+
 	 }  
 
 	/**
@@ -77,7 +77,7 @@ public class ListViewServiceAdapter extends BaseAdapter {
 			listItemView.title = (TextView)convertView.findViewById(R.id.servicelist_listitem_title);
 			listItemView.address = (TextView)convertView.findViewById(R.id.servicelist_listitem_address);
 			listItemView.pointearn = (TextView)convertView.findViewById(R.id.servicelist_listitem_point);
-			
+			//listItemView.phone = (TextView)convertView.findViewById(R.id.servicelist_listitem_phone);
 			
 			//设置控件集到convertView
 			convertView.setTag(listItemView);
@@ -98,7 +98,8 @@ public class ListViewServiceAdapter extends BaseAdapter {
 		listItemView.title.setTag(service);//设置隐藏参数(实体类)
 		listItemView.title.setText(service.getOrderDate() + " " + service.getTimeslot());
 		listItemView.address.setText(service.getFromLocation() + "-> " +service.getToLocation());
-		listItemView.pointearn.setText(""+service.getPrice());
+		listItemView.pointearn.setText("$"+service.getPrice());
+	
 		
 		return convertView;
 	}

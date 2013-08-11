@@ -47,15 +47,10 @@ public class AppContext extends Application {
 	public static final int PAGE_SIZE = 10;// 默认分页大小
 	private static final int CACHE_TIME = 60 * 60000;// 缓存失效时间
 
-	private boolean login = false; // 登录状态
-	private int loginUid = 0; // 登录用户的id
-	
 	private IMService imService;
-
 
 	private int showTabPage = -1;
 	
-	private String uuid = null;
 	private String driverId = null;
 	private TextView matchPointTextView = null;
 	private Hashtable<String, Object> memCacheRegion = new Hashtable<String, Object>();
@@ -155,13 +150,6 @@ public class AppContext extends Application {
 		return currentVersion >= VersionCode;
 	}
 
-	public String getUuid() {
-		return uuid;
-	}
-
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
-	}
 
 	public String getDriverId() {
 		return driverId;
@@ -202,33 +190,7 @@ public class AppContext extends Application {
 		return uniqueID;
 	}
 
-	/**
-	 * 用户是否登录
-	 * 
-	 * @return
-	 */
-	public boolean isLogin() {
-		return login;
-	}
-
-	/**
-	 * 获取登录用户id
-	 * 
-	 * @return
-	 */
-	public int getLoginUid() {
-		return this.loginUid;
-	}
-
-	/**
-	 * 用户注销
-	 */
-	public void Logout() {
-		ApiClient.cleanCookie();
-		this.cleanCookie();
-		this.login = false;
-		this.loginUid = 0;
-	}
+	
 
 	/**
 	 * 未登录或修改密码后的处理
@@ -308,49 +270,6 @@ public class AppContext extends Application {
 				news = new Service();
 		}
 		return news;
-	}
-
-	//
-	// /**
-	// * 博客详情
-	// * @param blog_id
-	// * @return
-	// * @throws AppException
-	// */
-	// public Blog getBlog(int blog_id, boolean isRefresh) throws AppException {
-	// Blog blog = null;
-	// String key = "blog_"+blog_id;
-	// if(isNetworkConnected() && (!isReadDataCache(key) || isRefresh)) {
-	// try{
-	// blog = ApiClient.getBlogDetail(this, blog_id);
-	// if(blog != null){
-	// Notice notice = blog.getNotice();
-	// blog.setNotice(null);
-	// blog.setCacheKey(key);
-	// saveObject(blog, key);
-	// blog.setNotice(notice);
-	// }
-	// }catch(AppException e){
-	// blog = (Blog)readObject(key);
-	// if(blog == null)
-	// throw e;
-	// }
-	// } else {
-	// blog = (Blog)readObject(key);
-	// if(blog == null)
-	// blog = new Blog();
-	// }
-	// return blog;
-	// }
-
-	/**
-	 * 清除登录信息
-	 */
-	public void cleanLoginInfo() {
-		this.loginUid = 0;
-		this.login = false;
-		removeProperty("user.uid", "user.name", "user.face", "user.account", "user.pwd", "user.location",
-				"user.followers", "user.fans", "user.score", "user.isRememberMe");
 	}
 
 	

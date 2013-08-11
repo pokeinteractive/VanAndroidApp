@@ -23,7 +23,7 @@
         <item name="android:background">@drawable/widget_dface_border</item>
         <item name="android:src">@drawable/widget_dface_loading</item>
     </style>
-    
+
     <style name="reward_item_photo">
         <item name="android:layout_width">120.0dip</item>
         <item name="android:layout_height">90.0dip</item>
@@ -70,6 +70,20 @@
         <!-- <item name="android:background">@drawable/btn_custom</item> -->
         <item name="android:focusable">true</item>
         <item name="android:clickable">true</item>
+    </style>
+
+    <style name="ButtonText">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_margin">3dp</item>
+        <item name="android:textSize">30dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:shadowColor">#000000</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">2</item>
     </style>
 
 </resources>
